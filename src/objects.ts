@@ -35,6 +35,8 @@ export interface OsmWay {
   nodes: number[];
   geometry: Coordinate[];
   tags: Tags;
+  version: number;
+  user: string;
 }
 
 export interface OsmAuthOptions {
