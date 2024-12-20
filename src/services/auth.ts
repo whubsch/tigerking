@@ -6,7 +6,7 @@ import { OsmXhrOptions } from "../types/osm";
 
 export const auth = osmAuth({
   client_id: "o8woB8nXRF1IbN4Bjwjc5EoSVWQiabhCDjqPyl4xUSk",
-  redirect_uri: window.location.origin,
+  redirect_uri: window.location.origin + window.location.pathname,
   scope: "read_prefs write_api",
   auto: true,
 });
