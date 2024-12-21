@@ -54,6 +54,11 @@ const App: React.FC = () => {
     }
   };
 
+  const wayCoordinates =
+    overpassWays[currentWay]?.geometry.map(
+      (coord) => [coord.lon, coord.lat] as [number, number],
+    ) || [];
+
   return (
     <OsmAuthProvider>
       <div className="flex flex-col h-screen">
@@ -98,11 +103,15 @@ const App: React.FC = () => {
                         >
                           Skip
                         </Button>
+                        <Button color="default" size="md" className="flex-1">
+                          Fix
+                        </Button>
                         <Button
                           color="primary"
                           size="md"
                           className="flex-1"
                           onPress={handleSubmit}
+                          isDisabled={!surfaceKeys || !lanesKeys}
                         >
                           Submit
                         </Button>
@@ -120,7 +129,7 @@ const App: React.FC = () => {
 
           {/* Right Pane */}
           <div className="flex-1 p-4">
-            <WayMap longitude={-73.985428} latitude={40.748817} zoom={16} />
+            <WayMap coordinates={wayCoordinates} zoom={16} />
           </div>
         </div>
       </div>
