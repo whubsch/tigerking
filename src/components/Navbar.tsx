@@ -15,6 +15,7 @@ import logo from "../assets/tiger.svg";
 import upload from "../assets/upload.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
+import UserCard from "./UserCard";
 
 interface NavbarProps {
   uploadCount: number;
@@ -24,8 +25,19 @@ const LinkIcon = () => {
   return <img src={link} alt="link" className="w-6 h-6" />;
 };
 
+const getButtonColor = (count: number) => {
+  if (count >= 180) return "bg-red-600";
+  if (count >= 150) return "bg-red-500";
+  if (count >= 120) return "bg-red-400";
+  if (count >= 90) return "bg-red-300";
+  if (count >= 60) return "bg-orange-400";
+  if (count >= 30) return "bg-orange-300";
+  return "bg-default";
+};
+
 const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
-  const { loggedIn, osmUser, handleLogin, handleLogout } = useOsmAuthContext();
+  const { loggedIn, osmUser, userImage, handleLogin, handleLogout } =
+    useOsmAuthContext();
   return (
     <Navbar maxWidth="full" position="static" className="shadow">
       <NavbarBrand className="gap-4">
@@ -39,7 +51,11 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
             <Button
               variant="flat"
               startContent={
-                <img src={upload} alt="upload" className="w-6 h-6" />
+                <img
+                  src={upload}
+                  alt="upload"
+                  className={`w-6 h-6 ${getButtonColor(uploadCount)}`}
+                />
               }
             >
               <Chip>{uploadCount}</Chip>
@@ -51,8 +67,12 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Navigation menu">
-                <DropdownItem key="username" className="opacity-50" isReadOnly>
-                  Signed in as {osmUser}
+                <DropdownItem
+                  key="user"
+                  target="_blank"
+                  href={`https://www.openstreetmap.org/user/${osmUser}`}
+                >
+                  <UserCard name={osmUser} imageUrl={userImage} changes={0} />
                 </DropdownItem>
                 <DropdownItem
                   key="tiger_map"

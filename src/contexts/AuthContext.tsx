@@ -5,7 +5,12 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { loginAndfetchOsmUser, osmLogout, OsmUser } from "../services/auth";
+import {
+  loginAndfetchOsmUser,
+  osmLogout,
+  handleOAuthCallback,
+  OsmUser,
+} from "../services/auth";
 import Cookies from "js-cookie";
 
 interface OsmAuthType {
@@ -54,6 +59,28 @@ export const OsmAuthProvider = ({
 
   const [osmUser, setOsmUser] = useOsmUserState(cookies);
 
+  // Add effect to handle OAuth callback
+  useEffect(() => {
+    const handleAuth = async () => {
+      try {
+        const user = await handleOAuthCallback();
+        if (user) {
+          setOsmUser(user);
+          // Remove the OAuth parameters from URL
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname,
+          );
+        }
+      } catch (error) {
+        console.error("Authentication error:", error);
+      }
+    };
+
+    handleAuth();
+  }, []);
+
   // Add effect to check authentication state on mount
   useEffect(() => {
     const storedUser = Cookies.get("osmUserForSSR");
@@ -77,7 +104,7 @@ export const OsmAuthProvider = ({
 
   const value = {
     loggedIn: !!osmUser,
-    osmUser: osmUser?.name || "", // TODO rename
+    osmUser: osmUser?.name || "",
     userImage: osmUser?.imageUrl || "",
     handleLogin,
     handleLogout,

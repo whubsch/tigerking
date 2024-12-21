@@ -26,6 +26,8 @@ const App: React.FC = () => {
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]); // const { loggedIn } = useOsmAuthContext();
   const { loggedIn } = useOsmAuthContext();
 
+  console.log("Logged in:", loggedIn);
+
   const handleSkip = () => {
     setLanesKeys("");
     setSurfaceKeys("");
