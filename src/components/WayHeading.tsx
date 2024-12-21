@@ -1,24 +1,17 @@
 import React from "react";
-import { Link } from "@nextui-org/react";
+import CardHeading from "./CardHeading";
+import TagSelection from "./TagSelection";
 
 interface WayHeadingProps {
-  name: string;
-  type: string;
+  tags: Record<string, string>;
   wayId: string | number;
 }
 
-const WayHeading: React.FC<WayHeadingProps> = ({ name, type, wayId }) => {
+const WayHeading: React.FC<WayHeadingProps> = ({ tags, wayId }) => {
   return (
     <div className="gap-2">
-      <h1 className="text-xl font-bold my-2">{name}</h1>
-      <h2 className="text-large text-gray-800 dark:text-gray-300">{type}</h2>
-      <h3 className="text-normal">
-        {
-          <Link isExternal href={`https://www.openstreetmap.org/way/${wayId}`}>
-            Way {wayId}
-          </Link>
-        }
-      </h3>
+      <CardHeading name={tags.name} id={wayId} type={"way"} />
+      <TagSelection tags={tags} />
     </div>
   );
 };

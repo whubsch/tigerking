@@ -90,13 +90,13 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
             ["linear"],
             ["zoom"],
             12,
-            4, // Width 2 at zoom level 12 or less
+            4,
             15,
-            6, // Width 4 at zoom level 15
+            6,
             17,
-            8, // Width 8 at zoom level 18
+            8,
             22,
-            14, // Width 12 at zoom level 22
+            14,
           ],
           "line-dasharray": [2, 2],
           "line-opacity": [
@@ -113,28 +113,6 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
         },
       });
     });
-
-    // line.current = new maplibregl.GeoJSONSource();
-    // map.current.addLayer({
-    //   id: "line_example",
-    //   type: "line",
-    //   source: {
-    //     type: "geojson",
-    //     data: {
-    //       type: "Feature",
-    //       properties: {},
-    //       geometry: {
-    //         type: "LineString",
-    //         coordinates: [
-    //           [longitude, latitude],
-    //           // Add more coordinate pairs to create a line
-    //           [longitude + 0.01, latitude + 0.01], // Example second point
-    //         ],
-    //       },
-    //     },
-    //   },
-    //   paint: { "line-color": "#198EC8" },
-    // });
 
     // Cleanup on unmount
     return () => {

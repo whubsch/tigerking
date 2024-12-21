@@ -7,9 +7,8 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownSection,
-  Link,
 } from "@nextui-org/react";
-import info from "../assets/info.svg";
+import TagButtonHeading from "./TagButtonHeading";
 
 interface SurfaceButtonsProps {
   surfaceKeys: string;
@@ -23,16 +22,11 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
   const commonSurfaces = ["concrete", "asphalt", "compacted"];
   return (
     <div className="w-full">
-      <div className="flex justify-between">
-        <h2 className="text-lg">Surface</h2>
-        <Link
-          href="https://wiki.openstreetmap.org/wiki/Key:surface"
-          target="_blank"
-        >
-          <img src={info} alt="surface" className="w-6 h-6" />
-        </Link>
-      </div>
-      <ButtonGroup variant="bordered" className="w-full">
+      <TagButtonHeading
+        header="surface"
+        tooltip="The surface of the roadway."
+      />
+      <ButtonGroup variant="bordered" className="w-full" size="lg">
         <Button
           className="flex-1"
           onPress={() => setSurfaceKeys("asphalt")}

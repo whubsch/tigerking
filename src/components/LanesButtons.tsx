@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, ButtonGroup, Link } from "@nextui-org/react";
-import info from "../assets/info.svg";
+import { Button, ButtonGroup } from "@nextui-org/react";
+import TagButtonHeading from "./TagButtonHeading";
 
 interface LanesButtonsProps {
   lanesKeys: string;
@@ -13,16 +13,11 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
 }) => {
   return (
     <div className="w-full">
-      <div className="flex justify-between">
-        <h2 className="text-lg">Lanes</h2>
-        <Link
-          href="https://wiki.openstreetmap.org/wiki/Key:lanes"
-          target="_blank"
-        >
-          <img src={info} alt="surface" className="w-6 h-6" />
-        </Link>
-      </div>
-      <ButtonGroup variant="bordered" className="w-full">
+      <TagButtonHeading
+        header="lanes"
+        tooltip="The number of lanes on the road."
+      />
+      <ButtonGroup variant="bordered" className="w-full" size="lg">
         <Button
           className="flex-1"
           onPress={() => setLanesKeys("none")}

@@ -24,10 +24,18 @@ const RelationForm: React.FC<RelationFormProps> = ({
         type="number"
         value={relationId}
         onChange={(e) => setRelationId(e.target.value)}
+        endContent={
+          <Button
+            type="submit"
+            variant="solid"
+            size="sm"
+            color="primary"
+            isDisabled={!relationId}
+          >
+            Submit
+          </Button>
+        }
       />
-      <Button type="submit" variant="bordered" className="w-full">
-        Submit
-      </Button>
     </Form>
   );
 };

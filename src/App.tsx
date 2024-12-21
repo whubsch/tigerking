@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, Card } from "@nextui-org/react";
 // import Location from "./components/Location";
 import WayHeading from "./components/WayHeading";
@@ -9,6 +9,7 @@ import SurfaceButtons from "./components/SurfaceButtons";
 import LanesButtons from "./components/LanesButtons";
 import RelationForm from "./components/RelationForm";
 import MainNavbar from "./components/Navbar";
+import RelationTags from "./components/RelationHeading";
 
 import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
 import { OsmAuthProvider, useOsmAuthContext } from "./contexts/AuthContext";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
   const [overpassWays, setOverpassWays] = useState<OsmWay[]>([]);
   const [uploadCount, setUploadCount] = useState<number>(0);
   const [currentWay, setCurrentWay] = useState<number>(0);
+  const [showRelationHeading, setShowRelationHeading] = useState(false);
   const uploadWays: OsmWay[] = [];
   const { loggedIn } = useOsmAuthContext();
 
@@ -43,6 +45,7 @@ const App: React.FC = () => {
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setShowRelationHeading(true);
 
     try {
       const ways = await overpassService.fetchWaysInRelation(relationId);
@@ -54,10 +57,18 @@ const App: React.FC = () => {
     }
   };
 
-  const wayCoordinates =
-    overpassWays[currentWay]?.geometry.map(
-      (coord) => [coord.lon, coord.lat] as [number, number],
-    ) || [];
+  const wayCoordinates = useMemo(
+    () =>
+      overpassWays[currentWay]?.geometry.map(
+        (coord) => [coord.lon, coord.lat] as [number, number],
+      ) || [],
+    [overpassWays, currentWay], // Only recalculate when these dependencies change
+  );
+
+  const memoizedMap = useMemo(
+    () => <WayMap coordinates={wayCoordinates} zoom={16} />,
+    [wayCoordinates],
+  );
 
   return (
     <OsmAuthProvider>
@@ -66,24 +77,26 @@ const App: React.FC = () => {
         <div className="flex flex-1 bg-background">
           {/* Left Pane */}
           <div className="flex flex-col w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
-            <Card className="rounded-lg shadow p-4">
-              <RelationForm
-                relationId={relationId}
-                setRelationId={setRelationId}
-                onSubmit={handleRelationSubmit}
-              />
-            </Card>
+            <div className="p-4">
+              {relationId && showRelationHeading ? (
+                <RelationTags relationId={relationId} />
+              ) : (
+                <RelationForm
+                  relationId={relationId}
+                  setRelationId={setRelationId}
+                  onSubmit={handleRelationSubmit}
+                />
+              )}
+            </div>
             <Card className="rounded-lg shadow p-4 gap-2">
               {overpassWays && overpassWays.length > 0 ? (
                 <>
                   <WayHeading
-                    name={overpassWays[currentWay].tags?.name ?? ""}
-                    type={overpassWays[currentWay].tags?.highway ?? ""}
+                    tags={overpassWays[currentWay].tags}
                     wayId={overpassWays[currentWay].id?.toString() ?? ""}
                   />
                   <div className="flex flex-col gap-2">
-                    <div>
-                      <h2 className="text-lg">Tags</h2>
+                    <div className="py-2 flex flex-col gap-4">
                       <SurfaceButtons
                         surfaceKeys={surfaceKeys}
                         setSurfaceKeys={setSurfaceKeys}
@@ -117,7 +130,7 @@ const App: React.FC = () => {
                         </Button>
                       </div>
                     ) : (
-                      <p>Please login to submit changes.</p>
+                      <p>Please log in to submit changes.</p>
                     )}
                   </div>
                 </>
@@ -128,9 +141,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Right Pane */}
-          <div className="flex-1 p-4">
-            <WayMap coordinates={wayCoordinates} zoom={16} />
-          </div>
+          <div className="flex-1 p-4">{memoizedMap}</div>
         </div>
       </div>
     </OsmAuthProvider>
