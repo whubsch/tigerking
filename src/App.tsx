@@ -17,13 +17,12 @@ import { OsmAuthProvider, useOsmAuthContext } from "./contexts/AuthContext";
 const App: React.FC = () => {
   const [surfaceKeys, setSurfaceKeys] = useState<string>("");
   const [lanesKeys, setLanesKeys] = useState<string>(""); // Add this line
-  // const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
   const [relationId, setRelationId] = useState<string>("");
   const [overpassWays, setOverpassWays] = useState<OsmWay[]>([]);
   const [uploadCount, setUploadCount] = useState<number>(0);
   const [currentWay, setCurrentWay] = useState<number>(0);
   const [showRelationHeading, setShowRelationHeading] = useState(false);
-  const uploadWays: OsmWay[] = [];
+  const [uploadWays, setUploadWays] = useState<OsmWay[]>([]); // const { loggedIn } = useOsmAuthContext();
   const { loggedIn } = useOsmAuthContext();
 
   const handleSkip = () => {
@@ -34,13 +33,25 @@ const App: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    uploadWays.push(overpassWays[0]);
+    overpassWays[currentWay].tags = {
+      ...overpassWays[currentWay].tags, // Keep existing tags
+      surface: surfaceKeys,
+      ...(lanesKeys === "none"
+        ? { lane_markings: "no" }
+        : { lanes: lanesKeys }),
+    };
+    setUploadWays((prevWays) => [...prevWays, overpassWays[currentWay]]);
+    console.log("Submit clicked", overpassWays[currentWay]);
+    console.log("uploadWays:", uploadWays);
+    // console.log(
+    //   "XML changeset:",
+    //   osmXmlBuilder.createChangeSet(uploadWays, -1),
+    // );
+
     setCurrentWay(currentWay + 1);
     setUploadCount(uploadCount + 1);
     setLanesKeys("");
     setSurfaceKeys("");
-
-    console.log("Submit clicked");
   };
 
   const handleRelationSubmit = async (e: React.FormEvent) => {

@@ -28,21 +28,21 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
       />
       <ButtonGroup variant="bordered" className="w-full" size="lg">
         <Button
-          className="flex-1"
+          className="flex-1 border-1"
           onPress={() => setSurfaceKeys("asphalt")}
           variant={surfaceKeys === "asphalt" ? "solid" : "bordered"}
         >
           asphalt
         </Button>
         <Button
-          className="flex-1"
+          className="flex-1 border-1"
           onPress={() => setSurfaceKeys("compacted")}
           variant={surfaceKeys === "compacted" ? "solid" : "bordered"}
         >
           compacted
         </Button>
         <Button
-          className="flex-1"
+          className="flex-1 border-1"
           onPress={() => setSurfaceKeys("concrete")}
           variant={surfaceKeys === "concrete" ? "solid" : "bordered"}
         >
@@ -56,7 +56,7 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
                   ? "solid"
                   : "bordered"
               }
-              className="flex-1"
+              className="flex-1 border-1"
               onPress={() => setSurfaceKeys("none")}
             >
               {!commonSurfaces.includes(surfaceKeys) && surfaceKeys

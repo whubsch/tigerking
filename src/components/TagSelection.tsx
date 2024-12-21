@@ -31,6 +31,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
       "boundary",
       "admin_level",
       "border_type",
+      "ref",
     ];
 
     switch (key) {

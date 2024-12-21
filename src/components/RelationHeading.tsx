@@ -43,7 +43,9 @@ const RelationTags: React.FC<RelationTagsProps> = ({ relationId }) => {
           setError("No tags found for this relation");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch tags");
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch relation tags",
+        );
       } finally {
         setLoading(false);
       }
