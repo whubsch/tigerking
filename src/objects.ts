@@ -10,7 +10,7 @@ interface Coordinate {
   lon: number;
 }
 
-interface Tags {
+export interface Tags {
   alt_name?: string;
   highway?: string;
   maxspeed?: string;

@@ -2,7 +2,7 @@ import React from "react";
 import { Chip, Link } from "@nextui-org/react";
 
 interface TagSelectionProps {
-  tags: Record<string, string>;
+  tags: Record<string, string | undefined>;
   commonTags?: string[]; // Make common tags configurable
   onTagClick?: (key: string, value: string) => void; // Optional click handler
 }
@@ -78,7 +78,9 @@ const TagSelection: React.FC<TagSelectionProps> = ({
 
   return (
     <div className="flex flex-wrap gap-2">
-      {sortedTags.map(([key, value]) => renderChip(key, value))}
+      {sortedTags.map(
+        ([key, value]) => value !== undefined && renderChip(key, value),
+      )}
     </div>
   );
 };
