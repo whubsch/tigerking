@@ -10,6 +10,7 @@ import LanesButtons from "./components/LanesButtons";
 import RelationForm from "./components/RelationForm";
 import MainNavbar from "./components/Navbar";
 import RelationTags from "./components/RelationHeading";
+import { osmXmlBuilder } from "./services/xml";
 
 import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
 import { OsmAuthProvider, useOsmAuthContext } from "./contexts/AuthContext";
@@ -43,10 +44,10 @@ const App: React.FC = () => {
     setUploadWays((prevWays) => [...prevWays, overpassWays[currentWay]]);
     console.log("Submit clicked", overpassWays[currentWay]);
     console.log("uploadWays:", uploadWays);
-    // console.log(
-    //   "XML changeset:",
-    //   osmXmlBuilder.createChangeSet(uploadWays, -1),
-    // );
+    console.log(
+      "XML changeset:",
+      osmXmlBuilder.createChangeSet(uploadWays, -1),
+    );
 
     setCurrentWay(currentWay + 1);
     setUploadCount(uploadCount + 1);

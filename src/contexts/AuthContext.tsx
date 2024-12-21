@@ -1,5 +1,12 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { loginAndfetchOsmUser, osmLogout, OsmUser } from "../services/auth";
+import Cookies from "js-cookie";
 
 interface OsmAuthType {
   loggedIn: boolean;
@@ -39,7 +46,27 @@ export const OsmAuthProvider = ({
   children,
   cookies = {},
 }: OsmAuthProviderProps) => {
+  console.log("Initial cookies:", cookies);
+  console.log("Stored cookies:", {
+    osmAccessToken: Cookies.get("osmAccessToken"),
+    osmUserForSSR: Cookies.get("osmUserForSSR"),
+  });
+
   const [osmUser, setOsmUser] = useOsmUserState(cookies);
+
+  // Add effect to check authentication state on mount
+  useEffect(() => {
+    const storedUser = Cookies.get("osmUserForSSR");
+    console.log("Stored user on mount:", storedUser);
+
+    if (storedUser) {
+      try {
+        setOsmUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Error parsing stored user:", e);
+      }
+    }
+  }, []);
 
   const successfulLogin = (user: OsmUser) => {
     setOsmUser(user);

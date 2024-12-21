@@ -9,7 +9,19 @@ export const auth = osmAuth({
   redirect_uri: window.location.origin + window.location.pathname,
   scope: "read_prefs write_api",
   auto: true,
+  persistToken: true,
 });
+
+// Add a function to check auth state
+export const checkAuthState = () => {
+  const { url } = auth.options();
+  const token = localStorage.getItem(`${url}oauth2_access_token`);
+  console.log("Current auth state:", {
+    hasToken: !!token,
+    token: token,
+  });
+  return !!token;
+};
 
 const authFetch = async (options: OsmXhrOptions) =>
   new Promise<any>((resolve, reject) => {
@@ -48,10 +60,14 @@ export const loginAndfetchOsmUser = async (): Promise<OsmUser> => {
   let osmAccessToken = localStorage.getItem(`${url}oauth2_access_token`);
   const osmUserForSSR = JSON.stringify(osmUser);
   osmAccessToken = osmAccessToken ?? "";
+
+  console.log("Setting cookies:", {
+    osmAccessToken,
+    osmUserForSSR,
+  });
+
   Cookies.set("osmAccessToken", osmAccessToken, { path: "/", expires: 365 });
   Cookies.set("osmUserForSSR", osmUserForSSR, { path: "/", expires: 365 });
-
-  await fetch("/api/token-login");
 
   return osmUser;
 };
