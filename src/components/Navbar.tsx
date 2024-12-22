@@ -10,7 +10,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
-import { useOsmAuthContext } from "../contexts/AuthContext";
+import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import logo from "../assets/tiger.svg";
 import upload from "../assets/upload.svg";
 import menu from "../assets/menu.svg";

@@ -21,7 +21,7 @@ export const handleOAuthCallback = async () => {
   if (code && state) {
     console.log("Handling OAuth callback", { code, state });
     try {
-      await auth.bootstrapToken(code);
+      // await auth.bootstrapToken(code);
       const user = await fetchOsmUser();
       return user;
     } catch (error) {

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { NextUIProvider } from "@nextui-org/react";
 import App from "./App";
+import { OsmAuthProvider } from "./contexts/AuthContext";
 import "./index.css";
 
 function isDarkModeEnabled(): boolean {
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         isDarkModeEnabled() ? "dark" : "light"
       } text-foreground bg-background`}
     >
-      <App />
+      <OsmAuthProvider>
+        <App />
+      </OsmAuthProvider>
     </NextUIProvider>
   </React.StrictMode>,
 );

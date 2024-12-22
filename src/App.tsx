@@ -13,7 +13,7 @@ import RelationTags from "./components/RelationHeading";
 import { osmXmlBuilder } from "./services/xml";
 
 import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
-import { OsmAuthProvider, useOsmAuthContext } from "./contexts/AuthContext";
+import { useOsmAuthContext } from "./contexts/useOsmAuth";
 
 const App: React.FC = () => {
   const [surfaceKeys, setSurfaceKeys] = useState<string>("");
@@ -24,9 +24,7 @@ const App: React.FC = () => {
   const [currentWay, setCurrentWay] = useState<number>(0);
   const [showRelationHeading, setShowRelationHeading] = useState(false);
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]); // const { loggedIn } = useOsmAuthContext();
-  const { loggedIn } = useOsmAuthContext();
-
-  console.log("Logged in:", loggedIn);
+  const { loggedIn, loading } = useOsmAuthContext();
 
   const handleSkip = () => {
     setLanesKeys("");
@@ -85,12 +83,14 @@ const App: React.FC = () => {
   );
 
   return (
-    <OsmAuthProvider>
-      <div className="flex flex-col h-screen">
-        <MainNavbar uploadCount={uploadCount} />
-        <div className="flex flex-1 bg-background">
-          {/* Left Pane */}
-          <div className="flex flex-col w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
+    <div className="flex flex-col h-screen">
+      <MainNavbar uploadCount={uploadCount} />
+      <div className="flex flex-1 bg-background">
+        {/* Left Pane */}
+        <div className="flex flex-col w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
+          {loading ? (
+            <div>Loading authentication state...</div>
+          ) : (
             <div className="p-4">
               {relationId && showRelationHeading ? (
                 <RelationTags relationId={relationId} />
@@ -102,63 +102,65 @@ const App: React.FC = () => {
                 />
               )}
             </div>
-            <Card className="rounded-lg shadow p-4 gap-2">
-              {overpassWays && overpassWays.length > 0 ? (
-                <>
-                  <WayHeading
-                    tags={overpassWays[currentWay].tags}
-                    wayId={overpassWays[currentWay].id?.toString() ?? ""}
-                  />
-                  <div className="flex flex-col gap-2">
-                    <div className="py-2 flex flex-col gap-4">
-                      <SurfaceButtons
-                        surfaceKeys={surfaceKeys}
-                        setSurfaceKeys={setSurfaceKeys}
-                      />
-                      <LanesButtons
-                        lanesKeys={lanesKeys}
-                        setLanesKeys={setLanesKeys}
-                      />
-                    </div>
-                    {loggedIn ? (
-                      <div className="flex gap-2 w-full mt-4">
-                        <Button
-                          color="default"
-                          size="md"
-                          className="flex-1"
-                          onPress={handleSkip}
-                        >
-                          Skip
-                        </Button>
-                        <Button color="default" size="md" className="flex-1">
-                          Fix
-                        </Button>
-                        <Button
-                          color="primary"
-                          size="md"
-                          className="flex-1"
-                          onPress={handleSubmit}
-                          isDisabled={!surfaceKeys || !lanesKeys}
-                        >
-                          Submit
-                        </Button>
-                      </div>
-                    ) : (
-                      <p>Please log in to submit changes.</p>
-                    )}
+          )}
+          <Card className="rounded-lg shadow p-4 gap-2">
+            {overpassWays && overpassWays.length > 0 ? (
+              <>
+                <WayHeading
+                  tags={overpassWays[currentWay].tags}
+                  wayId={overpassWays[currentWay].id?.toString() ?? ""}
+                />
+                <div className="flex flex-col gap-2">
+                  <div className="py-2 flex flex-col gap-4">
+                    <SurfaceButtons
+                      surfaceKeys={surfaceKeys}
+                      setSurfaceKeys={setSurfaceKeys}
+                    />
+                    <LanesButtons
+                      lanesKeys={lanesKeys}
+                      setLanesKeys={setLanesKeys}
+                    />
                   </div>
-                </>
-              ) : (
-                <p>Enter a relation ID to get started.</p>
-              )}
-            </Card>
-          </div>
-
-          {/* Right Pane */}
-          <div className="flex-1 p-4">{memoizedMap}</div>
+                  {loading ? (
+                    <div>Loading...</div>
+                  ) : loggedIn ? (
+                    <div className="flex gap-2 w-full mt-4">
+                      <Button
+                        color="default"
+                        size="md"
+                        className="flex-1"
+                        onPress={handleSkip}
+                      >
+                        Skip
+                      </Button>
+                      <Button color="default" size="md" className="flex-1">
+                        Fix
+                      </Button>
+                      <Button
+                        color="primary"
+                        size="md"
+                        className="flex-1"
+                        onPress={handleSubmit}
+                        isDisabled={!surfaceKeys || !lanesKeys}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  ) : (
+                    <p>Please log in to submit changes.</p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p>Enter a relation ID to get started.</p>
+            )}
+          </Card>
         </div>
+
+        {/* Right Pane */}
+        <div className="flex-1 p-4">{memoizedMap}</div>
       </div>
-    </OsmAuthProvider>
+    </div>
   );
 };
 

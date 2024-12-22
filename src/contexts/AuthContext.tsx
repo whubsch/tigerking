@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import { useState, useEffect, ReactNode } from "react";
 import {
   loginAndfetchOsmUser,
   osmLogout,
@@ -12,26 +6,7 @@ import {
   OsmUser,
 } from "../services/auth";
 import Cookies from "js-cookie";
-
-interface OsmAuthType {
-  loggedIn: boolean;
-  osmUser: string;
-  userImage: string;
-  handleLogin: () => void;
-  handleLogout: () => void;
-}
-
-const defaultAuthContext: OsmAuthType = {
-  loggedIn: false,
-  osmUser: "",
-  userImage: "",
-  handleLogin: () => {
-    console.warn("Auth context not initialized");
-  },
-  handleLogout: () => {
-    console.warn("Auth context not initialized");
-  },
-};
+import { OsmAuthContext, OsmAuthType } from "./OsmAuthContextDef";
 
 interface OsmAuthProviderProps {
   children: ReactNode;
@@ -45,55 +20,48 @@ const useOsmUserState = (cookies?: { osmUserForSSR?: any }) => {
   return useState<OsmUser | undefined>(initialState);
 };
 
-export const OsmAuthContext = createContext<OsmAuthType>(defaultAuthContext);
-
 export const OsmAuthProvider = ({
   children,
   cookies = {},
 }: OsmAuthProviderProps) => {
-  console.log("Initial cookies:", cookies);
-  console.log("Stored cookies:", {
-    osmAccessToken: Cookies.get("osmAccessToken"),
-    osmUserForSSR: Cookies.get("osmUserForSSR"),
-  });
-
+  const [loading, setLoading] = useState(true);
   const [osmUser, setOsmUser] = useOsmUserState(cookies);
 
-  // Add effect to handle OAuth callback
   useEffect(() => {
-    const handleAuth = async () => {
+    const initializeAuth = async () => {
+      console.log("Initializing auth...");
       try {
+        // First check for stored user
+        const storedUser = Cookies.get("osmUserForSSR");
+        console.log("Checking stored user:", storedUser);
+
+        if (storedUser) {
+          try {
+            setOsmUser(JSON.parse(storedUser));
+            console.log("Found stored user, auth complete");
+            setLoading(false);
+            return;
+          } catch (e) {
+            console.error("Error parsing stored user:", e);
+          }
+        }
+
+        // If no stored user, check for OAuth callback
         const user = await handleOAuthCallback();
         if (user) {
+          console.log("User found from OAuth callback:", user);
           setOsmUser(user);
-          // Remove the OAuth parameters from URL
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname,
-          );
         }
       } catch (error) {
         console.error("Authentication error:", error);
+      } finally {
+        console.log("Auth initialization complete");
+        setLoading(false);
       }
     };
 
-    handleAuth();
-  }, []);
-
-  // Add effect to check authentication state on mount
-  useEffect(() => {
-    const storedUser = Cookies.get("osmUserForSSR");
-    console.log("Stored user on mount:", storedUser);
-
-    if (storedUser) {
-      try {
-        setOsmUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error("Error parsing stored user:", e);
-      }
-    }
-  }, []);
+    initializeAuth();
+  }, [setOsmUser]); // Run once on mount
 
   const successfulLogin = (user: OsmUser) => {
     setOsmUser(user);
@@ -102,17 +70,18 @@ export const OsmAuthProvider = ({
   const handleLogin = () => loginAndfetchOsmUser().then(successfulLogin);
   const handleLogout = () => osmLogout().then(() => setOsmUser(undefined));
 
-  const value = {
+  const value: OsmAuthType = {
     loggedIn: !!osmUser,
     osmUser: osmUser?.name || "",
     userImage: osmUser?.imageUrl || "",
+    loading,
     handleLogin,
     handleLogout,
   };
+
+  console.log("Auth context value:", value); // Add this log
 
   return (
     <OsmAuthContext.Provider value={value}>{children}</OsmAuthContext.Provider>
   );
 };
-
-export const useOsmAuthContext = () => useContext(OsmAuthContext);
