@@ -28,7 +28,6 @@ const App: React.FC = () => {
   const [lanesKeys, setLanesKeys] = useState<string>(""); // Add this line
   const [relationId, setRelationId] = useState<string>("");
   const [overpassWays, setOverpassWays] = useState<OsmWay[]>([]);
-  const [uploadCount, setUploadCount] = useState<number>(0);
   const [currentWay, setCurrentWay] = useState<number>(0);
   const [showRelationHeading, setShowRelationHeading] = useState(false);
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]);
@@ -52,8 +51,6 @@ const App: React.FC = () => {
     setLanesKeys("");
     setSurfaceKeys("");
     setCurrentWay(currentWay + 1);
-
-    console.log("Fix clicked");
   };
 
   const handleSubmit = () => {
@@ -65,17 +62,10 @@ const App: React.FC = () => {
         : { lanes: lanesKeys }),
     };
     setUploadWays((prevWays) => [...prevWays, overpassWays[currentWay]]);
-    console.log("Submit clicked", overpassWays[currentWay]);
-    console.log("uploadWays:", uploadWays);
-    console.log(
-      "XML changeset:",
-      osmXmlBuilder.createChangeSet(uploadWays, -1),
-    );
 
     setLanesKeys("");
     setSurfaceKeys("");
     setCurrentWay(currentWay + 1);
-    setUploadCount(uploadCount + 1);
   };
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
@@ -113,8 +103,8 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <MainNavbar uploads={uploadWays} />
-      <div className="flex flex-1 bg-background">
+      <MainNavbar uploads={uploadWays} setUploadWays={setUploadWays} />
+      <div className="flex flex-col md:flex-row flex-1 bg-background">
         {/* Left Pane */}
         <div className="flex flex-col w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
           {loading ? (
@@ -217,7 +207,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Right Pane */}
-        <div className="flex-1 p-4">{memoizedMap}</div>
+        <div className="flex-1 p-4 h-[50vh] md:h-auto">{memoizedMap}</div>
       </div>
     </div>
   );

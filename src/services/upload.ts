@@ -15,7 +15,7 @@ export const uploadChanges = async (ways: OsmWay[]) => {
     .att("v", "TIGER King " + version)
     .ele("tag")
     .att("k", "host")
-    .att("v", window.location.host)
+    .att("v", window.location.host + window.location.pathname)
     .up()
     .ele("tag")
     .att("k", "comment")

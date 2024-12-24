@@ -21,6 +21,7 @@ import { uploadChanges } from "../services/upload";
 
 interface NavbarProps {
   uploads: OsmWay[];
+  setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
 }
 
 const LinkIcon = () => {
@@ -37,7 +38,7 @@ const LinkIcon = () => {
 //   return "bg-default";
 // };
 
-const MainNavbar: React.FC<NavbarProps> = ({ uploads }) => {
+const MainNavbar: React.FC<NavbarProps> = ({ uploads, setUploadWays }) => {
   const {
     loggedIn,
     osmUser,
@@ -49,6 +50,7 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploads }) => {
 
   const handleUpload = (uploads: OsmWay[]) => {
     uploadChanges(uploads);
+    setUploadWays([]);
   };
 
   return (

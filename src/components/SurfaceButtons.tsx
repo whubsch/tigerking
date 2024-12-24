@@ -27,27 +27,17 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
         tooltip="The surface of the roadway."
       />
       <ButtonGroup variant="bordered" className="w-full" size="lg">
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setSurfaceKeys("asphalt")}
-          variant={surfaceKeys === "asphalt" ? "solid" : "bordered"}
-        >
-          asphalt
-        </Button>
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setSurfaceKeys("compacted")}
-          variant={surfaceKeys === "compacted" ? "solid" : "bordered"}
-        >
-          compacted
-        </Button>
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setSurfaceKeys("concrete")}
-          variant={surfaceKeys === "concrete" ? "solid" : "bordered"}
-        >
-          concrete
-        </Button>
+        {commonSurfaces.map((surface) => (
+          <Button
+            key={surface}
+            className="flex-1 border-1"
+            onPress={() => setSurfaceKeys(surface)}
+            variant={surfaceKeys === surface ? "solid" : "bordered"}
+          >
+            {surface}
+          </Button>
+        ))}
+
         <Dropdown>
           <DropdownTrigger>
             <Button
