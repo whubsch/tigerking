@@ -8,7 +8,6 @@ export const auth = osmAuth({
   client_id: "o8woB8nXRF1IbN4Bjwjc5EoSVWQiabhCDjqPyl4xUSk",
   redirect_uri: window.location.origin + window.location.pathname,
   scope: "read_prefs write_api",
-  persistToken: true,
   auto: true,
   singlepage: true,
 });
@@ -21,7 +20,6 @@ export const handleOAuthCallback = async () => {
   if (code && state) {
     console.log("Handling OAuth callback", { code, state });
     try {
-      // await auth.bootstrapToken(code);
       const user = await fetchOsmUser();
       return user;
     } catch (error) {

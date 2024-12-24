@@ -13,6 +13,9 @@ export const uploadChanges = async (ways: OsmWay[]) => {
     .ele("tag")
     .att("k", "created_by")
     .att("v", "TIGER King " + version)
+    .ele("tag")
+    .att("k", "host")
+    .att("v", window.location.host)
     .up()
     .ele("tag")
     .att("k", "comment")
@@ -36,9 +39,8 @@ export const uploadChanges = async (ways: OsmWay[]) => {
     method: "POST",
     path: `/api/0.6/changeset/${changesetId}/upload`,
     options: { header: { "Content-Type": "text/xml; charset=utf-8" } },
-    body: xmlWays,
+    content: xmlWays,
   });
-  // with body: Parser context not created.
   // with content: Version mismatch: Provided 4, server had: 3 of Way 21457547
 
   authFetch({

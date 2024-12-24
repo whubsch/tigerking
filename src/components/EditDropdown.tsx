@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownItem,
   ButtonGroup,
+  Link,
 } from "@nextui-org/react";
 import edit from "../assets/edit.svg";
 
@@ -27,7 +28,7 @@ export const EditorLinks: React.FC<EditorLinksProps> = ({
     {
       key: "id",
       label: "iD",
-      url: `https://www.openstreetmap.org/edit?editor=id&${elementType}=w${elementId}`,
+      url: `https://www.openstreetmap.org/edit?editor=id&${elementType}=${elementId}`,
     },
     {
       key: "rapid",
@@ -43,10 +44,16 @@ export const EditorLinks: React.FC<EditorLinksProps> = ({
 
   return (
     <ButtonGroup size="sm">
-      <Button
-        href={`https://www.openstreetmap.org/${elementType}/${elementId}`}
-        target="_blank"
-      >{`${elementType.charAt(0)}${elementId}`}</Button>
+      <Button>
+        <Link
+          href={`https://www.openstreetmap.org/${elementType.toLowerCase()}/${elementId}`}
+          target="_blank"
+          className="text-sm text-current"
+        >
+          {`${elementType.charAt(0)}${elementId}`}
+        </Link>
+      </Button>
+
       <Dropdown>
         <DropdownTrigger>
           <Button isIconOnly>

@@ -9,7 +9,7 @@ export const osmXmlBuilder = {
   wayToXml(
     way: OsmWay,
     changeset: number,
-    incrementVersion = true,
+    incrementVersion = false,
     cutTiger = true,
   ): XMLBuilder {
     const doc = create({ version: "1.0", encoding: "UTF-8" }).ele("way", {
@@ -37,11 +37,12 @@ export const osmXmlBuilder = {
   createChangeSet(ways: OsmWay[], changeset: number): string {
     const doc = create({ version: "1.0", encoding: "UTF-8" }).ele("osmChange", {
       version: "0.6",
+      generator: "tigerking",
     });
 
     // Iterate through ways
     ways.forEach((way) => {
-      const wayElement = this.wayToXml(way, changeset, true, true);
+      const wayElement = this.wayToXml(way, changeset, false, true);
       doc.ele("modify").import(wayElement); // Import the way element into the modify element
     });
 
