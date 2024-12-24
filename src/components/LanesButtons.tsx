@@ -11,40 +11,36 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
   lanesKeys,
   setLanesKeys,
 }) => {
+  const commonLanesKeys = ["none", "2", "4"];
   return (
     <div className="w-full">
       <TagButtonHeading
         header="lanes"
         tooltip="The number of lanes on the road as indicated by painted strips."
       />
-      <ButtonGroup variant="bordered" className="w-full" size="lg">
+      <ButtonGroup
+        variant="bordered"
+        className="flex flex-wrap w-full"
+        size="md"
+      >
+        {commonLanesKeys.map((lanes) => {
+          return (
+            <Button
+              key={lanes}
+              className="flex-1 border-1"
+              onPress={() => setLanesKeys(lanes)}
+              variant={lanesKeys === lanes ? "solid" : "bordered"}
+            >
+              {lanes}
+            </Button>
+          );
+        })}
         <Button
           className="flex-1 border-1"
-          onPress={() => setLanesKeys("none")}
-          variant={lanesKeys === "none" ? "solid" : "bordered"}
+          onPress={() => setLanesKeys("odd")}
+          variant={lanesKeys === "odd" ? "solid" : "bordered"}
         >
-          None
-        </Button>
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setLanesKeys("2")}
-          variant={lanesKeys === "2" ? "solid" : "bordered"}
-        >
-          2
-        </Button>
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setLanesKeys("4")}
-          variant={lanesKeys === "4" ? "solid" : "bordered"}
-        >
-          4
-        </Button>
-        <Button
-          className="flex-1 border-1"
-          onPress={() => setLanesKeys("other")}
-          variant={lanesKeys === "other" ? "solid" : "bordered"}
-        >
-          Other
+          Odd
         </Button>
       </ButtonGroup>
     </div>

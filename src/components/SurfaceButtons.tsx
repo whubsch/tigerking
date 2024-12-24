@@ -26,7 +26,11 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
         header="surface"
         tooltip="The surface of the roadway."
       />
-      <ButtonGroup variant="bordered" className="w-full" size="lg">
+      <ButtonGroup
+        variant="bordered"
+        className="flex flex-wrap w-full"
+        size="md"
+      >
         {commonSurfaces.map((surface) => (
           <Button
             key={surface}

@@ -88,7 +88,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({ relationId }) => {
   return (
     <>
       <CardHeading name={tags.name} id={relationId} type={"relation"} />
-      <TagSelection tags={tags} onTagClick={handleTagClick} />
+      <TagSelection tags={tags} onTagClick={handleTagClick} scroll={false} />
     </>
   );
 };

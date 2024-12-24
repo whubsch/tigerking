@@ -101,11 +101,11 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <MainNavbar uploads={uploadWays} setUploadWays={setUploadWays} />
-      <div className="flex flex-col md:flex-row flex-1 bg-background">
+      <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         {/* Left Pane */}
-        <div className="flex flex-col w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
+        <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
           {loading ? (
             <div>Loading authentication state...</div>
           ) : (
@@ -121,7 +121,7 @@ const App: React.FC = () => {
               )}
             </div>
           )}
-          <Card className="rounded-lg shadow p-4 gap-2 flex flex-col grow">
+          <Card className="rounded-lg shadow p-4 gap-2 flex flex-col md:grow">
             {overpassWays && overpassWays.length > 0 ? (
               <div>
                 <div>
@@ -204,9 +204,10 @@ const App: React.FC = () => {
             )}
           </Card>
         </div>
-
         {/* Right Pane */}
-        <div className="flex-1 p-4 h-[50vh] md:h-auto">{memoizedMap}</div>
+        <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">
+          {memoizedMap}
+        </div>
       </div>
     </div>
   );

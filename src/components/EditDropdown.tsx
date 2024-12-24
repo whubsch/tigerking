@@ -57,7 +57,10 @@ export const EditorLinks: React.FC<EditorLinksProps> = ({
       <Dropdown>
         <DropdownTrigger>
           <Button isIconOnly>
-            <img src={edit} className="h-4 w-4" />
+            <img
+              src={edit}
+              className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
+            />
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="OSM Editor Links">

@@ -12,7 +12,7 @@ const WayHeading: React.FC<WayHeadingProps> = ({ tags, wayId }) => {
   return (
     <div className="gap-2">
       <CardHeading name={tags.name ? tags.name : ""} id={wayId} type={"way"} />
-      <TagSelection tags={tags} />
+      <TagSelection tags={tags} scroll={true} />
     </div>
   );
 };

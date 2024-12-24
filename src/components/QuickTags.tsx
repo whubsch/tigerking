@@ -14,8 +14,6 @@ const QuickTags: React.FC<QuickTagsProps> = ({
   onSurfaceChange,
   onLanesChange,
 }) => {
-  console.log(surfaceKeys, lanesKeys);
-
   // Define the quick tags data
   const quickTagsData = useMemo(
     () => [
@@ -77,8 +75,10 @@ const QuickTags: React.FC<QuickTagsProps> = ({
           isPressable
           onPress={() => handleCardPress(tag.surface, tag.lanes)}
         >
-          <div className="flex gap-2 text-sm text-left">
-            <Kbd>{tag.keyboardShortcut}</Kbd>
+          <div className="flex flex-col gap-2 text-sm text-left">
+            <div>
+              <Kbd>{tag.keyboardShortcut}</Kbd>
+            </div>
             <span>surface={tag.surface}</span>
             <span>lanes={tag.lanes}</span>
           </div>

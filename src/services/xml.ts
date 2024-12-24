@@ -25,7 +25,13 @@ export const osmXmlBuilder = {
 
     // Add tags
     Object.entries(way.tags).forEach(([key, value]) => {
-      if (value && (!cutTiger || !key.startsWith("tiger:"))) {
+      if (
+        value &&
+        // remove tiger:* tags except for tiger:reviewed if fixme:tigerking
+        (!cutTiger ||
+          !key.startsWith("tiger:") ||
+          (key === "tiger:reviewed" && way.tags["fixme:tigerking"]))
+      ) {
         // Only add tag if value exists
         doc.ele("tag", { k: key, v: value });
       }

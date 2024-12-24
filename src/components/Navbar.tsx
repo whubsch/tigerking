@@ -66,7 +66,11 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploads, setUploadWays }) => {
             <Button
               variant="flat"
               startContent={
-                <img src={upload} alt="upload" className={"w-6 h-6"} />
+                <img
+                  src={upload}
+                  alt="upload"
+                  className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+                />
               }
               onPress={() => handleUpload(uploads)}
             >
@@ -75,7 +79,11 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploads, setUploadWays }) => {
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly>
-                  <img src={menu} alt="menu" className="w-6 h-6" />
+                  <img
+                    src={menu}
+                    alt="menu"
+                    className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+                  />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Navigation menu">
