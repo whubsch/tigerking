@@ -18,7 +18,6 @@ import RelationForm from "./components/RelationForm";
 import MainNavbar from "./components/Navbar";
 import RelationTags from "./components/RelationHeading";
 import QuickTags from "./components/QuickTags";
-import { osmXmlBuilder } from "./services/xml";
 
 import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
