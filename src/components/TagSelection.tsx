@@ -1,5 +1,6 @@
 import React from "react";
 import { Chip, Link } from "@nextui-org/react";
+import cancel from "../assets/cancel.svg";
 
 interface TagSelectionProps {
   tags: Record<string, string | undefined>;
@@ -55,12 +56,21 @@ const TagSelection: React.FC<TagSelectionProps> = ({
       <Chip
         key={key}
         variant={key.startsWith("tiger") ? "bordered" : "solid"}
+        endContent={
+          key.startsWith("tiger") ? (
+            <img src={cancel} className="h-4 w-4" />
+          ) : null
+        }
         className="max-w-full cursor-pointer"
         onClick={() => onTagClick?.(key, value)}
       >
         <span className="font-semibold">{key}</span>
-        <span className="mx-1">=</span>
-        <span className="text-default-600">{value}</span>
+        {!key.startsWith("tiger") ? (
+          <>
+            <span className="mx-1">=</span>
+            <span className="text-default-600">{value}</span>
+          </>
+        ) : null}
       </Chip>
     );
 

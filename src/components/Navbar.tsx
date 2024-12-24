@@ -11,33 +11,46 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
+import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";
 import upload from "../assets/upload.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
 import UserCard from "./UserCard";
+import { uploadChanges } from "../services/upload";
 
 interface NavbarProps {
-  uploadCount: number;
+  uploads: OsmWay[];
 }
 
 const LinkIcon = () => {
   return <img src={link} alt="link" className="w-6 h-6" />;
 };
 
-const getButtonColor = (count: number) => {
-  if (count >= 180) return "bg-red-600";
-  if (count >= 150) return "bg-red-500";
-  if (count >= 120) return "bg-red-400";
-  if (count >= 90) return "bg-red-300";
-  if (count >= 60) return "bg-orange-400";
-  if (count >= 30) return "bg-orange-300";
-  return "bg-default";
-};
+// const getButtonColor = (count: number) => {
+//   if (count >= 180) return "bg-red-600";
+//   if (count >= 150) return "bg-red-500";
+//   if (count >= 120) return "bg-red-400";
+//   if (count >= 90) return "bg-red-300";
+//   if (count >= 60) return "bg-orange-400";
+//   if (count >= 30) return "bg-orange-300";
+//   return "bg-default";
+// };
 
-const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
-  const { loggedIn, osmUser, userImage, handleLogin, handleLogout } =
-    useOsmAuthContext();
+const MainNavbar: React.FC<NavbarProps> = ({ uploads }) => {
+  const {
+    loggedIn,
+    osmUser,
+    userImage,
+    changesetCount,
+    handleLogin,
+    handleLogout,
+  } = useOsmAuthContext();
+
+  const handleUpload = (uploads: OsmWay[]) => {
+    uploadChanges(uploads);
+  };
+
   return (
     <Navbar maxWidth="full" position="static" className="shadow">
       <NavbarBrand className="gap-4">
@@ -51,14 +64,11 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
             <Button
               variant="flat"
               startContent={
-                <img
-                  src={upload}
-                  alt="upload"
-                  className={`w-6 h-6 ${getButtonColor(uploadCount)}`}
-                />
+                <img src={upload} alt="upload" className={"w-6 h-6"} />
               }
+              onPress={() => handleUpload(uploads)}
             >
-              <Chip>{uploadCount}</Chip>
+              <Chip>{uploads ? uploads.length : 0}</Chip>
             </Button>
             <Dropdown>
               <DropdownTrigger>
@@ -72,7 +82,11 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
                   target="_blank"
                   href={`https://www.openstreetmap.org/user/${osmUser}`}
                 >
-                  <UserCard name={osmUser} imageUrl={userImage} changes={0} />
+                  <UserCard
+                    name={osmUser}
+                    imageUrl={userImage}
+                    changes={changesetCount}
+                  />
                 </DropdownItem>
                 <DropdownItem
                   key="tiger_map"
@@ -103,7 +117,7 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploadCount }) => {
           </>
         ) : (
           <Button color="primary" variant="solid" onPress={handleLogin}>
-            Login with OpenStreetMap
+            Login
           </Button>
         )}
       </NavbarContent>

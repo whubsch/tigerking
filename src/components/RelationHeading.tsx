@@ -58,7 +58,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({ relationId }) => {
     return (
       <Card className="p-4">
         <div className="flex justify-center items-center">
-          <Spinner label="Loading tags..." />
+          <Spinner label="Loading area tags..." />
         </div>
       </Card>
     );

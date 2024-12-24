@@ -74,6 +74,7 @@ export const OsmAuthProvider = ({
     loggedIn: !!osmUser,
     osmUser: osmUser?.name || "",
     userImage: osmUser?.imageUrl || "",
+    changesetCount: osmUser?.changesetCount || 0,
     loading,
     handleLogin,
     handleLogout,

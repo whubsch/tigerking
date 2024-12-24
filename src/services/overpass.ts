@@ -20,7 +20,7 @@ export const overpassService = {
       [out:json][maxsize:1048576]; // limit response size to 100 MB
       rel(${relationId});
       map_to_area->.hood;
-      (way(area.hood)[highway][name]["tiger:reviewed"=no][!surface];);
+      (way(area.hood)[highway][name]["tiger:reviewed"=no][!surface][!"fixme:tigerking"];);
       out meta geom;
     `;
 

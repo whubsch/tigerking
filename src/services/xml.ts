@@ -48,6 +48,6 @@ export const osmXmlBuilder = {
     // Go back to root and end the document
     return doc
       .up() // Go back to osmChange
-      .end({ prettyPrint: true });
+      .end({ prettyPrint: true, headless: true });
   },
 };

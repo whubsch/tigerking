@@ -43,7 +43,7 @@ export const checkAuthState = () => {
   return !!token;
 };
 
-const authFetch = async (options: OsmXhrOptions) =>
+export const authFetch = async (options: OsmXhrOptions) =>
   new Promise<any>((resolve, reject) => {
     auth.xhr(options, (err: Error, details: any) => {
       if (err) {
@@ -57,6 +57,7 @@ const authFetch = async (options: OsmXhrOptions) =>
 export type OsmUser = {
   name: string;
   imageUrl: string;
+  changesetCount: number;
 };
 
 export const fetchOsmUser = async (): Promise<OsmUser> => {
@@ -70,6 +71,7 @@ export const fetchOsmUser = async (): Promise<OsmUser> => {
     imageUrl:
       details.img?.href ??
       `https://www.gravatar.com/avatar/${details.id}?s=24&d=robohash`,
+    changesetCount: details.changesets?.count ?? -1,
   };
 };
 

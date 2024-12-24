@@ -27,4 +27,6 @@ export interface OsmXhrOptions {
   path: string;
   headers?: Record<string, string>;
   content?: string;
+  body?: string;
+  options?: object;
 }

@@ -5,7 +5,7 @@ import { Tags } from "../objects";
 
 interface WayHeadingProps {
   tags: Tags;
-  wayId: string | number;
+  wayId: string;
 }
 
 const WayHeading: React.FC<WayHeadingProps> = ({ tags, wayId }) => {

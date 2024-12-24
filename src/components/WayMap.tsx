@@ -35,7 +35,8 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
             type: "raster",
             // tiles: ,
             tiles:
-              window.location.hostname !== "localhost"
+              window.location.hostname !== "localhost" &&
+              window.location.hostname !== "127.0.0.1"
                 ? [
                     "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                   ]
