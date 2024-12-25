@@ -1,13 +1,24 @@
 import React from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button,
+} from "@nextui-org/react";
 
 interface FinishedModalProps {
   ways: number;
+  onClose: () => void; // Add this prop
 }
 
-const FinishedModal: React.FC<FinishedModalProps> = ({ ways }) => {
+const FinishedModal: React.FC<FinishedModalProps> = ({ ways, onClose }) => {
   return (
-    <Modal isOpen={true}>
+    <Modal
+      isOpen={true}
+      onClose={onClose} // Add this prop
+      isDismissable={true} // Allows closing by clicking outside
+    >
       <ModalContent>
         <ModalHeader>Area completed</ModalHeader>
         <ModalBody>
@@ -15,6 +26,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({ ways }) => {
           <p>
             You've cleared the area of {ways} ways! Time to upload your changes.
           </p>
+          <Button onClick={onClose}>Close</Button>
         </ModalBody>
       </ModalContent>
     </Modal>

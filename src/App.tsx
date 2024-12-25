@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Button,
   Card,
@@ -6,6 +6,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Divider,
 } from "@nextui-org/react";
 // import Location from "./components/Location";
 import WayHeading from "./components/WayHeading";
@@ -35,14 +36,45 @@ const App: React.FC = () => {
   const [location, setLocation] = useState<string>("");
   const [latestChangeset, setLatestChangeset] = useState<number>(0);
   const [showFinishedModal, setShowFinishedModal] = useState(false);
-  const { loggedIn, loading } = useOsmAuthContext();
+  const { loading } = useOsmAuthContext();
+
+  // Add this useEffect
+  useEffect(() => {
+    if (overpassWays.length > 0 && overpassWays[currentWay]) {
+      const currentWayTags = overpassWays[currentWay].tags;
+
+      // Set surface if it exists
+      if (currentWayTags.surface) {
+        setSurfaceKeys(currentWayTags.surface);
+      } else {
+        setSurfaceKeys("");
+      }
+
+      // Set lanes if it exists
+      if (currentWayTags.lanes) {
+        setLanesKeys(currentWayTags.lanes);
+      } else if (currentWayTags.lane_markings === "no") {
+        setLanesKeys("none");
+      } else {
+        setLanesKeys("");
+      }
+    }
+  }, [currentWay, overpassWays]);
+
+  const handleEnd = () => {
+    if (currentWay < overpassWays.length - 1) {
+      setCurrentWay(currentWay + 1);
+    } else {
+      setShowFinishedModal(true);
+    }
+  };
 
   const handleSkip = () => {
     setLanesKeys("");
     setSurfaceKeys("");
-    setCurrentWay(currentWay + 1);
 
     console.log("Skip clicked");
+    handleEnd();
   };
 
   const handleFix = (message: string) => {
@@ -54,7 +86,7 @@ const App: React.FC = () => {
 
     setLanesKeys("");
     setSurfaceKeys("");
-    setCurrentWay(currentWay + 1);
+    handleEnd();
   };
 
   const handleSubmit = () => {
@@ -69,11 +101,7 @@ const App: React.FC = () => {
 
     setLanesKeys("");
     setSurfaceKeys("");
-    if (currentWay < overpassWays.length - 1) {
-      setCurrentWay(currentWay + 1);
-    } else {
-      setShowFinishedModal(true);
-    }
+    handleEnd();
   };
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
@@ -112,7 +140,12 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col md:h-screen">
       <ChangesetModal latestChangeset={latestChangeset} />
-      {showFinishedModal && <FinishedModal ways={overpassWays.length} />}
+      {showFinishedModal && (
+        <FinishedModal
+          ways={overpassWays.length}
+          onClose={() => setShowFinishedModal(false)}
+        />
+      )}
       <MainNavbar
         uploads={uploadWays}
         setUploadWays={setUploadWays}
@@ -140,6 +173,14 @@ const App: React.FC = () => {
               )}
             </div>
           )}
+          {overpassWays && overpassWays.length > 0 && (
+            <div className="relative">
+              <Divider className="my-4" />
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background px-2">
+                {currentWay + 1} of {overpassWays.length}
+              </div>
+            </div>
+          )}
           <Card className="rounded-lg shadow p-4 gap-2 flex flex-col md:grow">
             {overpassWays && overpassWays.length > 0 ? (
               <div>
@@ -162,62 +203,50 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  {loading ? (
-                    <div>Loading...</div>
-                  ) : loggedIn ? (
-                    <>
-                      <QuickTags
-                        surfaceKeys={surfaceKeys}
-                        lanesKeys={lanesKeys}
-                        onSurfaceChange={setSurfaceKeys}
-                        onLanesChange={setLanesKeys}
-                      />
-                      <div className="flex gap-2 w-full mt-4">
-                        <Button
-                          color="default"
-                          size="md"
-                          className="flex-1"
-                          onPress={handleSkip}
-                        >
-                          Skip
+                  <QuickTags
+                    surfaceKeys={surfaceKeys}
+                    lanesKeys={lanesKeys}
+                    onSurfaceChange={setSurfaceKeys}
+                    onLanesChange={setLanesKeys}
+                  />
+                  <div className="flex gap-2 w-full mt-4">
+                    <Button
+                      color="default"
+                      size="md"
+                      className="flex-1"
+                      onPress={handleSkip}
+                    >
+                      Skip
+                    </Button>
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <Button color="default" size="md" className="flex-1">
+                          Fix
                         </Button>
-                        <Dropdown>
-                          <DropdownTrigger>
-                            <Button
-                              color="default"
-                              size="md"
-                              className="flex-1"
-                            >
-                              Fix
-                            </Button>
-                          </DropdownTrigger>
-                          <DropdownMenu
-                            aria-label="Fix options"
-                            onAction={(label) =>
-                              handleFix(label.toString().toLowerCase())
-                            }
-                          >
-                            {fixOptions.map((option) => (
-                              <DropdownItem key={option.key}>
-                                {option.label}
-                              </DropdownItem>
-                            ))}
-                          </DropdownMenu>
-                        </Dropdown>
-                        <Button
-                          color="primary"
-                          size="md"
-                          className="flex-1"
-                          onPress={handleSubmit}
-                          isDisabled={!surfaceKeys || !lanesKeys}
-                        >
-                          Submit
-                        </Button>
-                      </div>
-                    </>
-                  ) : (
-                    <p>Please log in to submit changes.</p>
-                  )}
+                      </DropdownTrigger>
+                      <DropdownMenu
+                        aria-label="Fix options"
+                        onAction={(label) =>
+                          handleFix(label.toString().toLowerCase())
+                        }
+                      >
+                        {fixOptions.map((option) => (
+                          <DropdownItem key={option.key}>
+                            {option.label}
+                          </DropdownItem>
+                        ))}
+                      </DropdownMenu>
+                    </Dropdown>
+                    <Button
+                      color="primary"
+                      size="md"
+                      className="flex-1"
+                      onPress={handleSubmit}
+                      isDisabled={!surfaceKeys || !lanesKeys}
+                    >
+                      Submit
+                    </Button>
+                  </div>
                 </div>
               </div>
             ) : (

@@ -73,6 +73,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
           <>
             <Button
               variant="flat"
+              isDisabled={uploads.length === 0}
               startContent={
                 <img
                   src={upload}
