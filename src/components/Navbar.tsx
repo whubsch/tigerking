@@ -22,6 +22,7 @@ import { uploadChanges } from "../services/upload";
 interface NavbarProps {
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
+  location: string;
 }
 
 const LinkIcon = () => {
@@ -38,7 +39,11 @@ const LinkIcon = () => {
 //   return "bg-default";
 // };
 
-const MainNavbar: React.FC<NavbarProps> = ({ uploads, setUploadWays }) => {
+const MainNavbar: React.FC<NavbarProps> = ({
+  uploads,
+  setUploadWays,
+  location,
+}) => {
   const {
     loggedIn,
     osmUser,
@@ -49,7 +54,7 @@ const MainNavbar: React.FC<NavbarProps> = ({ uploads, setUploadWays }) => {
   } = useOsmAuthContext();
 
   const handleUpload = (uploads: OsmWay[]) => {
-    uploadChanges(uploads);
+    uploadChanges(uploads, location);
     setUploadWays([]);
   };
 

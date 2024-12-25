@@ -11,9 +11,13 @@ interface RelationDetails {
 
 interface RelationTagsProps {
   relationId: string;
+  setRelationName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const RelationTags: React.FC<RelationTagsProps> = ({ relationId }) => {
+const RelationTags: React.FC<RelationTagsProps> = ({
+  relationId,
+  setRelationName,
+}) => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +43,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({ relationId }) => {
 
         if (relationData && relationData.tags) {
           setTags(relationData.tags);
+          setRelationName(relationData.tags.name);
         } else {
           setError("No tags found for this relation");
         }

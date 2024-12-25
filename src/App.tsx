@@ -30,6 +30,7 @@ const App: React.FC = () => {
   const [currentWay, setCurrentWay] = useState<number>(0);
   const [showRelationHeading, setShowRelationHeading] = useState(false);
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]);
+  const [location, setLocation] = useState<string>("");
   const { loggedIn, loading } = useOsmAuthContext();
 
   const handleSkip = () => {
@@ -101,8 +102,12 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col">
-      <MainNavbar uploads={uploadWays} setUploadWays={setUploadWays} />
+    <div className="flex flex-col md:h-screen">
+      <MainNavbar
+        uploads={uploadWays}
+        setUploadWays={setUploadWays}
+        location={location}
+      />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         {/* Left Pane */}
         <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
@@ -111,7 +116,10 @@ const App: React.FC = () => {
           ) : (
             <div className="p-4">
               {relationId && showRelationHeading ? (
-                <RelationTags relationId={relationId} />
+                <RelationTags
+                  relationId={relationId}
+                  setRelationName={setLocation}
+                />
               ) : (
                 <RelationForm
                   relationId={relationId}
