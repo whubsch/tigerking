@@ -6,10 +6,6 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
 } from "@nextui-org/react";
 // import Location from "./components/Location";
 import WayHeading from "./components/WayHeading";
@@ -25,6 +21,8 @@ import QuickTags from "./components/QuickTags";
 
 import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
+import ChangesetModal from "./components/ChangesetModal";
+import FinishedModal from "./components/FinishedModal";
 
 const App: React.FC = () => {
   const [surfaceKeys, setSurfaceKeys] = useState<string>("");
@@ -36,6 +34,7 @@ const App: React.FC = () => {
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]);
   const [location, setLocation] = useState<string>("");
   const [latestChangeset, setLatestChangeset] = useState<number>(0);
+  const [showFinishedModal, setShowFinishedModal] = useState(false);
   const { loggedIn, loading } = useOsmAuthContext();
 
   const handleSkip = () => {
@@ -70,7 +69,11 @@ const App: React.FC = () => {
 
     setLanesKeys("");
     setSurfaceKeys("");
-    setCurrentWay(currentWay + 1);
+    if (currentWay < overpassWays.length - 1) {
+      setCurrentWay(currentWay + 1);
+    } else {
+      setShowFinishedModal(true);
+    }
   };
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
@@ -108,14 +111,8 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:h-screen">
-      <Modal isOpen={latestChangeset !== 0}>
-        <ModalContent>
-          <ModalHeader>Success</ModalHeader>
-          <ModalBody>
-            <p>Changeset ID: {latestChangeset}</p>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ChangesetModal latestChangeset={latestChangeset} />
+      {showFinishedModal && <FinishedModal ways={overpassWays.length} />}
       <MainNavbar
         uploads={uploadWays}
         setUploadWays={setUploadWays}
@@ -196,7 +193,9 @@ const App: React.FC = () => {
                           </DropdownTrigger>
                           <DropdownMenu
                             aria-label="Fix options"
-                            onAction={(key) => handleFix(key as string)}
+                            onAction={(label) =>
+                              handleFix(label.toString().toLowerCase())
+                            }
                           >
                             {fixOptions.map((option) => (
                               <DropdownItem key={option.key}>
