@@ -6,6 +6,10 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
 } from "@nextui-org/react";
 // import Location from "./components/Location";
 import WayHeading from "./components/WayHeading";
@@ -31,6 +35,7 @@ const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
   const [uploadWays, setUploadWays] = useState<OsmWay[]>([]);
   const [location, setLocation] = useState<string>("");
+  const [latestChangeset, setLatestChangeset] = useState<number>(0);
   const { loggedIn, loading } = useOsmAuthContext();
 
   const handleSkip = () => {
@@ -103,10 +108,19 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:h-screen">
+      <Modal isOpen={latestChangeset !== 0}>
+        <ModalContent>
+          <ModalHeader>Success</ModalHeader>
+          <ModalBody>
+            <p>Changeset ID: {latestChangeset}</p>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       <MainNavbar
         uploads={uploadWays}
         setUploadWays={setUploadWays}
         location={location}
+        setChangeset={setLatestChangeset}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         {/* Left Pane */}

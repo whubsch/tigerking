@@ -1,0 +1,14 @@
+{
+  "name": "TIGER King",
+  "description": "A simple web UI to fix imported road data in OpenStreetMap",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "src/assets/tiger.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ interface NavbarProps {
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   location: string;
+  setChangeset: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const LinkIcon = () => {
@@ -43,6 +44,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
   setUploadWays,
   location,
+  setChangeset,
 }) => {
   const {
     loggedIn,
@@ -53,8 +55,9 @@ const MainNavbar: React.FC<NavbarProps> = ({
     handleLogout,
   } = useOsmAuthContext();
 
-  const handleUpload = (uploads: OsmWay[]) => {
-    uploadChanges(uploads, location);
+  const handleUpload = async (uploads: OsmWay[]) => {
+    const changeset = await uploadChanges(uploads, location);
+    setChangeset(changeset);
     setUploadWays([]);
   };
 

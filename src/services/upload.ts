@@ -16,7 +16,13 @@ export const uploadChanges = async (ways: OsmWay[], location: string) => {
     .up()
     .ele("tag")
     .att("k", "host")
-    .att("v", window.location.host + window.location.pathname)
+    .att(
+      "v",
+      window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname,
+    )
     .up()
     .ele("tag")
     .att("k", "comment")
@@ -49,4 +55,5 @@ export const uploadChanges = async (ways: OsmWay[], location: string) => {
     path: `/api/0.6/changeset/${changesetId}/close`,
   });
   console.log(changesetId, diffResult);
+  return changesetId;
 };
