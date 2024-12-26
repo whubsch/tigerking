@@ -24,7 +24,14 @@ export const overpassService = {
       (
         way(area.hood)[highway][name]["tiger:reviewed"=no][!surface][!"fixme:tigerking"];
         way(area.hood)[highway][name]["tiger:reviewed"=no][!lanes][!"fixme:tigerking"];
-      );
+      )->.tigers;
+
+      (
+        way(area.hood)[highway=service];
+      )->.drives;
+
+      ((.tigers; - .drives;); >; )->.all;
+      way.all->._;
 
       out meta geom;
     `;

@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Divider,
+  Spinner,
 } from "@nextui-org/react";
 // import Location from "./components/Location";
 import WayHeading from "./components/WayHeading";
@@ -37,6 +38,7 @@ const App: React.FC = () => {
   const [location, setLocation] = useState<string>("");
   const [latestChangeset, setLatestChangeset] = useState<number>(0);
   const [showFinishedModal, setShowFinishedModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { loading } = useOsmAuthContext();
 
   // Add this useEffect
@@ -108,6 +110,7 @@ const App: React.FC = () => {
   const handleRelationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowRelationHeading(true);
+    setIsLoading(true); // Set loading to true when starting the fetch
 
     try {
       const ways = await overpassService.fetchWaysInRelation(relationId);
@@ -117,6 +120,8 @@ const App: React.FC = () => {
     } catch (error) {
       console.error("Error fetching OSM data:", error);
       // Handle error in UI (maybe set an error state)
+    } finally {
+      setIsLoading(false); // Set loading to false when done
     }
   };
 
@@ -254,6 +259,10 @@ const App: React.FC = () => {
                     </Button>
                   </div>
                 </div>
+              </div>
+            ) : isLoading ? (
+              <div className="flex justify-center items-center mt-4">
+                <Spinner label="Loading ways..." color="primary" />
               </div>
             ) : (
               <p>Enter a relation ID to get started.</p>

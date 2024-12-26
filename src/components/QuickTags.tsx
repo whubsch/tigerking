@@ -76,7 +76,7 @@ const QuickTags: React.FC<QuickTagsProps> = ({
           onPress={() => handleCardPress(tag.surface, tag.lanes)}
         >
           <div className="flex flex-col gap-2 text-sm text-left">
-            <div>
+            <div className="hidden md:block">
               <Kbd>{tag.keyboardShortcut}</Kbd>
             </div>
             <span>surface={tag.surface}</span>

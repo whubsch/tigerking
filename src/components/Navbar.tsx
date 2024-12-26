@@ -16,6 +16,7 @@ import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
 import UserCard from "./UserCard";
 import UploadButton from "./UploadButton";
+import packageJson from "../../package.json";
 
 interface NavbarProps {
   uploads: OsmWay[];
@@ -53,6 +54,23 @@ const MainNavbar: React.FC<NavbarProps> = ({
     handleLogout,
   } = useOsmAuthContext();
 
+  const dropdownItems = [
+    {
+      key: "github",
+      href: "https://github.com/whubsch/tigerking",
+      label: "GitHub",
+    },
+    {
+      key: "tiger_map",
+      href: "https://watmildon.github.io/TIGERMap/",
+      label: "TIGER Map",
+    },
+    {
+      key: "openstreetmap",
+      href: "https://openstreetmap.org",
+      label: "OpenStreetMap",
+    },
+  ];
   return (
     <Navbar maxWidth="full" position="static" className="shadow">
       <NavbarBrand className="gap-4">
@@ -91,22 +109,18 @@ const MainNavbar: React.FC<NavbarProps> = ({
                     changes={changesetCount}
                   />
                 </DropdownItem>
-                <DropdownItem
-                  key="tiger_map"
-                  href="https://watmildon.github.io/TIGERMap/"
-                  target="_blank"
-                  endContent={<LinkIcon />}
-                >
-                  TIGER Map
-                </DropdownItem>
-                <DropdownItem
-                  key="openstreetmap"
-                  href="https://openstreetmap.org"
-                  target="_blank"
-                  endContent={<LinkIcon />}
-                >
-                  OpenStreetMap
-                </DropdownItem>
+                <>
+                  {dropdownItems.map((item) => (
+                    <DropdownItem
+                      key={item.key}
+                      href={item.href}
+                      target="_blank"
+                      endContent={<LinkIcon />}
+                    >
+                      {item.label}
+                    </DropdownItem>
+                  ))}
+                </>
                 <DropdownItem
                   key="logout"
                   className="text-danger"
@@ -114,6 +128,9 @@ const MainNavbar: React.FC<NavbarProps> = ({
                   onPress={handleLogout}
                 >
                   Log Out
+                </DropdownItem>
+                <DropdownItem key="version" className="text-sm text-gray-500">
+                  version {packageJson.version}
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
