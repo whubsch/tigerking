@@ -4,7 +4,6 @@ import {
   NavbarContent,
   NavbarBrand,
   Button,
-  Chip,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
@@ -13,11 +12,10 @@ import {
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";
-import upload from "../assets/upload.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
 import UserCard from "./UserCard";
-import { uploadChanges } from "../services/upload";
+import UploadButton from "./UploadButton";
 
 interface NavbarProps {
   uploads: OsmWay[];
@@ -55,12 +53,6 @@ const MainNavbar: React.FC<NavbarProps> = ({
     handleLogout,
   } = useOsmAuthContext();
 
-  const handleUpload = async (uploads: OsmWay[]) => {
-    const changeset = await uploadChanges(uploads, location);
-    setChangeset(changeset);
-    setUploadWays([]);
-  };
-
   return (
     <Navbar maxWidth="full" position="static" className="shadow">
       <NavbarBrand className="gap-4">
@@ -71,20 +63,12 @@ const MainNavbar: React.FC<NavbarProps> = ({
       <NavbarContent justify="end">
         {loggedIn ? (
           <>
-            <Button
-              variant="flat"
-              isDisabled={uploads.length === 0}
-              startContent={
-                <img
-                  src={upload}
-                  alt="upload"
-                  className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
-                />
-              }
-              onPress={() => handleUpload(uploads)}
-            >
-              <Chip>{uploads ? uploads.length : 0}</Chip>
-            </Button>
+            <UploadButton
+              uploads={uploads}
+              setUploadWays={setUploadWays}
+              location={location}
+              setChangeset={setChangeset}
+            />
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly>

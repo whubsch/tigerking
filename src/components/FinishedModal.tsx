@@ -6,13 +6,26 @@ import {
   ModalBody,
   Button,
 } from "@nextui-org/react";
+import UploadButton from "./UploadButton";
+import { OsmWay } from "../objects";
 
 interface FinishedModalProps {
   ways: number;
   onClose: () => void; // Add this prop
+  uploads: OsmWay[];
+  setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
+  location: string;
+  setChangeset: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const FinishedModal: React.FC<FinishedModalProps> = ({ ways, onClose }) => {
+const FinishedModal: React.FC<FinishedModalProps> = ({
+  ways,
+  onClose,
+  uploads,
+  setUploadWays,
+  location,
+  setChangeset,
+}) => {
   return (
     <Modal
       isOpen={true}
@@ -26,7 +39,13 @@ const FinishedModal: React.FC<FinishedModalProps> = ({ ways, onClose }) => {
           <p>
             You've cleared the area of {ways} ways! Time to upload your changes.
           </p>
-          <Button onClick={onClose}>Close</Button>
+          <UploadButton
+            uploads={uploads}
+            setUploadWays={setUploadWays}
+            location={location}
+            setChangeset={setChangeset}
+          />
+          <Button onPress={onClose}>Close</Button>
         </ModalBody>
       </ModalContent>
     </Modal>

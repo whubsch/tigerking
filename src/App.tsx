@@ -24,6 +24,7 @@ import "maplibre-gl/dist/maplibre-gl.css"; // MapLibre CSS for styling
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import ChangesetModal from "./components/ChangesetModal";
 import FinishedModal from "./components/FinishedModal";
+import { shuffleArray } from "./services/shuffle";
 
 const App: React.FC = () => {
   const [surfaceKeys, setSurfaceKeys] = useState<string>("");
@@ -110,7 +111,8 @@ const App: React.FC = () => {
 
     try {
       const ways = await overpassService.fetchWaysInRelation(relationId);
-      setOverpassWays(ways);
+      const shuffledWays = shuffleArray(ways);
+      setOverpassWays(shuffledWays);
       console.log("Ways:", ways);
     } catch (error) {
       console.error("Error fetching OSM data:", error);
@@ -144,6 +146,10 @@ const App: React.FC = () => {
         <FinishedModal
           ways={overpassWays.length}
           onClose={() => setShowFinishedModal(false)}
+          uploads={uploadWays}
+          setUploadWays={setUploadWays}
+          location={location}
+          setChangeset={setLatestChangeset}
         />
       )}
       <MainNavbar
