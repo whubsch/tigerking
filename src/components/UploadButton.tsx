@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Chip } from "@nextui-org/react";
 import upload from "../assets/upload.svg";
 import { uploadChanges } from "../services/upload";
@@ -17,22 +17,34 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   location,
   setChangeset,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleUpload = async (uploads: OsmWay[]) => {
-    const changeset = await uploadChanges(uploads, location);
-    setChangeset(changeset);
-    setUploadWays([]);
+    try {
+      setIsLoading(true);
+      const changeset = await uploadChanges(uploads, location);
+      setChangeset(changeset);
+      setUploadWays([]);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Button
       variant="flat"
-      isDisabled={uploads.length === 0}
+      isDisabled={uploads.length === 0 || isLoading}
+      isLoading={isLoading}
       startContent={
-        <img
-          src={upload}
-          alt="upload"
-          className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
-        />
+        !isLoading && (
+          <img
+            src={upload}
+            alt="upload"
+            className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+          />
+        )
       }
       onPress={() => handleUpload(uploads)}
     >
