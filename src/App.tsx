@@ -72,6 +72,10 @@ const App: React.FC = () => {
     }
   };
 
+  const handleChangesetClose = () => {
+    setLatestChangeset(0);
+  };
+
   const handleSkip = () => {
     setLanesKeys("");
     setSurfaceKeys("");
@@ -146,7 +150,10 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:h-screen">
-      <ChangesetModal latestChangeset={latestChangeset} />
+      <ChangesetModal
+        latestChangeset={latestChangeset}
+        onClose={handleChangesetClose}
+      />
       {showFinishedModal && (
         <FinishedModal
           ways={overpassWays.length}

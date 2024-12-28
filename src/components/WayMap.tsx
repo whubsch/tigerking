@@ -1,6 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Select, SelectItem } from "@nextui-org/react";
+
+const TILE_SOURCES = {
+  esri: {
+    name: "ESRI Clarity",
+    url: "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  },
+  street: {
+    name: "USDA NAIP",
+    url: "https://gis.apfo.usda.gov/arcgis/rest/services/NAIP/USDA_CONUS_PRIME/ImageServer/tile/{z}/{y}/{x}",
+  },
+};
 
 interface WayMapProps {
   coordinates: [number, number][];
@@ -10,6 +22,7 @@ interface WayMapProps {
 const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
+  const [tileSource, setTileSource] = useState(TILE_SOURCES.street.url);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -33,13 +46,10 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
         sources: {
           "raster-tiles": {
             type: "raster",
-            // tiles: ,
             tiles:
               window.location.hostname !== "localhost" &&
               window.location.hostname !== "127.0.0.1"
-                ? [
-                    "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                  ]
+                ? [tileSource]
                 : ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
             tileSize: 256,
             attribution:
@@ -119,10 +129,36 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
     return () => {
       map.current?.remove();
     };
-  }, [coordinates, zoom]);
+  }, [coordinates, zoom, tileSource]);
+
+  const handleTileSourceChange = (sourceUrl: string) => {
+    if (map.current) {
+      const mapSource = map.current.getSource(
+        "raster-tiles",
+      ) as maplibregl.RasterTileSource;
+      mapSource.setTiles([sourceUrl]);
+      setTileSource(sourceUrl);
+    }
+  };
 
   return (
-    <div ref={mapContainer} className="w-full h-full rounded-lg shadow-lg" />
+    <div className="relative w-full h-full">
+      <div className="absolute top-2 left-2 z-10 w-40">
+        <Select
+          size="sm"
+          label="Map Style"
+          defaultSelectedKeys={[tileSource]}
+          onChange={(e) => handleTileSourceChange(e.target.value)}
+        >
+          {Object.values(TILE_SOURCES).map((source) => (
+            <SelectItem key={source.url} value={source.url}>
+              {source.name}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>
+      <div ref={mapContainer} className="w-full h-full rounded-lg shadow-lg" />
+    </div>
   );
 };
 

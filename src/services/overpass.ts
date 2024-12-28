@@ -17,7 +17,7 @@ export const overpassService = {
    */
   async fetchWaysInRelation(relationId: string): Promise<OsmWay[]> {
     const query = `
-      [out:json]; // limit response size to 100 MB
+      [out:json];
       rel(${relationId});
       map_to_area->.hood;
 
@@ -28,6 +28,8 @@ export const overpassService = {
 
       (
         way(area.hood)[highway=service];
+        way(area.hood)[highway=proposed];
+        way(area.hood)[highway=track];
       )->.drives;
 
       ((.tigers; - .drives;); >; )->.all;

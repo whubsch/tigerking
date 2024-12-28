@@ -9,11 +9,15 @@ import {
 
 interface ChangesetModalProps {
   latestChangeset: number;
+  onClose: () => void; // Add this prop
 }
 
-const ChangesetModal: React.FC<ChangesetModalProps> = ({ latestChangeset }) => {
+const ChangesetModal: React.FC<ChangesetModalProps> = ({
+  latestChangeset,
+  onClose,
+}) => {
   return (
-    <Modal isOpen={latestChangeset !== 0}>
+    <Modal isOpen={latestChangeset !== 0} onClose={onClose} closeButton>
       <ModalContent>
         <ModalHeader>Changeset uploaded</ModalHeader>
         <ModalBody>
