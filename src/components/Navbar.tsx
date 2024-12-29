@@ -8,6 +8,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  DropdownSection,
 } from "@nextui-org/react";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
@@ -54,7 +55,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
     handleLogout,
   } = useOsmAuthContext();
 
-  const dropdownItems = [
+  const externalLinks = [
     {
       key: "github",
       href: "https://github.com/whubsch/tigerking",
@@ -98,19 +99,29 @@ const MainNavbar: React.FC<NavbarProps> = ({
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Navigation menu">
-                <DropdownItem
-                  key="user"
-                  target="_blank"
-                  href={`https://www.openstreetmap.org/user/${osmUser}`}
-                >
-                  <UserCard
-                    name={osmUser}
-                    imageUrl={userImage}
-                    changes={changesetCount}
-                  />
-                </DropdownItem>
-                <>
-                  {dropdownItems.map((item) => (
+                <DropdownSection title="Account">
+                  <DropdownItem
+                    key="user"
+                    target="_blank"
+                    href={`https://www.openstreetmap.org/user/${osmUser}`}
+                  >
+                    <UserCard
+                      name={osmUser}
+                      imageUrl={userImage}
+                      changes={changesetCount}
+                    />
+                  </DropdownItem>
+                  <DropdownItem
+                    key="logout"
+                    className="text-danger"
+                    color="danger"
+                    onPress={handleLogout}
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownSection>
+                <DropdownSection title="Links">
+                  {externalLinks.map((item) => (
                     <DropdownItem
                       key={item.key}
                       href={item.href}
@@ -120,16 +131,8 @@ const MainNavbar: React.FC<NavbarProps> = ({
                       {item.label}
                     </DropdownItem>
                   ))}
-                </>
-                <DropdownItem
-                  key="logout"
-                  className="text-danger"
-                  color="danger"
-                  onPress={handleLogout}
-                >
-                  Log Out
-                </DropdownItem>
-                <DropdownItem key="version" className="text-sm text-gray-500">
+                </DropdownSection>
+                <DropdownItem key="version" className="text-sm" isDisabled>
                   version {packageJson.version}
                 </DropdownItem>
               </DropdownMenu>
