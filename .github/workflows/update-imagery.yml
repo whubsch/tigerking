@@ -24,7 +24,7 @@ jobs:
           pip install requests
 
       - name: Run imagery script
-        run: python tigerking/scripts/imagery.py
+        run: python scripts/imagery.py
 
       - name: Commit changes
         run: |
