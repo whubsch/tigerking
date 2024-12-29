@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add src/assets/filtered.geojson
+          git add src/assets/filtered.json
           git commit -m "Automatically update imagery options" || echo "No changes to commit"
           git push
         env:
