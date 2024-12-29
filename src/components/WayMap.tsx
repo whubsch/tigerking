@@ -2,16 +2,38 @@ import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Select, SelectItem } from "@nextui-org/react";
+import imagery_json from "../assets/filtered.json";
 
-const TILE_SOURCES = {
-  esri: {
-    name: "ESRI Clarity",
-    url: "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  },
-  street: {
-    name: "USDA NAIP",
-    url: "https://gis.apfo.usda.gov/arcgis/rest/services/NAIP/USDA_CONUS_PRIME/ImageServer/tile/{z}/{y}/{x}",
-  },
+interface Attribution {
+  text: string;
+  required?: boolean;
+  url?: string;
+}
+
+interface TileSource {
+  name: string;
+  url: string;
+  attribution: Attribution;
+  maxZoom: number;
+}
+
+interface TileSources {
+  [key: string]: TileSource;
+}
+
+const TILE_SOURCES: TileSources = {
+  ...imagery_json.features.reduce((acc, feature) => {
+    const { properties } = feature;
+    return {
+      ...acc,
+      [properties.id]: {
+        name: properties.name,
+        url: properties.url,
+        attribution: properties.attribution,
+        maxZoom: properties.max_zoom,
+      },
+    };
+  }, {}),
 };
 
 interface WayMapProps {
@@ -22,7 +44,9 @@ interface WayMapProps {
 const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const [tileSource, setTileSource] = useState(TILE_SOURCES.street.url);
+  const [tileSource, setTileSource] = useState(
+    "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  );
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -46,14 +70,16 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
         sources: {
           "raster-tiles": {
             type: "raster",
-            tiles:
-              window.location.hostname !== "localhost" &&
-              window.location.hostname !== "127.0.0.1"
-                ? [tileSource]
-                : ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+            tiles: [tileSource],
             tileSize: 256,
             attribution:
-              '<a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a> contributors',
+              Object.values(TILE_SOURCES).find(
+                (source) => source.url === tileSource,
+              )?.attribution?.text || "OpenStreetMap contributors",
+            maxzoom:
+              Object.values(TILE_SOURCES).find(
+                (source) => source.url === tileSource,
+              )?.maxZoom || 22,
           },
         },
         layers: [
@@ -143,10 +169,10 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
 
   return (
     <div className="relative w-full h-full">
-      <div className="absolute top-2 left-2 z-10 w-40">
+      <div className="absolute bottom-2 md:top-2 left-2 z-10 w-40 md:w-72">
         <Select
           size="sm"
-          label="Map Style"
+          label="Imagery"
           defaultSelectedKeys={[tileSource]}
           onChange={(e) => handleTileSourceChange(e.target.value)}
         >
