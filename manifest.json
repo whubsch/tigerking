@@ -8,12 +8,12 @@
   "background_color": "#000000",
   "icons": [
     {
-      "src": "src/assets/tiger_512.png",
+      "src": "/tigerking/icons/tiger_512.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "src/assets/tiger.svg",
+      "src": "/tigerking/icons/tiger.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     }
