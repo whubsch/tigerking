@@ -11,7 +11,7 @@ interface RelationDetails {
 
 interface RelationTagsProps {
   relationId: string;
-  setRelationName: React.Dispatch<React.SetStateAction<string>>;
+  setRelationName: (location: string) => void;
 }
 
 const RelationTags: React.FC<RelationTagsProps> = ({
@@ -57,7 +57,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({
     };
 
     fetchRelationTags();
-  }, [relationId]);
+  }, [relationId, setRelationName]);
 
   if (loading) {
     return (
@@ -93,7 +93,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({
   return (
     <>
       <CardHeading name={tags.name} id={relationId} type={"relation"} />
-      <TagSelection tags={tags} onTagClick={handleTagClick} scroll={false} />
+      <TagSelection tags={tags} onTagClick={handleTagClick} scroll={true} />
     </>
   );
 };

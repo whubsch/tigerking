@@ -10,8 +10,9 @@ import UploadButton from "./UploadButton";
 import { OsmWay } from "../objects";
 
 interface FinishedModalProps {
+  show: boolean;
   ways: number;
-  onClose: () => void; // Add this prop
+  onClose: () => void;
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   location: string;
@@ -19,6 +20,7 @@ interface FinishedModalProps {
 }
 
 const FinishedModal: React.FC<FinishedModalProps> = ({
+  show,
   ways,
   onClose,
   uploads,
@@ -28,24 +30,71 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
 }) => {
   return (
     <Modal
-      isOpen={true}
-      onClose={onClose} // Add this prop
-      isDismissable={true} // Allows closing by clicking outside
+      isOpen={show}
+      onClose={onClose}
+      isDismissable={true}
+      motionProps={{
+        variants: {
+          enter: {
+            y: 0,
+            opacity: 1,
+            transition: {
+              duration: 0.3,
+              ease: "easeOut",
+            },
+          },
+          exit: {
+            y: -20,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: "easeIn",
+            },
+          },
+        },
+      }}
     >
       <ModalContent>
-        <ModalHeader>Area completed</ModalHeader>
-        <ModalBody>
-          <p>Thank you for helping to tame the TIGER!</p>
-          <p>
-            You've cleared the area of {ways} ways! Time to upload your changes.
+        <ModalHeader className="flex flex-col gap-1">
+          <h2 className="text-2xl font-bold text-blue-600">
+            Area Completed! 🎯
+          </h2>
+          <p className="text-sm text-gray-500">
+            You've successfully reviewed all ways in this area
           </p>
-          <UploadButton
-            uploads={uploads}
-            setUploadWays={setUploadWays}
-            location={location}
-            setChangeset={setChangeset}
-          />
-          <Button onPress={onClose}>Close</Button>
+        </ModalHeader>
+
+        <ModalBody className="py-6">
+          <div className="space-y-6">
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <p className="text-center text-lg font-medium text-blue-800">
+                Thank you for helping to tame the TIGER!
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center gap-2">
+              <div className="bg-gray-100 px-6 py-3 rounded-full">
+                <span className="text-2xl font-bold text-gray-700">{ways}</span>
+                <span className="text-gray-600 ml-2">ways cleared</span>
+              </div>
+              <p className="text-center text-gray-600 mt-2">
+                Time to upload your changes and make them permanent!
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <UploadButton
+                uploads={uploads}
+                setUploadWays={setUploadWays}
+                location={location}
+                setChangeset={setChangeset}
+              />
+
+              <Button onPress={onClose} variant="light" className="w-full">
+                Continue Editing
+              </Button>
+            </div>
+          </div>
         </ModalBody>
       </ModalContent>
     </Modal>
