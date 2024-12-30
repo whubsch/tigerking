@@ -4,7 +4,11 @@ import { create } from "xmlbuilder2";
 import { osmXmlBuilder } from "../services/xml";
 import packageJson from "../../package.json";
 
-export const uploadChanges = async (ways: OsmWay[], location: string) => {
+export const uploadChanges = async (
+  ways: OsmWay[],
+  location: string,
+  source: string,
+) => {
   const version = packageJson.version;
 
   const changeset = create()
@@ -13,6 +17,10 @@ export const uploadChanges = async (ways: OsmWay[], location: string) => {
     .ele("tag")
     .att("k", "created_by")
     .att("v", "TIGER King " + version)
+    .up()
+    .ele("tag")
+    .att("k", "source")
+    .att("v", source)
     .up()
     .ele("tag")
     .att("k", "host")

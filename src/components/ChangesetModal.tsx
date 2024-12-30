@@ -7,15 +7,18 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import ChangesetTagTable from "./ChangesetTags";
 
 interface ChangesetModalProps {
   latestChangeset: number;
   onClose: () => void;
+  imagery: string;
 }
 
 const ChangesetModal: React.FC<ChangesetModalProps> = ({
   latestChangeset,
   onClose,
+  imagery,
 }) => {
   return (
     <Modal
@@ -70,6 +73,11 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
                 {latestChangeset}
               </Link>
             </div>
+            <ChangesetTagTable
+              description="test"
+              source={imagery}
+              host="test"
+            />
 
             <div className="flex justify-center pt-4">
               <Button color="primary" variant="light" onPress={onClose}>

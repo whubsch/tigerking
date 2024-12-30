@@ -24,27 +24,19 @@ interface NavbarProps {
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
+  imagery: string;
 }
 
 const LinkIcon = () => {
   return <img src={link} alt="link" className="w-6 h-6" />;
 };
 
-// const getButtonColor = (count: number) => {
-//   if (count >= 180) return "bg-red-600";
-//   if (count >= 150) return "bg-red-500";
-//   if (count >= 120) return "bg-red-400";
-//   if (count >= 90) return "bg-red-300";
-//   if (count >= 60) return "bg-orange-400";
-//   if (count >= 30) return "bg-orange-300";
-//   return "bg-default";
-// };
-
 const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
   setUploadWays,
   location,
   setChangeset,
+  imagery,
 }) => {
   const {
     loggedIn,
@@ -87,6 +79,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
               setUploadWays={setUploadWays}
               location={location}
               setChangeset={setChangeset}
+              imagery={imagery}
             />
             <Dropdown>
               <DropdownTrigger>

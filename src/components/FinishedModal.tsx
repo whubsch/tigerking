@@ -17,6 +17,7 @@ interface FinishedModalProps {
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
+  imagery: string;
 }
 
 const FinishedModal: React.FC<FinishedModalProps> = ({
@@ -27,6 +28,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
   setUploadWays,
   location,
   setChangeset,
+  imagery,
 }) => {
   return (
     <Modal
@@ -88,6 +90,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
                 setUploadWays={setUploadWays}
                 location={location}
                 setChangeset={setChangeset}
+                imagery={imagery}
               />
 
               <Button onPress={onClose} variant="light" className="w-full">

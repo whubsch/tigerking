@@ -9,6 +9,7 @@ interface UploadButtonProps {
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
+  imagery: string;
 }
 
 const UploadButton: React.FC<UploadButtonProps> = ({
@@ -16,13 +17,14 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   setUploadWays,
   location,
   setChangeset,
+  imagery,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpload = async (uploads: OsmWay[]) => {
     try {
       setIsLoading(true);
-      const changeset = await uploadChanges(uploads, location);
+      const changeset = await uploadChanges(uploads, location, imagery);
       setChangeset(changeset);
       setUploadWays([]);
     } catch (error) {

@@ -20,6 +20,7 @@ const App: React.FC = () => {
   const [latestChangeset, setLatestChangeset] = useState<number>(0);
   const [showFinishedModal, setShowFinishedModal] = useState(false);
   const [isRelationLoading, setIsRelationLoading] = useState(false);
+  const [imagery, setImagery] = useState<string>("");
   const { loading } = useOsmAuthContext();
 
   const {
@@ -119,21 +120,24 @@ const App: React.FC = () => {
       <ChangesetModal
         latestChangeset={latestChangeset}
         onClose={() => setLatestChangeset(0)}
+        imagery={imagery}
       />
       <FinishedModal
-        show={showFinishedModal}
+        show={showFinishedModal && !latestChangeset}
         ways={overpassWays.length}
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
         setUploadWays={setUploadWays}
         location={location}
         setChangeset={setLatestChangeset}
+        imagery={imagery}
       />
       <MainNavbar
         uploads={uploadWays}
         setUploadWays={setUploadWays}
         location={location}
         setChangeset={setLatestChangeset}
+        imagery={imagery}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane
@@ -155,7 +159,11 @@ const App: React.FC = () => {
           handleRelationSubmit={handleRelationSubmit}
         />
         <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">
-          <WayMap coordinates={currentWayCoordinates} zoom={16} />
+          <WayMap
+            coordinates={currentWayCoordinates}
+            setImagery={setImagery}
+            zoom={16}
+          />
         </div>
       </div>
     </div>

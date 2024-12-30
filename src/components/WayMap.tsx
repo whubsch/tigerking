@@ -38,10 +38,15 @@ const TILE_SOURCES: TileSources = {
 
 interface WayMapProps {
   coordinates: [number, number][];
+  setImagery: (value: string) => void;
   zoom?: number;
 }
 
-const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
+const WayMap: React.FC<WayMapProps> = ({
+  coordinates,
+  setImagery,
+  zoom = 15,
+}) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
   const [tileSource, setTileSource] = useState(
@@ -164,6 +169,13 @@ const WayMap: React.FC<WayMapProps> = ({ coordinates, zoom = 15 }) => {
       ) as maplibregl.RasterTileSource;
       mapSource.setTiles([sourceUrl]);
       setTileSource(sourceUrl);
+
+      const imagerySource = Object.values(TILE_SOURCES).find(
+        (source) => source.url === sourceUrl,
+      );
+      if (imagerySource) {
+        setImagery(imagerySource.name);
+      }
     }
   };
 
