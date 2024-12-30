@@ -2,7 +2,7 @@
   "name": "TIGER King",
   "short_name": "TIGER King",
   "description": "A simple web UI to fix imported road data in OpenStreetMap",
-  "start_url": "/",
+  "start_url": "/tigerking/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
