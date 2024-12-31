@@ -22,8 +22,8 @@ export const overpassService = {
       map_to_area->.hood;
 
       (
-        way(area.hood)[highway][name]["tiger:reviewed"=no][!surface][!"fixme:tigerking"];
-        way(area.hood)[highway][name]["tiger:reviewed"=no][!lanes][!"fixme:tigerking"];
+        way(area.hood)[highway]["tiger:reviewed"=no][!surface][!"fixme:tigerking"];
+        way(area.hood)[highway]["tiger:reviewed"=no][!lanes][!"fixme:tigerking"];
       )->.tigers;
 
       (

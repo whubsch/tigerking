@@ -16,6 +16,7 @@ import SurfaceButtons from "./SurfaceButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import { OsmWay } from "../objects";
+import check from "../assets/check.svg";
 
 interface LeftPaneProps {
   relationId: string;
@@ -26,7 +27,15 @@ interface LeftPaneProps {
   surfaceKeys: string;
   lanesKeys: string;
   onSurfaceChange: (value: string) => void;
-  onLanesChange: (value: string) => void;
+  setLanes: (value: string) => void;
+  showLaneDirection: boolean;
+  setShowLaneDirection: (value: boolean) => void;
+  lanesForward: number;
+  setLanesForward: (value: number) => void;
+  lanesBackward: number;
+  setLanesBackward: (value: number) => void;
+  convertDriveway: boolean;
+  setConvertDriveway: (value: boolean) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onSubmit: () => void;
@@ -45,7 +54,15 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   surfaceKeys,
   lanesKeys,
   onSurfaceChange,
-  onLanesChange,
+  setLanes,
+  showLaneDirection,
+  setShowLaneDirection,
+  lanesForward,
+  setLanesForward,
+  lanesBackward,
+  setLanesBackward,
+  convertDriveway,
+  setConvertDriveway,
   onSkip,
   onFix,
   onSubmit,
@@ -104,7 +121,13 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                   />
                   <LanesButtons
                     lanesKeys={lanesKeys}
-                    setLanesKeys={onLanesChange}
+                    setLanesKeys={setLanes}
+                    showLaneDirection={showLaneDirection}
+                    setShowLaneDirection={setShowLaneDirection}
+                    lanesForward={lanesForward}
+                    setLanesForward={setLanesForward}
+                    lanesBackward={lanesBackward}
+                    setLanesBackward={setLanesBackward}
                   />
                 </div>
               </div>
@@ -114,8 +137,37 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                 surfaceKeys={surfaceKeys}
                 lanesKeys={lanesKeys}
                 onSurfaceChange={onSurfaceChange}
-                onLanesChange={onLanesChange}
+                onLanesChange={setLanes}
               />
+              {!overpassWays[currentWay].tags.name &&
+                overpassWays[currentWay].tags.highway === "residential" && (
+                  <div
+                    className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200" : "bg-warning-100"}`}
+                  >
+                    <div className="flex flex-col flex-grow gap-1">
+                      <span className="text-sm font-medium">
+                        This residential way has no name
+                      </span>
+                      <span className="text-xs">
+                        Consider converting to a driveway if appropriate
+                      </span>
+                    </div>
+                    <Button
+                      size="sm"
+                      color="warning"
+                      variant="flat"
+                      onPress={() =>
+                        setConvertDriveway(convertDriveway ? false : true)
+                      }
+                    >
+                      {convertDriveway ? (
+                        <img src={check} alt="check" className="h-6 w-6" />
+                      ) : (
+                        "Convert"
+                      )}
+                    </Button>
+                  </div>
+                )}
               <div className="flex gap-2 w-full mt-4">
                 <Button
                   color="default"

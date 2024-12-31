@@ -10,10 +10,12 @@ import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { overpassService } from "./services/overpass";
 import { shuffleArray } from "./services/shuffle";
 import useWayManagement from "./hooks/useWayManagement";
+import ErrorModal from "./components/ErrorModal";
+import { OsmWay } from "./objects";
 
 const App: React.FC = () => {
-  const [surfaceKeys, setSurfaceKeys] = useState<string>("");
-  const [lanesKeys, setLanesKeys] = useState<string>(""); // Add this line
+  const [surface, setSurface] = useState<string>("");
+  const [lanes, setLanes] = useState<string>(""); // Add this line
   const [relationId, setRelationId] = useState<string>("");
   const [showRelationHeading, setShowRelationHeading] = useState(false);
   const [location, setLocation] = useState<string>("");
@@ -21,6 +23,11 @@ const App: React.FC = () => {
   const [showFinishedModal, setShowFinishedModal] = useState(false);
   const [isRelationLoading, setIsRelationLoading] = useState(false);
   const [imagery, setImagery] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [showLaneDirection, setShowLaneDirection] = useState(false);
+  const [lanesForward, setLanesForward] = useState(0);
+  const [lanesBackward, setLanesBackward] = useState(0);
+  const [convertDriveway, setConvertDriveway] = useState(false);
   const { loading } = useOsmAuthContext();
 
   const {
@@ -40,19 +47,36 @@ const App: React.FC = () => {
 
       // Set surface if it exists
       if (currentWayTags.surface) {
-        setSurfaceKeys(currentWayTags.surface);
+        setSurface(currentWayTags.surface);
       } else {
-        setSurfaceKeys("");
+        setSurface("");
       }
 
       // Set lanes if it exists
       if (currentWayTags.lanes) {
-        setLanesKeys(currentWayTags.lanes);
+        setLanes(currentWayTags.lanes);
       } else if (currentWayTags.lane_markings === "no") {
-        setLanesKeys("none");
+        setLanes("none");
       } else {
-        setLanesKeys("");
+        setLanes("");
       }
+
+      // Set lane forward and backward if it exists
+      if (currentWayTags["lanes:forward"]) {
+        setLanesForward(Number(currentWayTags["lanes:forward"]));
+      } else {
+        setLanesForward(0);
+      }
+
+      // Set lane forward and backward if it exists
+      if (currentWayTags["lanes:backward"]) {
+        setLanesBackward(Number(currentWayTags["lanes:backward"]));
+      } else {
+        setLanesBackward(0);
+      }
+
+      setShowLaneDirection(false);
+      setConvertDriveway(false);
     }
   }, [currentWay, overpassWays]);
 
@@ -74,8 +98,11 @@ const App: React.FC = () => {
       const shuffledWays = shuffleArray(ways);
       setOverpassWays(shuffledWays);
       console.log("Ways:", ways);
+      if (ways.length === 0) {
+        setError("No ways found in relation");
+      }
     } catch (error) {
-      console.error("Error fetching OSM data:", error);
+      setError("Error fetching OSM data: " + error);
       // Handle error in UI (maybe set an error state)
     } finally {
       setIsRelationLoading(false); // Set loading to false when done
@@ -84,8 +111,8 @@ const App: React.FC = () => {
 
   const handleActions = {
     skip: () => {
-      setLanesKeys("");
-      setSurfaceKeys("");
+      setLanes("");
+      setSurface("");
       handleEnd();
     },
     fix: (message: string) => {
@@ -100,16 +127,22 @@ const App: React.FC = () => {
       handleEnd();
     },
     submit: () => {
-      const updatedWay = {
+      const updatedWay: OsmWay = {
         ...overpassWays[currentWay],
         tags: {
           ...overpassWays[currentWay].tags,
-          surface: surfaceKeys,
-          ...(lanesKeys === "none"
-            ? { lane_markings: "no" }
-            : { lanes: lanesKeys }),
+          surface: surface,
+          ...(lanes === "none" ? { lane_markings: "no" } : { lanes: lanes }),
+          ...(lanesForward ? { "lanes:forward": lanesForward.toString() } : {}),
+          ...(lanesBackward
+            ? { "lanes:backward": lanesBackward.toString() }
+            : {}),
+          ...(convertDriveway
+            ? { highway: "service", service: "driveway" }
+            : {}),
         },
       };
+      console.log("Updated way:", updatedWay);
       setUploadWays((prevWays) => [...prevWays, updatedWay]);
       handleEnd();
     },
@@ -117,6 +150,11 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:h-screen">
+      <ErrorModal
+        isOpen={Boolean(error)}
+        onClose={() => setError("")}
+        message={error}
+      />
       <ChangesetModal
         latestChangeset={latestChangeset}
         onClose={() => setLatestChangeset(0)}
@@ -146,10 +184,18 @@ const App: React.FC = () => {
           overpassWays={overpassWays}
           currentWay={currentWay}
           isLoading={isRelationLoading}
-          surfaceKeys={surfaceKeys}
-          lanesKeys={lanesKeys}
-          onSurfaceChange={setSurfaceKeys}
-          onLanesChange={setLanesKeys}
+          surfaceKeys={surface}
+          lanesKeys={lanes}
+          onSurfaceChange={setSurface}
+          setLanes={setLanes}
+          showLaneDirection={showLaneDirection}
+          setShowLaneDirection={setShowLaneDirection}
+          lanesForward={lanesForward}
+          setLanesForward={setLanesForward}
+          lanesBackward={lanesBackward}
+          setLanesBackward={setLanesBackward}
+          convertDriveway={convertDriveway}
+          setConvertDriveway={setConvertDriveway}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
           onSubmit={handleActions.submit}

@@ -19,6 +19,8 @@ export interface Tags {
   lanes?: string;
   surface?: string;
   oneway?: string;
+  "lanes:forward"?: string;
+  "lanes:backward"?: string;
   "tiger:cfcc"?: string;
   "tiger:county"?: string;
   "tiger:name_base"?: string;
