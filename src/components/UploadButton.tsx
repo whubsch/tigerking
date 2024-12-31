@@ -10,6 +10,7 @@ interface UploadButtonProps {
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   imagery: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const UploadButton: React.FC<UploadButtonProps> = ({
@@ -18,6 +19,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   location,
   setChangeset,
   imagery,
+  setError,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +31,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       setUploadWays([]);
     } catch (error) {
       console.error("Upload failed:", error);
+      setError("Error uploading OSM data: " + error);
     } finally {
       setIsLoading(false);
     }

@@ -142,7 +142,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
               {!overpassWays[currentWay].tags.name &&
                 overpassWays[currentWay].tags.highway === "residential" && (
                   <div
-                    className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200" : "bg-warning-100"}`}
+                    className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200 outline outline-2 outline-warning" : "bg-warning-100"}`}
                   >
                     <div className="flex flex-col flex-grow gap-1">
                       <span className="text-sm font-medium">

@@ -169,6 +169,7 @@ const App: React.FC = () => {
         location={location}
         setChangeset={setLatestChangeset}
         imagery={imagery}
+        setError={setError}
       />
       <MainNavbar
         uploads={uploadWays}
@@ -176,6 +177,7 @@ const App: React.FC = () => {
         location={location}
         setChangeset={setLatestChangeset}
         imagery={imagery}
+        setError={setError}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane

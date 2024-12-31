@@ -18,6 +18,7 @@ interface FinishedModalProps {
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   imagery: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const FinishedModal: React.FC<FinishedModalProps> = ({
@@ -29,6 +30,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
   location,
   setChangeset,
   imagery,
+  setError,
 }) => {
   return (
     <Modal
@@ -91,6 +93,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
                 location={location}
                 setChangeset={setChangeset}
                 imagery={imagery}
+                setError={setError}
               />
 
               <Button onPress={onClose} variant="light" className="w-full">

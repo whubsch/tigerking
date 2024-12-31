@@ -25,6 +25,7 @@ interface NavbarProps {
   location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   imagery: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const LinkIcon = () => {
@@ -37,6 +38,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
   location,
   setChangeset,
   imagery,
+  setError,
 }) => {
   const {
     loggedIn,
@@ -80,6 +82,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
               location={location}
               setChangeset={setChangeset}
               imagery={imagery}
+              setError={setError}
             />
             <Dropdown>
               <DropdownTrigger>
