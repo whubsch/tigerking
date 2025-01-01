@@ -1,17 +1,13 @@
 import React from "react";
 import { Button, Form, Input } from "@nextui-org/react";
+import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface RelationFormProps {
-  relationId: string;
-  setRelationId: (id: string) => void;
   onSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
-const RelationForm: React.FC<RelationFormProps> = ({
-  relationId,
-  setRelationId,
-  onSubmit,
-}) => {
+const RelationForm: React.FC<RelationFormProps> = ({ onSubmit }) => {
+  const { relationId, setRelationId } = useChangesetStore();
   return (
     <Form onSubmit={onSubmit}>
       <Input

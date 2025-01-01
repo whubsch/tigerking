@@ -3,30 +3,28 @@ import { Button, Chip } from "@nextui-org/react";
 import upload from "../assets/upload.svg";
 import { uploadChanges } from "../services/upload";
 import { OsmWay } from "../objects";
+import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface UploadButtonProps {
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
-  location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
-  imagery: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const UploadButton: React.FC<UploadButtonProps> = ({
   uploads,
   setUploadWays,
-  location,
   setChangeset,
-  imagery,
   setError,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { location, source, host } = useChangesetStore();
 
   const handleUpload = async (uploads: OsmWay[]) => {
     try {
       setIsLoading(true);
-      const changeset = await uploadChanges(uploads, location, imagery);
+      const changeset = await uploadChanges(uploads, location, source, host);
       setChangeset(changeset);
       setUploadWays([]);
     } catch (error) {

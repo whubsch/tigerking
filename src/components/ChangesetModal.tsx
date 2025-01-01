@@ -8,18 +8,18 @@ import {
   Button,
 } from "@nextui-org/react";
 import ChangesetTagTable from "./ChangesetTags";
+import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface ChangesetModalProps {
   latestChangeset: number;
   onClose: () => void;
-  imagery: string;
 }
 
 const ChangesetModal: React.FC<ChangesetModalProps> = ({
   latestChangeset,
   onClose,
-  imagery,
 }) => {
+  const { source, location, host } = useChangesetStore();
   return (
     <Modal
       isOpen={latestChangeset !== 0}
@@ -74,9 +74,11 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
               </Link>
             </div>
             <ChangesetTagTable
-              description="test"
-              source={imagery}
-              host="test"
+              description={
+                "Adding details to `tiger:reviewed=no` ways in " + location
+              }
+              source={source}
+              host={host}
             />
 
             <div className="flex justify-center pt-4">

@@ -17,58 +17,38 @@ import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
+import { useChangesetStore } from "../stores/useChangesetStore";
+import { useWayTagsStore } from "../stores/useWayTagsStore";
 
 interface LeftPaneProps {
-  relationId: string;
   showRelationHeading: boolean;
   overpassWays: OsmWay[];
   currentWay: number;
   isLoading: boolean;
-  surfaceKeys: string;
-  lanesKeys: string;
-  onSurfaceChange: (value: string) => void;
-  setLanes: (value: string) => void;
   showLaneDirection: boolean;
   setShowLaneDirection: (value: boolean) => void;
-  lanesForward: number;
-  setLanesForward: (value: number) => void;
-  lanesBackward: number;
-  setLanesBackward: (value: number) => void;
   convertDriveway: boolean;
   setConvertDriveway: (value: boolean) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onSubmit: () => void;
   loading: boolean;
-  setLocation: (location: string) => void;
-  setRelationId: (id: string) => void;
   handleRelationSubmit: (e: React.FormEvent) => Promise<void>; // Add type definition
 }
 
 const LeftPane: React.FC<LeftPaneProps> = ({
-  relationId,
   showRelationHeading,
   overpassWays,
   currentWay,
   isLoading,
-  surfaceKeys,
-  lanesKeys,
-  onSurfaceChange,
-  setLanes,
   showLaneDirection,
   setShowLaneDirection,
-  lanesForward,
-  setLanesForward,
-  lanesBackward,
-  setLanesBackward,
   convertDriveway,
   setConvertDriveway,
   onSkip,
   onFix,
   onSubmit,
   loading,
-  setLocation,
-  setRelationId,
   handleRelationSubmit,
 }) => {
   const fixOptions = [
@@ -76,6 +56,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     { key: "needs-splitting", label: "Needs splitting" },
     { key: "doesnt-exist", label: "Doesn't exist" },
   ];
+  const { relationId } = useChangesetStore();
+  const { lanes, surface } = useWayTagsStore();
 
   return (
     <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
@@ -84,16 +66,9 @@ const LeftPane: React.FC<LeftPaneProps> = ({
       ) : (
         <div className="p-4">
           {relationId && showRelationHeading ? (
-            <RelationTags
-              relationId={relationId}
-              setRelationName={setLocation}
-            />
+            <RelationTags />
           ) : (
-            <RelationForm
-              relationId={relationId}
-              setRelationId={setRelationId}
-              onSubmit={handleRelationSubmit}
-            />
+            <RelationForm onSubmit={handleRelationSubmit} />
           )}
         </div>
       )}
@@ -115,30 +90,16 @@ const LeftPane: React.FC<LeftPaneProps> = ({
               />
               <div className="flex flex-col gap-2">
                 <div className="py-2 flex flex-col gap-4">
-                  <SurfaceButtons
-                    surfaceKeys={surfaceKeys}
-                    setSurfaceKeys={onSurfaceChange}
-                  />
+                  <SurfaceButtons />
                   <LanesButtons
-                    lanesKeys={lanesKeys}
-                    setLanesKeys={setLanes}
                     showLaneDirection={showLaneDirection}
                     setShowLaneDirection={setShowLaneDirection}
-                    lanesForward={lanesForward}
-                    setLanesForward={setLanesForward}
-                    lanesBackward={lanesBackward}
-                    setLanesBackward={setLanesBackward}
                   />
                 </div>
               </div>
             </div>
             <div>
-              <QuickTags
-                surfaceKeys={surfaceKeys}
-                lanesKeys={lanesKeys}
-                onSurfaceChange={onSurfaceChange}
-                onLanesChange={setLanes}
-              />
+              <QuickTags />
               {!overpassWays[currentWay].tags.name &&
                 overpassWays[currentWay].tags.highway === "residential" && (
                   <div
@@ -199,7 +160,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                   size="md"
                   className="flex-1"
                   onPress={onSubmit}
-                  isDisabled={!surfaceKeys || !lanesKeys}
+                  isDisabled={!surface || !lanes}
                 >
                   Submit
                 </Button>

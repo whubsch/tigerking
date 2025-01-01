@@ -9,17 +9,11 @@ import {
   DropdownSection,
 } from "@nextui-org/react";
 import TagButtonHeading from "./TagButtonHeading";
+import { useWayTagsStore } from "../stores/useWayTagsStore";
 
-interface SurfaceButtonsProps {
-  surfaceKeys: string;
-  setSurfaceKeys: (keys: string) => void;
-}
-
-const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
-  surfaceKeys,
-  setSurfaceKeys,
-}) => {
+const SurfaceButtons: React.FC = () => {
   const commonSurfaces = ["concrete", "asphalt", "compacted"];
+  const { surface, setSurface } = useWayTagsStore();
   return (
     <div className="w-full">
       <TagButtonHeading
@@ -31,14 +25,14 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
         className="flex flex-wrap w-full"
         size="md"
       >
-        {commonSurfaces.map((surface) => (
+        {commonSurfaces.map((surfaceKeys) => (
           <Button
-            key={surface}
+            key={surfaceKeys}
             className="flex-1 border-1"
-            onPress={() => setSurfaceKeys(surface)}
+            onPress={() => setSurface(surfaceKeys)}
             variant={surfaceKeys === surface ? "solid" : "bordered"}
           >
-            {surface}
+            {surfaceKeys}
           </Button>
         ))}
 
@@ -46,25 +40,23 @@ const SurfaceButtons: React.FC<SurfaceButtonsProps> = ({
           <DropdownTrigger>
             <Button
               variant={
-                !commonSurfaces.includes(surfaceKeys) && surfaceKeys
+                !commonSurfaces.includes(surface) && surface
                   ? "solid"
                   : "bordered"
               }
               className="flex-1 border-1"
-              onPress={() => setSurfaceKeys("none")}
+              onPress={() => setSurface("none")}
             >
-              {!commonSurfaces.includes(surfaceKeys) && surfaceKeys
-                ? surfaceKeys
-                : "Other"}
+              {!commonSurfaces.includes(surface) && surface ? surface : "Other"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Single selection example"
-            selectedKeys={surfaceKeys}
+            selectedKeys={surface}
             selectionMode="single"
             variant="flat"
             onSelectionChange={(keys) =>
-              setSurfaceKeys(Array.from(keys)[0] as string)
+              setSurface(Array.from(keys)[0] as string)
             }
           >
             <DropdownSection showDivider title="generic">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Spinner } from "@nextui-org/react";
 import TagSelection from "./TagSelection";
 import CardHeading from "./CardHeading";
+import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface RelationDetails {
   tags: Record<string, string>;
@@ -9,18 +10,11 @@ interface RelationDetails {
   type: string;
 }
 
-interface RelationTagsProps {
-  relationId: string;
-  setRelationName: (location: string) => void;
-}
-
-const RelationTags: React.FC<RelationTagsProps> = ({
-  relationId,
-  setRelationName,
-}) => {
+const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { relationId, setLocation } = useChangesetStore();
 
   useEffect(() => {
     const fetchRelationTags = async () => {
@@ -43,7 +37,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({
 
         if (relationData && relationData.tags) {
           setTags(relationData.tags);
-          setRelationName(relationData.tags.name);
+          setLocation(relationData.tags.name);
         } else {
           setError("No tags found for this relation");
         }
@@ -57,7 +51,7 @@ const RelationTags: React.FC<RelationTagsProps> = ({
     };
 
     fetchRelationTags();
-  }, [relationId, setRelationName]);
+  }, [relationId, setLocation]);
 
   if (loading) {
     return (

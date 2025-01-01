@@ -1,19 +1,9 @@
 import { useEffect, useMemo } from "react";
 import { Card, Kbd } from "@nextui-org/react";
+import { useWayTagsStore } from "../stores/useWayTagsStore";
 
-interface QuickTagsProps {
-  surfaceKeys: string;
-  lanesKeys: string;
-  onSurfaceChange: (surface: string) => void;
-  onLanesChange: (lanes: string) => void;
-}
-
-const QuickTags: React.FC<QuickTagsProps> = ({
-  surfaceKeys,
-  lanesKeys,
-  onSurfaceChange,
-  onLanesChange,
-}) => {
+const QuickTags: React.FC = () => {
+  const { surface, setSurface, lanes, setLanes } = useWayTagsStore();
   const quickTagsData = useMemo(
     () => [
       {
@@ -21,21 +11,18 @@ const QuickTags: React.FC<QuickTagsProps> = ({
         surface: "asphalt",
         lanes: "none",
         keyboardShortcut: "1",
-        label: "Asphalt Path",
       },
       {
         id: 2,
         surface: "compacted",
         lanes: "none",
         keyboardShortcut: "2",
-        label: "Compacted Trail",
       },
       {
         id: 3,
         surface: "asphalt",
         lanes: "2",
         keyboardShortcut: "3",
-        label: "Asphalt Road",
       },
     ],
     [],
@@ -47,8 +34,8 @@ const QuickTags: React.FC<QuickTagsProps> = ({
         (tag) => tag.keyboardShortcut === event.key,
       );
       if (quickTag) {
-        onSurfaceChange(quickTag.surface);
-        onLanesChange(quickTag.lanes);
+        setSurface(quickTag.surface);
+        setLanes(quickTag.lanes);
       }
     };
 
@@ -56,20 +43,19 @@ const QuickTags: React.FC<QuickTagsProps> = ({
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [onSurfaceChange, onLanesChange, quickTagsData]);
+  }, [setSurface, setLanes, quickTagsData]);
 
   const handleCardPress = (surface: string, lanes: string): void => {
-    onSurfaceChange(surface);
-    onLanesChange(lanes);
+    setSurface(surface);
+    setLanes(lanes);
   };
 
   return (
     <>
       <h3 className="text-lg font-light">Quick Tags</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {quickTagsData.map((tag) => {
-          const isActive =
-            tag.surface === surfaceKeys && tag.lanes === lanesKeys;
+          const isActive = tag.surface === surface && tag.lanes === lanes;
           return (
             <Card
               key={tag.id}
@@ -77,7 +63,7 @@ const QuickTags: React.FC<QuickTagsProps> = ({
               transition-all duration-200
               ${
                 isActive
-                  ? "border-2 border-primary bg-primary/10 scale-[1.02]"
+                  ? "border-2 border-primary bg-primary/10"
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
               }
             `}

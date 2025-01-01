@@ -8,6 +8,7 @@ export const uploadChanges = async (
   ways: OsmWay[],
   location: string,
   source: string,
+  host: string,
 ) => {
   const version = packageJson.version;
 
@@ -24,13 +25,7 @@ export const uploadChanges = async (
     .up()
     .ele("tag")
     .att("k", "host")
-    .att(
-      "v",
-      window.location.protocol +
-        "//" +
-        window.location.host +
-        window.location.pathname,
-    )
+    .att("v", host)
     .up()
     .ele("tag")
     .att("k", "comment")

@@ -12,23 +12,32 @@ import { shuffleArray } from "./services/shuffle";
 import useWayManagement from "./hooks/useWayManagement";
 import ErrorModal from "./components/ErrorModal";
 import { OsmWay } from "./objects";
+import { useChangesetStore } from "./stores/useChangesetStore";
+import { useWayTagsStore } from "./stores/useWayTagsStore";
 
 const App: React.FC = () => {
-  const [surface, setSurface] = useState<string>("");
-  const [lanes, setLanes] = useState<string>(""); // Add this line
-  const [relationId, setRelationId] = useState<string>("");
   const [showRelationHeading, setShowRelationHeading] = useState(false);
-  const [location, setLocation] = useState<string>("");
   const [latestChangeset, setLatestChangeset] = useState<number>(0);
   const [showFinishedModal, setShowFinishedModal] = useState(false);
   const [isRelationLoading, setIsRelationLoading] = useState(false);
-  const [imagery, setImagery] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [lanesForward, setLanesForward] = useState(0);
   const [lanesBackward, setLanesBackward] = useState(0);
   const [convertDriveway, setConvertDriveway] = useState(false);
   const { loading } = useOsmAuthContext();
+  const { relationId, setHost, setSource } = useChangesetStore();
+  const { lanes, setLanes, surface, setSurface } = useWayTagsStore();
+
+  // Should be inside a useEffect:
+  useEffect(() => {
+    setHost(
+      window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname,
+    );
+  }, [setHost]); // Empty dependency array since this only needs to run once
 
   const {
     overpassWays,
@@ -158,7 +167,6 @@ const App: React.FC = () => {
       <ChangesetModal
         latestChangeset={latestChangeset}
         onClose={() => setLatestChangeset(0)}
-        imagery={imagery}
       />
       <FinishedModal
         show={showFinishedModal && !latestChangeset}
@@ -166,50 +174,35 @@ const App: React.FC = () => {
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
         setUploadWays={setUploadWays}
-        location={location}
         setChangeset={setLatestChangeset}
-        imagery={imagery}
         setError={setError}
       />
       <MainNavbar
         uploads={uploadWays}
         setUploadWays={setUploadWays}
-        location={location}
         setChangeset={setLatestChangeset}
-        imagery={imagery}
         setError={setError}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane
-          relationId={relationId}
           showRelationHeading={showRelationHeading}
           overpassWays={overpassWays}
           currentWay={currentWay}
           isLoading={isRelationLoading}
-          surfaceKeys={surface}
-          lanesKeys={lanes}
-          onSurfaceChange={setSurface}
-          setLanes={setLanes}
           showLaneDirection={showLaneDirection}
           setShowLaneDirection={setShowLaneDirection}
-          lanesForward={lanesForward}
-          setLanesForward={setLanesForward}
-          lanesBackward={lanesBackward}
-          setLanesBackward={setLanesBackward}
           convertDriveway={convertDriveway}
           setConvertDriveway={setConvertDriveway}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
           onSubmit={handleActions.submit}
           loading={loading}
-          setLocation={setLocation}
-          setRelationId={setRelationId}
           handleRelationSubmit={handleRelationSubmit}
         />
         <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">
           <WayMap
             coordinates={currentWayCoordinates}
-            setImagery={setImagery}
+            setImagery={setSource}
             zoom={16}
           />
         </div>

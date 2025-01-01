@@ -1,32 +1,29 @@
 import React from "react";
 import { Button, ButtonGroup, Slider } from "@nextui-org/react";
 import TagButtonHeading from "./TagButtonHeading";
+import { useWayTagsStore } from "../stores/useWayTagsStore";
 
 interface LanesButtonsProps {
-  lanesKeys: string;
-  setLanesKeys: (keys: string) => void;
   showLaneDirection: boolean;
   setShowLaneDirection: (value: boolean) => void;
-  lanesForward: number;
-  setLanesForward: (value: number) => void;
-  lanesBackward: number;
-  setLanesBackward: (value: number) => void;
 }
 
 const LanesButtons: React.FC<LanesButtonsProps> = ({
-  lanesKeys,
-  setLanesKeys,
   showLaneDirection,
   setShowLaneDirection,
-  lanesForward,
-  setLanesForward,
-  lanesBackward,
-  setLanesBackward,
 }) => {
-  const commonLanesKeys = ["none", "2", "4"];
+  const commonLanes = ["none", "2", "4"];
+  const {
+    lanes,
+    setLanes,
+    lanesForward,
+    setLanesForward,
+    lanesBackward,
+    setLanesBackward,
+  } = useWayTagsStore();
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full">
       <TagButtonHeading
         header="lanes"
         tooltip="The number of lanes on the road as indicated by painted strips."
@@ -36,22 +33,22 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
         className="flex flex-wrap w-full"
         size="md"
       >
-        {commonLanesKeys.map((lanes) => {
+        {commonLanes.map((lanesKey) => {
           return (
             <Button
-              key={lanes}
+              key={lanesKey}
               className="flex-1 border-1"
-              onPress={() => setLanesKeys(lanes)}
-              variant={lanesKeys === lanes ? "solid" : "bordered"}
+              onPress={() => setLanes(lanesKey)}
+              variant={lanesKey === lanes ? "solid" : "bordered"}
             >
-              {lanes}
+              {lanesKey}
             </Button>
           );
         })}
         <Button
           className="flex-1 border-1"
           onPress={() => {
-            setLanesKeys("other");
+            setLanes("other");
             setShowLaneDirection(true);
           }}
           variant={showLaneDirection ? "solid" : "bordered"}
@@ -72,7 +69,7 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
               value={lanesForward}
               onChange={(value) => {
                 setLanesForward(value as number);
-                setLanesKeys(((value as number) + lanesBackward).toString());
+                setLanes(((value as number) + lanesBackward).toString());
               }}
               className="max-w-md"
               showSteps={true}
@@ -93,7 +90,7 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
               value={lanesBackward}
               onChange={(value) => {
                 setLanesBackward(value as number);
-                setLanesKeys(((value as number) + lanesForward).toString());
+                setLanes(((value as number) + lanesForward).toString());
               }}
               className="max-w-md"
               showSteps={true}

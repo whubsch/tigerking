@@ -15,9 +15,7 @@ interface FinishedModalProps {
   onClose: () => void;
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
-  location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
-  imagery: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -27,9 +25,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
   onClose,
   uploads,
   setUploadWays,
-  location,
   setChangeset,
-  imagery,
   setError,
 }) => {
   return (
@@ -90,9 +86,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
               <UploadButton
                 uploads={uploads}
                 setUploadWays={setUploadWays}
-                location={location}
                 setChangeset={setChangeset}
-                imagery={imagery}
                 setError={setError}
               />
 

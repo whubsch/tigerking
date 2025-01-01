@@ -22,9 +22,7 @@ import packageJson from "../../package.json";
 interface NavbarProps {
   uploads: OsmWay[];
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
-  location: string;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
-  imagery: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -35,9 +33,7 @@ const LinkIcon = () => {
 const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
   setUploadWays,
-  location,
   setChangeset,
-  imagery,
   setError,
 }) => {
   const {
@@ -79,9 +75,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
             <UploadButton
               uploads={uploads}
               setUploadWays={setUploadWays}
-              location={location}
               setChangeset={setChangeset}
-              imagery={imagery}
               setError={setError}
             />
             <Dropdown>
