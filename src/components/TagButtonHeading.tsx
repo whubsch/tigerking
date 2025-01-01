@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, Tooltip } from "@nextui-org/react";
+import { Link } from "@nextui-org/link";
+import { Tooltip } from "@nextui-org/tooltip";
 import info from "../assets/info.svg";
 
 interface TagButtonHeadingProps {

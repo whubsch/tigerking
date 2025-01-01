@@ -1,13 +1,12 @@
 import React from "react";
+import { Button, ButtonGroup } from "@nextui-org/button";
 import {
-  Button,
-  ButtonGroup,
   Dropdown,
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
   DropdownSection,
-} from "@nextui-org/react";
+} from "@nextui-org/dropdown";
 import TagButtonHeading from "./TagButtonHeading";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 

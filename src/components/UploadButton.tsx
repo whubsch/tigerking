@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Chip } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
 import upload from "../assets/upload.svg";
 import { uploadChanges } from "../services/upload";
 import { OsmWay } from "../objects";

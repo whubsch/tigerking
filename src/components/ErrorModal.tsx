@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Button,
-} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
+import { Button } from "@nextui-org/button";
 
 interface ErrorModalProps {
   isOpen: boolean;

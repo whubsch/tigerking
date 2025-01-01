@@ -1,15 +1,13 @@
 import React from "react";
+import { Navbar, NavbarContent, NavbarBrand } from "@nextui-org/navbar";
+import { Button } from "@nextui-org/button";
 import {
-  Navbar,
-  NavbarContent,
-  NavbarBrand,
-  Button,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-} from "@nextui-org/react";
+} from "@nextui-org/dropdown";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";

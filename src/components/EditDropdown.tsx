@@ -1,12 +1,11 @@
+import { Button, ButtonGroup } from "@nextui-org/button";
 import {
-  Button,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  ButtonGroup,
-  Link,
-} from "@nextui-org/react";
+} from "@nextui-org/dropdown";
+import { Link } from "@nextui-org/link";
 import edit from "../assets/edit.svg";
 
 interface EditorLinksProps {

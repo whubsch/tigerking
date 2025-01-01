@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@nextui-org/react";
+} from "@nextui-org/table";
 
 // Define the interface for individual table items
 interface TableItem {

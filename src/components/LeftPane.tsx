@@ -1,14 +1,14 @@
 import React from "react";
+import { Button } from "@nextui-org/button";
+import { Card } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
 import {
-  Button,
-  Card,
-  Divider,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Spinner,
-} from "@nextui-org/react";
+} from "@nextui-org/dropdown";
+import { Spinner } from "@nextui-org/spinner";
 import RelationTags from "./RelationHeading";
 import RelationForm from "./RelationForm";
 import WayHeading from "./WayHeading";

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Card, Spinner } from "@nextui-org/react";
+import { Card } from "@nextui-org/card";
+import { Spinner } from "@nextui-org/spinner";
+
 import TagSelection from "./TagSelection";
 import CardHeading from "./CardHeading";
 import { useChangesetStore } from "../stores/useChangesetStore";

@@ -1,5 +1,8 @@
 import React from "react";
-import { Chip, Link, ScrollShadow } from "@nextui-org/react";
+import { Chip } from "@nextui-org/chip";
+import { Link } from "@nextui-org/link";
+import { ScrollShadow } from "@nextui-org/scroll-shadow";
+
 import cancel from "../assets/cancel.svg";
 
 interface TagSelectionProps {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
-import { Card, Kbd } from "@nextui-org/react";
+import { Card } from "@nextui-org/card";
+import { Kbd } from "@nextui-org/kbd";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 
 const QuickTags: React.FC = () => {

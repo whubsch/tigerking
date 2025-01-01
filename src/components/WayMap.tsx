@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem } from "@nextui-org/select";
 import imagery_json from "../assets/filtered.json";
 
 interface Attribution {

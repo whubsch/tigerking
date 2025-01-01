@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Link,
-  Button,
-} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
+import { Link } from "@nextui-org/link";
+import { Button } from "@nextui-org/button";
 import ChangesetTagTable from "./ChangesetTags";
 import { useChangesetStore } from "../stores/useChangesetStore";
 
