@@ -12,6 +12,8 @@ TIGER King is a web application that helps OpenStreetMap contributors improve ro
 - Compare with current aerial imagery
 - Submit improvements directly to OSM
 
+View the changesets that have used TIGER King [here](https://resultmaps.neis-one.org/osm-changesets?comment=TIGER%20King).
+
 ## Usage
 
 1. Enter an OSM relation ID
@@ -32,8 +34,8 @@ TIGER King is a web application that helps OpenStreetMap contributors improve ro
 
 ## Contributing
 
-Issues and pull requests are welcome. Please read CONTRIBUTING.md for details.
+Issues and pull requests are welcome.
 
 ## License
 
-MIT
+MIT. See [LICENSE.md](LICENSE.md) for details.

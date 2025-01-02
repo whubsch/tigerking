@@ -87,7 +87,7 @@ const App: React.FC = () => {
       setShowLaneDirection(false);
       setConvertDriveway(false);
     }
-  }, [currentWay, overpassWays]);
+  }, [currentWay, overpassWays, setLanes, setSurface]);
 
   const handleEnd = () => {
     if (currentWay < overpassWays.length - 1) {
@@ -170,7 +170,7 @@ const App: React.FC = () => {
       />
       <FinishedModal
         show={showFinishedModal && !latestChangeset}
-        ways={overpassWays.length}
+        ways={currentWay}
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
         setUploadWays={setUploadWays}
@@ -182,6 +182,7 @@ const App: React.FC = () => {
         setUploadWays={setUploadWays}
         setChangeset={setLatestChangeset}
         setError={setError}
+        setShowFinishedModal={setShowFinishedModal}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane

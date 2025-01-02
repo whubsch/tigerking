@@ -6,6 +6,8 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
+import { useChangesetStore } from "../stores/useChangesetStore";
+import packageJson from "../../package.json";
 
 // Define the interface for individual table items
 interface TableItem {
@@ -17,39 +19,42 @@ interface TableItem {
 interface InfoTableProps {
   description: string;
   source: string;
-  host: string;
 }
 
 const ChangesetTagTable: React.FC<InfoTableProps> = ({
   description,
   source,
-  host,
 }) => {
+  const { host } = useChangesetStore();
   const data: TableItem[] = [
     {
-      key: "Description",
+      key: "description",
       value: description,
     },
     {
-      key: "Source",
+      key: "source",
       value: source,
     },
     {
-      key: "Host",
+      key: "host",
       value: host,
+    },
+    {
+      key: "created_by",
+      value: "TIGER King " + packageJson.version,
     },
   ];
 
   return (
     <Table
       aria-label="Changeset tags table"
-      classNames={{
-        wrapper: "min-h-[100px]",
-      }}
+      className="px-4"
+      hideHeader
+      isStriped
     >
       <TableHeader>
-        <TableColumn>KEY</TableColumn>
-        <TableColumn>VALUE</TableColumn>
+        <TableColumn>key</TableColumn>
+        <TableColumn>value</TableColumn>
       </TableHeader>
       <TableBody>
         {data.map((item, index) => (

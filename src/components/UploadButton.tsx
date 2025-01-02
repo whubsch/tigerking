@@ -20,12 +20,12 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   setError,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { location, source, host } = useChangesetStore();
+  const { description, source, host } = useChangesetStore();
 
   const handleUpload = async (uploads: OsmWay[]) => {
     try {
       setIsLoading(true);
-      const changeset = await uploadChanges(uploads, location, source, host);
+      const changeset = await uploadChanges(uploads, description, source, host);
       setChangeset(changeset);
       setUploadWays([]);
     } catch (error) {
@@ -52,6 +52,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       }
       onPress={() => handleUpload(uploads)}
     >
+      Upload
       <Chip>{uploads ? uploads.length : 0}</Chip>
     </Button>
   );

@@ -14,7 +14,7 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
   latestChangeset,
   onClose,
 }) => {
-  const { source, location, host } = useChangesetStore();
+  const { source, description } = useChangesetStore();
   return (
     <Modal
       isOpen={latestChangeset !== 0}
@@ -68,13 +68,7 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
                 {latestChangeset}
               </Link>
             </div>
-            <ChangesetTagTable
-              description={
-                "Adding details to `tiger:reviewed=no` ways in " + location
-              }
-              source={source}
-              host={host}
-            />
+            <ChangesetTagTable description={description} source={source} />
 
             <div className="flex justify-center pt-4">
               <Button color="primary" variant="light" onPress={onClose}>

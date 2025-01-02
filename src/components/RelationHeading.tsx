@@ -16,7 +16,7 @@ const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { relationId, setLocation } = useChangesetStore();
+  const { relationId, setDescription } = useChangesetStore();
 
   useEffect(() => {
     const fetchRelationTags = async () => {
@@ -39,7 +39,7 @@ const RelationTags: React.FC = () => {
 
         if (relationData && relationData.tags) {
           setTags(relationData.tags);
-          setLocation(relationData.tags.name);
+          setDescription(relationData.tags.name);
         } else {
           setError("No tags found for this relation");
         }
@@ -53,7 +53,7 @@ const RelationTags: React.FC = () => {
     };
 
     fetchRelationTags();
-  }, [relationId, setLocation]);
+  }, [relationId, setDescription]);
 
   if (loading) {
     return (

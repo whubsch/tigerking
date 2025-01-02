@@ -8,13 +8,14 @@ import {
   DropdownItem,
   DropdownSection,
 } from "@nextui-org/dropdown";
+import { Chip } from "@nextui-org/chip";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
+import upload from "../assets/upload.svg";
 import UserCard from "./UserCard";
-import UploadButton from "./UploadButton";
 import packageJson from "../../package.json";
 
 interface NavbarProps {
@@ -22,6 +23,7 @@ interface NavbarProps {
   setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
+  setShowFinishedModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LinkIcon = () => {
@@ -30,9 +32,7 @@ const LinkIcon = () => {
 
 const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
-  setUploadWays,
-  setChangeset,
-  setError,
+  setShowFinishedModal,
 }) => {
   const {
     loggedIn,
@@ -70,12 +70,20 @@ const MainNavbar: React.FC<NavbarProps> = ({
       <NavbarContent justify="end">
         {loggedIn ? (
           <>
-            <UploadButton
-              uploads={uploads}
-              setUploadWays={setUploadWays}
-              setChangeset={setChangeset}
-              setError={setError}
-            />
+            <Button
+              variant="flat"
+              isDisabled={uploads.length === 0}
+              startContent={
+                <img
+                  src={upload}
+                  alt="upload"
+                  className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+                />
+              }
+              onPress={() => setShowFinishedModal(true)}
+            >
+              <Chip>{uploads ? uploads.length : 0}</Chip>
+            </Button>
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly>
