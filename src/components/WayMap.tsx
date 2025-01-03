@@ -5,9 +5,9 @@ import { Select, SelectItem } from "@nextui-org/select";
 import imagery_json from "../assets/filtered.json";
 
 interface Attribution {
-  text: string;
   required?: boolean;
-  url?: string;
+  text: string;
+  url: string;
 }
 
 interface TileSource {
@@ -21,20 +21,43 @@ interface TileSources {
   [key: string]: TileSource;
 }
 
-const TILE_SOURCES: TileSources = {
-  ...imagery_json.features.reduce((acc, feature) => {
-    const { properties } = feature;
-    return {
-      ...acc,
-      [properties.id]: {
+interface AccumulatorType {
+  countrywideSourcesMap: TileSources;
+  otherSourcesMap: TileSources;
+}
+
+const { countrywideSourcesMap, otherSourcesMap } =
+  imagery_json.features.reduce<AccumulatorType>(
+    (acc, feature) => {
+      const { properties } = feature;
+      const sourceObject = {
         name: properties.name,
         url: properties.url,
-        attribution: properties.attribution,
-        maxZoom: properties.max_zoom,
-      },
-    };
-  }, {}),
+        attribution: {
+          required: properties.attribution?.required || false,
+          text: properties.attribution?.text || "OpenStreetMap contributors",
+          url: properties.attribution?.url || "",
+        },
+        maxZoom: properties.max_zoom || 20,
+      };
+
+      if (properties.countrywide) {
+        acc.countrywideSourcesMap[properties.id] = sourceObject;
+      } else {
+        acc.otherSourcesMap[properties.id] = sourceObject;
+      }
+
+      return acc;
+    },
+    { countrywideSourcesMap: {}, otherSourcesMap: {} },
+  );
+
+const TILE_SOURCES: TileSources = {
+  ...countrywideSourcesMap,
+  ...otherSourcesMap,
 };
+const COUNTRYWIDE_TILE_SOURCES: TileSources = countrywideSourcesMap;
+const OTHER_TILE_SOURCES: TileSources = otherSourcesMap;
 
 interface WayMapProps {
   coordinates: [number, number][];
@@ -49,9 +72,18 @@ const WayMap: React.FC<WayMapProps> = ({
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const [tileSource, setTileSource] = useState(
-    "https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  );
+  const [selectedSourceId, setSelectedSourceId] = useState(() => {
+    // Verify that the default ID exists, otherwise use the first available source
+    return TILE_SOURCES["EsriWorldImageryClarity"]
+      ? "EsriWorldImageryClarity"
+      : Object.keys(TILE_SOURCES)[0] || "";
+  });
+  const tileSource = TILE_SOURCES[selectedSourceId]?.url || "";
+
+  console.log("TILE_SOURCES:", TILE_SOURCES);
+  console.log("COUNTRYWIDE_TILE_SOURCES:", COUNTRYWIDE_TILE_SOURCES);
+  console.log("OTHER_TILE_SOURCES:", OTHER_TILE_SOURCES);
+  console.log("Initial selectedSourceId:", selectedSourceId);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -162,20 +194,14 @@ const WayMap: React.FC<WayMapProps> = ({
     };
   }, [coordinates, zoom, tileSource]);
 
-  const handleTileSourceChange = (sourceUrl: string) => {
-    if (map.current) {
+  const handleTileSourceChange = (sourceId: string) => {
+    if (map.current && TILE_SOURCES[sourceId]) {
       const mapSource = map.current.getSource(
         "raster-tiles",
       ) as maplibregl.RasterTileSource;
-      mapSource.setTiles([sourceUrl]);
-      setTileSource(sourceUrl);
-
-      const imagerySource = Object.values(TILE_SOURCES).find(
-        (source) => source.url === sourceUrl,
-      );
-      if (imagerySource) {
-        setImagery(imagerySource.name);
-      }
+      mapSource.setTiles([TILE_SOURCES[sourceId].url]);
+      setSelectedSourceId(sourceId);
+      setImagery(TILE_SOURCES[sourceId].name);
     }
   };
 
@@ -185,14 +211,27 @@ const WayMap: React.FC<WayMapProps> = ({
         <Select
           size="sm"
           label="Imagery"
-          defaultSelectedKeys={[tileSource]}
+          selectedKeys={[selectedSourceId]}
           onChange={(e) => handleTileSourceChange(e.target.value)}
+          className="max-w-xs"
+          isVirtualized
         >
-          {Object.values(TILE_SOURCES).map((source) => (
-            <SelectItem key={source.url} value={source.url}>
-              {source.name}
-            </SelectItem>
-          ))}
+          {/* waiting for nextui SelectSection component to be fixed
+            https://github.com/nextui-org/nextui/pull/4462 */}
+          <>
+            {Object.entries(COUNTRYWIDE_TILE_SOURCES).map(([id, source]) => (
+              <SelectItem key={id} value={id}>
+                {source.name}
+              </SelectItem>
+            ))}
+          </>
+          <>
+            {Object.entries(OTHER_TILE_SOURCES).map(([id, source]) => (
+              <SelectItem key={id} value={id}>
+                {source.name}
+              </SelectItem>
+            ))}
+          </>
         </Select>
       </div>
       <div ref={mapContainer} className="w-full h-full rounded-lg shadow-lg" />

@@ -62,7 +62,8 @@ def filter_geojson(geojson_data: dict[str, Any]) -> dict[str, Any]:
                 and props.get("type") in ["tms", "wms"]
                 and props.get("category") == "photo"
                 and "{apikey}" not in props.get("url").lower()
-                and ("Coast" not in props.get("name") or "eox.at" in props.get("name"))
+                and "Coast" not in props.get("name")
+                and "eox.at" not in props.get("name")
             ):
                 # Replace {zoom} with {z}, {switch:} with first
                 if "url" in props:

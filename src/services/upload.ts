@@ -6,7 +6,7 @@ import packageJson from "../../package.json";
 
 export const uploadChanges = async (
   ways: OsmWay[],
-  location: string,
+  description: string,
   source: string,
   host: string,
 ) => {
@@ -29,7 +29,7 @@ export const uploadChanges = async (
     .up()
     .ele("tag")
     .att("k", "comment")
-    .att("v", "Adding details to `tiger:reviewed=no` ways in " + location)
+    .att("v", description)
     .up()
     .up()
     .up();
