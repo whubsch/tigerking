@@ -62,7 +62,7 @@ def filter_geojson(geojson_data: dict[str, Any]) -> dict[str, Any]:
                 and props.get("type") in ["tms", "wms"]
                 and props.get("category") == "photo"
                 and "{apikey}" not in props.get("url").lower()
-                and "Coast" not in props.get("name")
+                and ("Coast" not in props.get("name") or "eox.at" in props.get("name"))
             ):
                 # Replace {zoom} with {z}, {switch:} with first
                 if "url" in props:
@@ -76,9 +76,20 @@ def filter_geojson(geojson_data: dict[str, Any]) -> dict[str, Any]:
                         r"{switch:([a-zA-Z]+),.*?}", r"\1", props["url"]
                     )
 
+                if props.get("id") in [
+                    "EsriWorldImageryClarity",
+                    "EsriWorldImagery",
+                    "USDA-NAIP",
+                    "USGS-Imagery",
+                ]:
+                    props["countrywide"] = True
+
                 # Create new feature without geometry
                 filtered_feature = {"type": "Feature", "properties": props}
                 filtered_features.append(filtered_feature)
+
+    # Sort filtered_features by name
+    filtered_features.sort(key=lambda x: x["properties"].get("name", "").lower())
 
     # Create new GeoJSON with filtered features
     filtered_geojson = {"type": geojson_data["type"], "features": filtered_features}
