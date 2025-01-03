@@ -10,7 +10,9 @@ interface CardHeadingProps {
 const CardHeading: React.FC<CardHeadingProps> = ({ name, type, id }) => {
   return (
     <div className="flex gap-2 mb-4 justify-between">
-      <h3 className={`text-xl font-bold ${name ? "" : "text-danger-400"}`}>
+      <h3
+        className={`text-xl font-bold truncate ${name ? "" : "text-danger-400"}`}
+      >
         {name ? name : "no name"}
       </h3>
       <EditorLinks elementType={type} elementId={id} />

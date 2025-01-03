@@ -11,7 +11,7 @@ import { overpassService } from "./services/overpass";
 import { shuffleArray } from "./services/shuffle";
 import useWayManagement from "./hooks/useWayManagement";
 import ErrorModal from "./components/ErrorModal";
-import { OsmWay } from "./objects";
+import { OsmWay, Tags } from "./objects";
 import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
 
@@ -79,9 +79,21 @@ const App: React.FC = () => {
     localStorage.removeItem(UPLOAD_WAYS_STORAGE_KEY);
   };
 
+  const isWayProcessed = (wayId: number, toUploadWays: OsmWay[]): boolean => {
+    return toUploadWays.some((way) => way.id === wayId);
+  };
+
   // Handle current way and tags
   useEffect(() => {
     if (overpassWays.length > 0 && overpassWays[currentWay]) {
+      // Check and skipping if way is already in uploadWays
+      const currentWayId = overpassWays[currentWay].id;
+      if (isWayProcessed(currentWayId, uploadWays)) {
+        console.log(`Skipping already processed way ${currentWayId}`);
+        setCurrentWay(currentWay + 1);
+        return;
+      }
+
       const currentWayTags = overpassWays[currentWay].tags;
 
       // Set surface if it exists
@@ -148,6 +160,12 @@ const App: React.FC = () => {
     }
   };
 
+  const filterTigerTags = (tags: Tags): Tags => {
+    return Object.fromEntries(
+      Object.entries(tags).filter(([key]) => !key.startsWith("tiger")),
+    );
+  };
+
   const handleActions = {
     skip: () => {
       setLanes("");
@@ -165,11 +183,22 @@ const App: React.FC = () => {
       setUploadWays((prevWays) => [...prevWays, updatedWay]);
       handleEnd();
     },
+    clearTiger: () => {
+      const updatedWay = {
+        ...overpassWays[currentWay],
+        tags: {
+          ...filterTigerTags(overpassWays[currentWay].tags),
+        },
+      };
+      console.log("Updated way:", updatedWay);
+      setUploadWays((prevWays) => [...prevWays, updatedWay]);
+      handleEnd();
+    },
     submit: () => {
       const updatedWay: OsmWay = {
         ...overpassWays[currentWay],
         tags: {
-          ...overpassWays[currentWay].tags,
+          ...filterTigerTags(overpassWays[currentWay].tags),
           surface: surface,
           ...(lanes === "none" ? { lane_markings: "no" } : { lanes: lanes }),
           ...(lanesForward ? { "lanes:forward": lanesForward.toString() } : {}),
@@ -231,6 +260,7 @@ const App: React.FC = () => {
           setConvertDriveway={setConvertDriveway}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
+          onClearTiger={handleActions.clearTiger}
           onSubmit={handleActions.submit}
           loading={loading}
           handleRelationSubmit={handleRelationSubmit}

@@ -17,6 +17,7 @@ import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
+import lightning from "../assets/lightning.svg";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 
@@ -31,6 +32,7 @@ interface LeftPaneProps {
   setConvertDriveway: (value: boolean) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
+  onClearTiger: () => void;
   onSubmit: () => void;
   loading: boolean;
   handleRelationSubmit: (e: React.FormEvent) => Promise<void>; // Add type definition
@@ -47,6 +49,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   setConvertDriveway,
   onSkip,
   onFix,
+  onClearTiger,
   onSubmit,
   loading,
   handleRelationSubmit,
@@ -146,15 +149,33 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                       Fix
                     </Button>
                   </DropdownTrigger>
-                  <DropdownMenu
-                    aria-label="Fix options"
-                    onAction={(label) => onFix(label.toString().toLowerCase())}
-                  >
-                    {fixOptions.map((option) => (
-                      <DropdownItem key={option.key}>
-                        {option.label}
-                      </DropdownItem>
-                    ))}
+                  <DropdownMenu aria-label="Fix options">
+                    <>
+                      {fixOptions.map((option) => (
+                        <DropdownItem
+                          key={option.key}
+                          onPress={(label) =>
+                            onFix(label.toString().toLowerCase())
+                          }
+                        >
+                          {option.label}
+                        </DropdownItem>
+                      ))}
+                    </>
+                    <DropdownItem
+                      key="clear-tiger"
+                      color="primary"
+                      onPress={onClearTiger}
+                      endContent={
+                        <img
+                          src={lightning}
+                          alt="lightning"
+                          className="w-5 h-5 brightness-0 dark:brightness-100 dark:invert"
+                        />
+                      }
+                    >
+                      Clear TIGER tags
+                    </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
                 <Button
