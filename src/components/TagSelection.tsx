@@ -97,7 +97,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
   );
 
   return scroll ? (
-    <ScrollShadow className="flex flex-wrap gap-2 h-[100px]">
+    <ScrollShadow className="flex flex-wrap gap-2 max-h-[100px]">
       {tagsContainer}
     </ScrollShadow>
   ) : (

@@ -12,11 +12,10 @@ const RelationForm: React.FC<RelationFormProps> = ({ onSubmit }) => {
   const { relationId, setRelationId } = useChangesetStore();
   return (
     <Form onSubmit={onSubmit}>
+      <p className="text-lg font-medium">OSM Relation ID</p>
       <Input
         isRequired
         errorMessage="Please enter a valid OSM relation ID"
-        label="OSM Relation ID"
-        labelPlacement="outside"
         name="relation"
         placeholder="12345"
         type="number"

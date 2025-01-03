@@ -28,20 +28,20 @@ const ChangesetTagTable: React.FC<InfoTableProps> = ({
   const { host } = useChangesetStore();
   const data: TableItem[] = [
     {
+      key: "created_by",
+      value: "TIGER King " + packageJson.version,
+    },
+    {
       key: "description",
       value: description,
     },
     {
-      key: "source",
+      key: "imagery_used",
       value: source,
     },
     {
       key: "host",
       value: host,
-    },
-    {
-      key: "created_by",
-      value: "TIGER King " + packageJson.version,
     },
   ];
 

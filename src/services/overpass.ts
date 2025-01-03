@@ -29,6 +29,7 @@ export const overpassService = {
       (
         way(area.hood)[highway=service];
         way(area.hood)[highway=cycleway];
+        way(area.hood)[highway=footway];
         way(area.hood)[highway=proposed];
         way(area.hood)[highway=track];
       )->.drives;

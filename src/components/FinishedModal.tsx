@@ -74,7 +74,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
               <div className="bg-gray-100 px-6 py-3 rounded-full">
                 <span className="text-2xl font-bold text-gray-700">{ways}</span>
                 <span className="text-gray-600 ml-2">
-                  {ways > 1 ? "ways" : "way"} reviewed
+                  {ways !== 1 ? "ways" : "way"} reviewed
                 </span>
               </div>
             </div>
@@ -82,7 +82,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
             <p className="text-center text-medium font-medium">
               The changes you upload as
               <Link
-                className="px-1 text-medium font-medium hover:underline"
+                className="px-1 hover:underline"
                 target="_blank"
                 href={`https://www.openstreetmap.org/user/${osmUser}`}
               >
@@ -111,9 +111,9 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
                   setUploadWays([]);
                   onClose();
                 }}
-                className="pt-2"
+                className="mt-2 hover:border-2 hover:border-danger"
               >
-                Clear
+                Discard
               </Button>
             </div>
           </div>

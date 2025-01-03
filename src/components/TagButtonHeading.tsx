@@ -23,7 +23,11 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
           href={`https://wiki.openstreetmap.org/wiki/Key:${header}`}
           target="_blank"
         >
-          <img src={info} alt="surface" className="w-6 h-6" />
+          <img
+            src={info}
+            alt="surface"
+            className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
+          />
         </Link>
       </Tooltip>
     </div>

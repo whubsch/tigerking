@@ -64,7 +64,7 @@ const QuickTags: React.FC = () => {
               transition-all duration-200
               ${
                 isActive
-                  ? "border-2 border-primary bg-primary/10"
+                  ? "outline outline-2 outline-primary bg-primary/10"
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
               }
             `}

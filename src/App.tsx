@@ -26,7 +26,8 @@ const App: React.FC = () => {
   const [lanesBackward, setLanesBackward] = useState(0);
   const [convertDriveway, setConvertDriveway] = useState(false);
   const { loading } = useOsmAuthContext();
-  const { relationId, setHost, setSource } = useChangesetStore();
+  const { relationId, setHost, setSource, setDescription } =
+    useChangesetStore();
   const { lanes, setLanes, surface, setSurface } = useWayTagsStore();
 
   // Should be inside a useEffect:
@@ -49,7 +50,36 @@ const App: React.FC = () => {
     currentWayCoordinates,
   } = useWayManagement();
 
-  // Add this useEffect
+  const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
+
+  // Load saved ways when component mounts
+  useEffect(() => {
+    setDescription("");
+
+    const savedWays = localStorage.getItem(UPLOAD_WAYS_STORAGE_KEY);
+    if (savedWays) {
+      try {
+        const parsedWays = JSON.parse(savedWays);
+        setUploadWays(parsedWays);
+      } catch (e) {
+        console.error("Error loading saved ways:", e);
+      }
+    }
+  }, []);
+
+  // Save ways whenever they change
+  useEffect(() => {
+    if (uploadWays.length > 0) {
+      localStorage.setItem(UPLOAD_WAYS_STORAGE_KEY, JSON.stringify(uploadWays));
+    }
+  }, [uploadWays]);
+
+  // Clear saved ways on upload or clear
+  const clearSavedWays = () => {
+    localStorage.removeItem(UPLOAD_WAYS_STORAGE_KEY);
+  };
+
+  // Handle current way and tags
   useEffect(() => {
     if (overpassWays.length > 0 && overpassWays[currentWay]) {
       const currentWayTags = overpassWays[currentWay].tags;
@@ -173,7 +203,12 @@ const App: React.FC = () => {
         ways={currentWay}
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
-        setUploadWays={setUploadWays}
+        setUploadWays={(ways) => {
+          setUploadWays(ways);
+          if (ways.length === 0) {
+            clearSavedWays();
+          }
+        }}
         setChangeset={setLatestChangeset}
         setError={setError}
       />

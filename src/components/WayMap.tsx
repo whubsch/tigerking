@@ -80,11 +80,6 @@ const WayMap: React.FC<WayMapProps> = ({
   });
   const tileSource = TILE_SOURCES[selectedSourceId]?.url || "";
 
-  console.log("TILE_SOURCES:", TILE_SOURCES);
-  console.log("COUNTRYWIDE_TILE_SOURCES:", COUNTRYWIDE_TILE_SOURCES);
-  console.log("OTHER_TILE_SOURCES:", OTHER_TILE_SOURCES);
-  console.log("Initial selectedSourceId:", selectedSourceId);
-
   useEffect(() => {
     if (!mapContainer.current) return;
 
@@ -98,6 +93,8 @@ const WayMap: React.FC<WayMapProps> = ({
           [-124.848974, 24.396308], // Southwest coordinates [lng, lat]
           [-66.885444, 49.384358], // Northeast coordinates [lng, lat]
         );
+
+    setImagery(TILE_SOURCES[selectedSourceId].name);
 
     // Initialize the map
     map.current = new maplibregl.Map({

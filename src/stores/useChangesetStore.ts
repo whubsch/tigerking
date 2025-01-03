@@ -21,6 +21,6 @@ export const useChangesetStore = create<ChangesetStoreState>((set) => ({
   setHost: (host) => set({ host: host }),
   setDescription: (location) =>
     set({
-      description: `Adding details to \`tiger:reviewed=no\` ways in ${location}`,
+      description: `Adding details to and removing tiger tags from \`tiger:reviewed=no\` ways${location ?? ` in ${location}`}`,
     }),
 }));

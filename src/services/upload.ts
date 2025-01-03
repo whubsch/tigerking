@@ -20,7 +20,7 @@ export const uploadChanges = async (
     .att("v", "TIGER King " + version)
     .up()
     .ele("tag")
-    .att("k", "source")
+    .att("k", "imagery_used")
     .att("v", source)
     .up()
     .ele("tag")

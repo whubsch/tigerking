@@ -60,18 +60,20 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   const { lanes, surface } = useWayTagsStore();
 
   return (
-    <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4">
-      {loading ? (
-        <div>Loading authentication state...</div>
-      ) : (
-        <div className="p-4">
-          {relationId && showRelationHeading ? (
-            <RelationTags />
-          ) : (
-            <RelationForm onSubmit={handleRelationSubmit} />
-          )}
-        </div>
-      )}
+    <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
+      <Card>
+        {loading ? (
+          <div>Loading authentication state...</div>
+        ) : (
+          <div className="p-4">
+            {relationId && showRelationHeading ? (
+              <RelationTags />
+            ) : (
+              <RelationForm onSubmit={handleRelationSubmit} />
+            )}
+          </div>
+        )}
+      </Card>
       {overpassWays && overpassWays.length > 0 && (
         <div className="relative">
           <Divider className="my-4" />
@@ -80,7 +82,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
           </div>
         </div>
       )}
-      <Card className="rounded-lg shadow p-4 gap-2 flex flex-col md:grow">
+      <div className="p-4 gap-2 flex flex-col md:grow">
         {overpassWays && overpassWays.length > 0 ? (
           <div>
             <div>
@@ -174,7 +176,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
         ) : (
           <p>Enter a relation ID to get started.</p>
         )}
-      </Card>
+      </div>
     </div>
   );
 };
