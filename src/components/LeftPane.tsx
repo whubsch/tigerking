@@ -20,9 +20,12 @@ import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import { BBox } from "../stores/useBboxStore";
+import BboxCard from "./BboxCard";
 
 interface LeftPaneProps {
   showRelationHeading: boolean;
+  bbox: BBox;
   overpassWays: OsmWay[];
   currentWay: number;
   isLoading: boolean;
@@ -34,12 +37,12 @@ interface LeftPaneProps {
   onFix: (message: string) => void;
   onClearTiger: () => void;
   onSubmit: () => void;
-  loading: boolean;
   handleRelationSubmit: (e: React.FormEvent) => Promise<void>; // Add type definition
 }
 
 const LeftPane: React.FC<LeftPaneProps> = ({
   showRelationHeading,
+  bbox,
   overpassWays,
   currentWay,
   isLoading,
@@ -51,7 +54,6 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   onFix,
   onClearTiger,
   onSubmit,
-  loading,
   handleRelationSubmit,
 }) => {
   const fixOptions = [
@@ -65,8 +67,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   return (
     <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
       <Card>
-        {loading ? (
-          <div>Loading authentication state...</div>
+        {bbox.north && bbox.south && bbox.east && bbox.west ? (
+          <BboxCard bbox={bbox} />
         ) : (
           <div className="p-4">
             {relationId && showRelationHeading ? (

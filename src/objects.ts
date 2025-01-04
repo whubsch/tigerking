@@ -53,5 +53,11 @@ export interface OsmAuthOptions {
 export interface OsmUser {
   id: string;
   display_name: string;
-  // Add other user properties as needed
+}
+
+export interface ZxyTileType {
+  zoom: number;
+  x: number;
+  y: number;
+  hasParams: boolean;
 }

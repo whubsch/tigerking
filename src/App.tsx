@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import WayMap from "./components/WayMap";
 import MainNavbar from "./components/Navbar";
 
@@ -6,7 +6,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import LeftPane from "./components/LeftPane";
 import ChangesetModal from "./components/ChangesetModal";
 import FinishedModal from "./components/FinishedModal";
-import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { overpassService } from "./services/overpass";
 import { shuffleArray } from "./services/shuffle";
 import useWayManagement from "./hooks/useWayManagement";
@@ -14,6 +13,7 @@ import ErrorModal from "./components/ErrorModal";
 import { OsmWay, Tags } from "./objects";
 import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
+import { useBBoxStore } from "./stores/useBboxStore";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
@@ -25,10 +25,27 @@ const App: React.FC = () => {
   const [lanesForward, setLanesForward] = useState(0);
   const [lanesBackward, setLanesBackward] = useState(0);
   const [convertDriveway, setConvertDriveway] = useState(false);
-  const { loading } = useOsmAuthContext();
   const { relationId, setHost, setSource, setDescription } =
     useChangesetStore();
   const { lanes, setLanes, surface, setSurface } = useWayTagsStore();
+  const { bboxState, updateFromZXY } = useBBoxStore();
+
+  // Get search parameters from URL
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const zoom = searchParams.get("zoom");
+    const lon = searchParams.get("x");
+    const lat = searchParams.get("y");
+
+    if (zoom && lat && lon) {
+      updateFromZXY({
+        zoom: Number(zoom),
+        x: Number(lon),
+        y: Number(lat),
+      });
+    }
+  }, [updateFromZXY]);
 
   // Should be inside a useEffect:
   useEffect(() => {
@@ -52,6 +69,54 @@ const App: React.FC = () => {
 
   const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
 
+  const handleNewWays = useCallback(
+    (ways: OsmWay[]) => {
+      // Filter out ways that are already in uploadWays
+      const unprocessedWays = ways.filter(
+        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
+      );
+      const shuffledWays = shuffleArray(unprocessedWays);
+      setOverpassWays(shuffledWays);
+      if (unprocessedWays.length === 0) {
+        setError("No unprocessed ways found in bounding box");
+      }
+    },
+    [uploadWays, setOverpassWays, setError],
+  );
+
+  useEffect(() => {
+    const fetchWaysInBoundingBox = async () => {
+      if (
+        bboxState.north &&
+        bboxState.south &&
+        bboxState.east &&
+        bboxState.west
+      ) {
+        setIsRelationLoading(true);
+        try {
+          const ways = await overpassService.fetchWaysInBbox([
+            bboxState.south,
+            bboxState.west,
+            bboxState.north,
+            bboxState.east,
+          ]);
+
+          if (ways.length === 0) {
+            setError("No ways found in bounding box");
+          } else {
+            handleNewWays(ways);
+          }
+        } catch (error) {
+          setError("Error fetching OSM data: " + error);
+        } finally {
+          setIsRelationLoading(false);
+        }
+      }
+    };
+
+    fetchWaysInBoundingBox();
+  }, [bboxState, setOverpassWays, handleNewWays]);
+
   // Load saved ways when component mounts
   useEffect(() => {
     setDescription("");
@@ -65,7 +130,7 @@ const App: React.FC = () => {
         console.error("Error loading saved ways:", e);
       }
     }
-  }, []);
+  }, [setDescription, setUploadWays]);
 
   // Save ways whenever they change
   useEffect(() => {
@@ -79,20 +144,10 @@ const App: React.FC = () => {
     localStorage.removeItem(UPLOAD_WAYS_STORAGE_KEY);
   };
 
-  const isWayProcessed = (wayId: number, toUploadWays: OsmWay[]): boolean => {
-    return toUploadWays.some((way) => way.id === wayId);
-  };
-
   // Handle current way and tags
   useEffect(() => {
     if (overpassWays.length > 0 && overpassWays[currentWay]) {
       // Check and skipping if way is already in uploadWays
-      const currentWayId = overpassWays[currentWay].id;
-      if (isWayProcessed(currentWayId, uploadWays)) {
-        console.log(`Skipping already processed way ${currentWayId}`);
-        setCurrentWay(currentWay + 1);
-        return;
-      }
 
       const currentWayTags = overpassWays[currentWay].tags;
 
@@ -129,7 +184,14 @@ const App: React.FC = () => {
       setShowLaneDirection(false);
       setConvertDriveway(false);
     }
-  }, [currentWay, overpassWays, setLanes, setSurface]);
+  }, [
+    currentWay,
+    overpassWays,
+    setLanes,
+    setSurface,
+    setCurrentWay,
+    uploadWays,
+  ]);
 
   const handleEnd = () => {
     if (currentWay < overpassWays.length - 1) {
@@ -146,11 +208,10 @@ const App: React.FC = () => {
 
     try {
       const ways = await overpassService.fetchWaysInRelation(relationId);
-      const shuffledWays = shuffleArray(ways);
-      setOverpassWays(shuffledWays);
-      console.log("Ways:", ways);
       if (ways.length === 0) {
-        setError("No ways found in relation");
+        setError("No ways found in bounding box");
+      } else {
+        handleNewWays(ways);
       }
     } catch (error) {
       setError("Error fetching OSM data: " + error);
@@ -251,6 +312,7 @@ const App: React.FC = () => {
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane
           showRelationHeading={showRelationHeading}
+          bbox={bboxState}
           overpassWays={overpassWays}
           currentWay={currentWay}
           isLoading={isRelationLoading}
@@ -262,7 +324,6 @@ const App: React.FC = () => {
           onFix={handleActions.fix}
           onClearTiger={handleActions.clearTiger}
           onSubmit={handleActions.submit}
-          loading={loading}
           handleRelationSubmit={handleRelationSubmit}
         />
         <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">

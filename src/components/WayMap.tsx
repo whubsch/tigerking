@@ -189,7 +189,7 @@ const WayMap: React.FC<WayMapProps> = ({
     return () => {
       map.current?.remove();
     };
-  }, [coordinates, zoom, tileSource]);
+  }, [coordinates, zoom, tileSource, selectedSourceId, setImagery]);
 
   const handleTileSourceChange = (sourceId: string) => {
     if (map.current && TILE_SOURCES[sourceId]) {
@@ -204,7 +204,7 @@ const WayMap: React.FC<WayMapProps> = ({
 
   return (
     <div className="relative w-full h-full">
-      <div className="absolute bottom-2 md:top-2 left-2 z-10 w-40 md:w-72">
+      <div className="absolute bottom-2 md:bottom-auto md:top-2 left-2 z-10 w-40 md:w-72">
         <Select
           size="sm"
           label="Imagery"
