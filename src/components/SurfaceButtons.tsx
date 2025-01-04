@@ -13,6 +13,7 @@ import { useWayTagsStore } from "../stores/useWayTagsStore";
 const SurfaceButtons: React.FC = () => {
   const commonSurfaces = ["concrete", "asphalt", "compacted"];
   const { surface, setSurface } = useWayTagsStore();
+
   return (
     <div className="w-full">
       <TagButtonHeading
@@ -22,14 +23,18 @@ const SurfaceButtons: React.FC = () => {
       <ButtonGroup
         variant="bordered"
         className="flex flex-wrap w-full"
+        radius="sm"
         size="md"
       >
         {commonSurfaces.map((surfaceKeys) => (
           <Button
             key={surfaceKeys}
-            className="flex-1 border-1"
+            className={`flex-1 border-1 transition-all duration-200 ${
+              surfaceKeys === surface
+                ? "bg-primary-100 shadow-lg border-primary"
+                : "hover:bg-primary/10"
+            }`}
             onPress={() => setSurface(surfaceKeys)}
-            variant={surfaceKeys === surface ? "solid" : "bordered"}
           >
             {surfaceKeys}
           </Button>
@@ -38,25 +43,24 @@ const SurfaceButtons: React.FC = () => {
         <Dropdown>
           <DropdownTrigger>
             <Button
-              variant={
+              className={`flex-1 border-1 ${
                 !commonSurfaces.includes(surface) && surface
-                  ? "solid"
-                  : "bordered"
-              }
-              className="flex-1 border-1"
-              onPress={() => setSurface("none")}
+                  ? "bg-primary-100 shadow-lg border-primary"
+                  : "hover:bg-primary/10"
+              }`}
             >
               {!commonSurfaces.includes(surface) && surface ? surface : "Other"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
-            aria-label="Single selection example"
+            aria-label="Surface selection"
             selectedKeys={surface}
             selectionMode="single"
             variant="flat"
             onSelectionChange={(keys) =>
               setSurface(Array.from(keys)[0] as string)
             }
+            className="max-h-[300px]"
           >
             <DropdownSection showDivider title="generic">
               <DropdownItem key="paved">paved</DropdownItem>

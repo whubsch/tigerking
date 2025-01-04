@@ -89,109 +89,109 @@ const LeftPane: React.FC<LeftPaneProps> = ({
       )}
       <div className="p-4 gap-2 flex flex-col md:grow">
         {overpassWays && overpassWays.length > 0 ? (
-          <div>
-            <div>
-              <WayHeading
-                tags={overpassWays[currentWay].tags}
-                wayId={overpassWays[currentWay].id?.toString() ?? ""}
-              />
-              <div className="flex flex-col gap-2">
-                <div className="py-2 flex flex-col gap-4">
-                  <SurfaceButtons />
-                  <LanesButtons
-                    showLaneDirection={showLaneDirection}
-                    setShowLaneDirection={setShowLaneDirection}
-                  />
-                </div>
+          <>
+            <WayHeading
+              tags={overpassWays[currentWay].tags}
+              wayId={overpassWays[currentWay].id?.toString() ?? ""}
+            />
+            <div className="flex flex-col gap-2">
+              <div className="py-2 flex flex-col gap-4">
+                <SurfaceButtons />
+                <LanesButtons
+                  showLaneDirection={showLaneDirection}
+                  setShowLaneDirection={setShowLaneDirection}
+                />
               </div>
             </div>
-            <div>
-              <QuickTags />
-              {!overpassWays[currentWay].tags.name &&
-                overpassWays[currentWay].tags.highway === "residential" && (
-                  <div
-                    className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200 outline outline-2 outline-warning" : "bg-warning-100"}`}
-                  >
-                    <div className="flex flex-col flex-grow gap-1">
-                      <span className="text-sm font-medium">
-                        This residential way has no name
-                      </span>
-                      <span className="text-xs">
-                        Consider converting to a driveway if appropriate
-                      </span>
+            <div className="grow">
+              <>
+                <QuickTags />
+                {!overpassWays[currentWay].tags.name &&
+                  overpassWays[currentWay].tags.highway === "residential" && (
+                    <div
+                      className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200 outline outline-2 outline-warning" : "bg-warning-100"}`}
+                    >
+                      <div className="flex flex-col flex-grow gap-1">
+                        <span className="text-sm font-medium">
+                          This residential way has no name
+                        </span>
+                        <span className="text-xs">
+                          Consider converting to a driveway if appropriate
+                        </span>
+                      </div>
+                      <Button
+                        size="sm"
+                        color="warning"
+                        variant="flat"
+                        onPress={() =>
+                          setConvertDriveway(convertDriveway ? false : true)
+                        }
+                      >
+                        {convertDriveway ? (
+                          <img src={check} alt="check" className="h-6 w-6" />
+                        ) : (
+                          "Convert"
+                        )}
+                      </Button>
                     </div>
-                    <Button
-                      size="sm"
-                      color="warning"
-                      variant="flat"
-                      onPress={() =>
-                        setConvertDriveway(convertDriveway ? false : true)
-                      }
-                    >
-                      {convertDriveway ? (
-                        <img src={check} alt="check" className="h-6 w-6" />
-                      ) : (
-                        "Convert"
-                      )}
-                    </Button>
-                  </div>
-                )}
-              <div className="flex gap-2 w-full mt-4">
-                <Button
-                  color="default"
-                  size="md"
-                  className="flex-1"
-                  onPress={onSkip}
-                >
-                  Skip
-                </Button>
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button color="default" size="md" className="flex-1">
-                      Fix
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="Fix options">
-                    <>
-                      {fixOptions.map((option) => (
-                        <DropdownItem
-                          key={option.key}
-                          onPress={(label) =>
-                            onFix(label.toString().toLowerCase())
-                          }
-                        >
-                          {option.label}
-                        </DropdownItem>
-                      ))}
-                    </>
-                    <DropdownItem
-                      key="clear-tiger"
-                      color="primary"
-                      onPress={onClearTiger}
-                      endContent={
-                        <img
-                          src={lightning}
-                          alt="lightning"
-                          className="w-5 h-5 brightness-0 dark:brightness-100 dark:invert"
-                        />
-                      }
-                    >
-                      Clear TIGER tags
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-                <Button
-                  color="primary"
-                  size="md"
-                  className="flex-1"
-                  onPress={onSubmit}
-                  isDisabled={!surface || !lanes}
-                >
-                  Submit
-                </Button>
-              </div>
+                  )}
+                <div className="flex gap-2 w-full mt-4">
+                  <Button
+                    color="default"
+                    size="md"
+                    className="flex-1"
+                    onPress={onSkip}
+                  >
+                    Skip
+                  </Button>
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Button color="default" size="md" className="flex-1">
+                        Fix
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Fix options">
+                      <>
+                        {fixOptions.map((option) => (
+                          <DropdownItem
+                            key={option.key}
+                            onPress={(label) =>
+                              onFix(label.toString().toLowerCase())
+                            }
+                          >
+                            {option.label}
+                          </DropdownItem>
+                        ))}
+                      </>
+                      <DropdownItem
+                        key="clear-tiger"
+                        color="primary"
+                        onPress={onClearTiger}
+                        endContent={
+                          <img
+                            src={lightning}
+                            alt="lightning"
+                            className="w-5 h-5 brightness-0 dark:brightness-100 dark:invert"
+                          />
+                        }
+                      >
+                        Clear TIGER tags
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                  <Button
+                    color="primary"
+                    size="md"
+                    className="flex-1"
+                    onPress={onSubmit}
+                    isDisabled={!surface || !lanes}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </>
             </div>
-          </div>
+          </>
         ) : isLoading ? (
           <div className="flex justify-center items-center mt-4">
             <Spinner label="Loading ways..." color="primary" />

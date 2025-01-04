@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Card } from "@nextui-org/card";
 import { Kbd } from "@nextui-org/kbd";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import { Tooltip } from "@nextui-org/react";
 
 const QuickTags: React.FC = () => {
   const { surface, setSurface, lanes, setLanes } = useWayTagsStore();
@@ -58,35 +59,41 @@ const QuickTags: React.FC = () => {
         {quickTagsData.map((tag) => {
           const isActive = tag.surface === surface && tag.lanes === lanes;
           return (
-            <Card
-              key={tag.id}
-              className={`
+            <Tooltip
+              content={
+                <p>
+                  Press <Kbd>{tag.keyboardShortcut}</Kbd>
+                </p>
+              }
+              delay={1000}
+            >
+              <Card
+                key={tag.id}
+                className={`
               transition-all duration-200
               ${
                 isActive
-                  ? "outline outline-2 outline-primary bg-primary/10"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "outline outline-2 outline-primary bg-primary/10 shadow-lg"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-800 shadow-md"
               }
             `}
-              isPressable
-              onPress={() => handleCardPress(tag.surface, tag.lanes)}
-            >
-              <div className="p-3">
-                <div className="flex justify-between items-center">
-                  <Kbd className="hidden md:block">{tag.keyboardShortcut}</Kbd>
-                </div>
-                <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
-                  <div className="flex items-center gap-2">
-                    {/* <span className="font-medium">Surface:</span> */}
-                    <span>{tag.surface}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {/* <span className="font-medium">Lanes:</span> */}
-                    <span>{tag.lanes}</span>
+                isPressable
+                onPress={() => handleCardPress(tag.surface, tag.lanes)}
+              >
+                <div className="p-3 relative">
+                  <div className="space-y-1 text-sm">
+                    <div className="flex items-center gap-2">
+                      {/* <span className="font-medium">Surface:</span> */}
+                      <span>{tag.surface}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {/* <span className="font-medium">Lanes:</span> */}
+                      <span>{tag.lanes}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </Tooltip>
           );
         })}
       </div>

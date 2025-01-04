@@ -9,6 +9,7 @@ import {
   DropdownSection,
 } from "@nextui-org/dropdown";
 import { Chip } from "@nextui-org/chip";
+import { Tooltip } from "@nextui-org/react";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";
@@ -70,20 +71,22 @@ const MainNavbar: React.FC<NavbarProps> = ({
       <NavbarContent justify="end">
         {loggedIn ? (
           <>
-            <Button
-              variant="flat"
-              isDisabled={uploads.length === 0}
-              startContent={
-                <img
-                  src={upload}
-                  alt="upload"
-                  className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
-                />
-              }
-              onPress={() => setShowFinishedModal(true)}
-            >
-              <Chip>{uploads ? uploads.length : 0}</Chip>
-            </Button>
+            <Tooltip content="Upload" delay={250}>
+              <Button
+                variant="flat"
+                isDisabled={uploads.length === 0}
+                startContent={
+                  <img
+                    src={upload}
+                    alt="upload"
+                    className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+                  />
+                }
+                onPress={() => setShowFinishedModal(true)}
+              >
+                <Chip>{uploads ? uploads.length : 0}</Chip>
+              </Button>
+            </Tooltip>
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly>
