@@ -15,6 +15,7 @@ import WayHeading from "./WayHeading";
 import SurfaceButtons from "./SurfaceButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
+import NoRelationPlaceholder from "./NoRelationPlaceholder";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
@@ -62,6 +63,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     { key: "bad-geometry", label: "Bad geometry" },
     { key: "needs-splitting", label: "Needs splitting" },
     { key: "doesnt-exist", label: "Doesn't exist" },
+    { key: "check-highway", label: "Check highway value" },
   ];
   const { relationId } = useChangesetStore();
   const { lanes, surface, laneMarkings } = useWayTagsStore();
@@ -210,7 +212,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
             <Spinner label="Loading ways..." color="primary" />
           </div>
         ) : (
-          <p>Enter a relation ID to get started.</p>
+          <NoRelationPlaceholder />
         )}
       </div>
     </div>
