@@ -11,7 +11,7 @@ interface RelationFormProps {
 const RelationForm: React.FC<RelationFormProps> = ({ onSubmit }) => {
   const { relationId, setRelationId } = useChangesetStore();
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} id="relation-form">
       <p className="text-lg font-medium">OSM Relation ID</p>
       <Input
         isRequired

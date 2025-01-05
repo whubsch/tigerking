@@ -5,7 +5,8 @@ import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { Tooltip } from "@nextui-org/react";
 
 const QuickTags: React.FC = () => {
-  const { surface, setSurface, lanes, setLanes } = useWayTagsStore();
+  const { surface, setSurface, lanes, setLanes, setLaneMarkings } =
+    useWayTagsStore();
   const quickTagsData = useMemo(
     () => [
       {
@@ -49,7 +50,11 @@ const QuickTags: React.FC = () => {
 
   const handleCardPress = (surface: string, lanes: string): void => {
     setSurface(surface);
-    setLanes(lanes);
+    if (lanes === "none") {
+      setLaneMarkings(false);
+    } else {
+      setLanes(lanes);
+    }
   };
 
   return (
@@ -60,6 +65,7 @@ const QuickTags: React.FC = () => {
           const isActive = tag.surface === surface && tag.lanes === lanes;
           return (
             <Tooltip
+              key={tag.id}
               content={
                 <p>
                   Shortcut: <Kbd>{tag.keyboardShortcut}</Kbd>
@@ -68,7 +74,6 @@ const QuickTags: React.FC = () => {
               delay={1000}
             >
               <Card
-                key={tag.id}
                 className={`
               transition-all duration-200
               ${

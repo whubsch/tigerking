@@ -12,6 +12,7 @@ const BASE_OVERPASS_QUERY = `
   way(area.hood)[highway=footway];
   way(area.hood)[highway=proposed];
   way(area.hood)[highway=track];
+  way(area.hood)[highway=path];
 )->.ignore;
 
 ((.tigers; - .ignore;); >; )->.all;

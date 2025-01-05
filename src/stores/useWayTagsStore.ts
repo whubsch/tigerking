@@ -8,6 +8,8 @@ interface WayTagsState {
   // Lanes state
   lanes: string;
   setLanes: (lanes: string) => void;
+  laneMarkings: boolean;
+  setLaneMarkings: (hasMarkings: boolean) => void;
 
   // Lane direction state
   showLaneDirection: boolean;
@@ -29,6 +31,8 @@ export const useWayTagsStore = create<WayTagsState>((set) => ({
   // Surface
   surface: "",
   setSurface: (surface) => set({ surface }),
+  laneMarkings: true,
+  setLaneMarkings: (hasMarkings) => set({ laneMarkings: hasMarkings }),
 
   // Lanes
   lanes: "",
@@ -51,6 +55,7 @@ export const useWayTagsStore = create<WayTagsState>((set) => ({
     set({
       surface: "",
       lanes: "",
+      laneMarkings: true,
       showLaneDirection: false,
       lanesForward: 0,
       lanesBackward: 0,

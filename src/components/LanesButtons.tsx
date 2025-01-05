@@ -3,6 +3,7 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { Slider } from "@nextui-org/slider";
 import TagButtonHeading from "./TagButtonHeading";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import kebab from "../assets/kebab.svg";
 
 interface LanesButtonsProps {
   showLaneDirection: boolean;
@@ -13,10 +14,12 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
   showLaneDirection,
   setShowLaneDirection,
 }) => {
-  const commonLanes = ["none", "2", "4"];
+  const commonLanes = ["2", "4"];
   const {
     lanes,
     setLanes,
+    laneMarkings,
+    setLaneMarkings,
     lanesForward,
     setLanesForward,
     lanesBackward,
@@ -34,6 +37,18 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
         className="flex flex-wrap w-full"
         size="md"
       >
+        <Button
+          className={`flex-1 border-1 transition-all duration-200 ${
+            !laneMarkings
+              ? "bg-primary-100 shadow-lg border-primary"
+              : "hover:bg-primary/10"
+          }`}
+          onPress={() => {
+            setLaneMarkings(false);
+          }}
+        >
+          none
+        </Button>
         {commonLanes.map((lanesKey) => {
           return (
             <Button
@@ -51,24 +66,32 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
         })}
         <Button
           className={`flex-1 border-1 transition-all duration-200 ${
-            lanes === "other"
+            (lanes && !commonLanes.includes(lanes)) ||
+            lanesBackward ||
+            lanesForward
               ? "bg-primary-100 shadow-lg border-primary"
               : "hover:bg-primary/10"
           }`}
           onPress={() => {
-            setLanes("other");
-            setShowLaneDirection(true);
+            setShowLaneDirection(showLaneDirection ? false : true);
           }}
+          key="other"
+          isIconOnly
         >
-          Other
+          <img
+            src={kebab}
+            alt="kebab"
+            className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
+          />
         </Button>
       </ButtonGroup>
 
       {showLaneDirection && (
         <div className="space-y-4 mt-2">
           <div>
-            <p className="text-small font-medium">Lanes</p>
             <Slider
+              label={<p className="text-small font-medium">Lanes</p>}
+              aria-label="Lanes"
               size="sm"
               step={1}
               maxValue={10}
@@ -87,8 +110,11 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
             />
           </div>
           <div>
-            <p className="text-small font-medium mb-2">Lanes Forward</p>
             <Slider
+              label={
+                <p className="text-small font-medium mb-2">Lanes Forward</p>
+              }
+              aria-label="Lanes Forward"
               size="sm"
               step={1}
               maxValue={5}
@@ -108,8 +134,11 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           </div>
 
           <div>
-            <p className="text-small font-medium mb-2">Lanes Backward</p>
             <Slider
+              label={
+                <p className="text-small font-medium mb-2">Lanes Backward</p>
+              }
+              aria-label="Lanes Backward"
               size="sm"
               step={1}
               maxValue={5}

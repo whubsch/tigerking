@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/dropdown";
 import TagButtonHeading from "./TagButtonHeading";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import kebab from "../assets/kebab.svg";
 
 const SurfaceButtons: React.FC = () => {
   const commonSurfaces = ["concrete", "asphalt", "compacted"];
@@ -48,8 +49,17 @@ const SurfaceButtons: React.FC = () => {
                   ? "bg-primary-100 shadow-lg border-primary"
                   : "hover:bg-primary/10"
               }`}
+              isIconOnly
             >
-              {!commonSurfaces.includes(surface) && surface ? surface : "Other"}
+              {!commonSurfaces.includes(surface) && surface ? (
+                surface
+              ) : (
+                <img
+                  src={kebab}
+                  alt="kebab"
+                  className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
+                />
+              )}
             </Button>
           </DropdownTrigger>
           <DropdownMenu

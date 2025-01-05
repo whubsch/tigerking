@@ -28,12 +28,22 @@ const App: React.FC = () => {
   const [isRelationLoading, setIsRelationLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [showLaneDirection, setShowLaneDirection] = useState(false);
-  const [lanesForward, setLanesForward] = useState(0);
-  const [lanesBackward, setLanesBackward] = useState(0);
   const [convertDriveway, setConvertDriveway] = useState(false);
   const { relationId, setHost, setSource, setDescription } =
     useChangesetStore();
-  const { lanes, setLanes, surface, setSurface } = useWayTagsStore();
+  const {
+    lanes,
+    setLanes,
+    surface,
+    setSurface,
+    laneMarkings,
+    setLaneMarkings,
+    lanesForward,
+    lanesBackward,
+    setLanesForward,
+    setLanesBackward,
+    resetTags,
+  } = useWayTagsStore();
   const { bboxState, updateFromZXY } = useBBoxStore();
 
   // Get search parameters from URL
@@ -174,7 +184,7 @@ const App: React.FC = () => {
       if (currentWayTags.lanes) {
         setLanes(currentWayTags.lanes);
       } else if (currentWayTags.lane_markings === "no") {
-        setLanes("none");
+        setLaneMarkings(false);
       } else {
         setLanes("");
       }
@@ -202,16 +212,25 @@ const App: React.FC = () => {
     setLanes,
     setSurface,
     setCurrentWay,
-    uploadWays,
+    setLanesBackward,
+    setLanesForward,
+    setLaneMarkings,
   ]);
 
   const handleEnd = useCallback(() => {
     if (currentWay < overpassWays.length - 1) {
+      resetTags();
       setCurrentWay(currentWay + 1);
     } else {
       setShowFinishedModal(true);
     }
-  }, [currentWay, overpassWays.length, setCurrentWay, setShowFinishedModal]);
+  }, [
+    currentWay,
+    overpassWays.length,
+    setCurrentWay,
+    setShowFinishedModal,
+    resetTags,
+  ]);
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -283,7 +302,8 @@ const App: React.FC = () => {
           tags: {
             ...filterTigerTags(overpassWays[currentWay].tags),
             surface: surface,
-            ...(lanes === "none" ? { lane_markings: "no" } : { lanes: lanes }),
+            ...(lanes ? { lanes: lanes } : {}),
+            ...(!laneMarkings ? { lane_markings: "no" } : {}),
             ...(lanesForward
               ? { "lanes:forward": lanesForward.toString() }
               : {}),
@@ -313,6 +333,7 @@ const App: React.FC = () => {
       lanesForward,
       lanesBackward,
       convertDriveway,
+      laneMarkings,
     ],
   );
 

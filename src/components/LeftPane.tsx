@@ -64,7 +64,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     { key: "doesnt-exist", label: "Doesn't exist" },
   ];
   const { relationId } = useChangesetStore();
-  const { lanes, surface } = useWayTagsStore();
+  const { lanes, surface, laneMarkings } = useWayTagsStore();
 
   return (
     <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
@@ -197,7 +197,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                       size="md"
                       className="flex-1"
                       onPress={onSubmit}
-                      isDisabled={!surface || !lanes}
+                      isDisabled={!surface || (!lanes && laneMarkings)}
                     >
                       Submit
                     </Button>
