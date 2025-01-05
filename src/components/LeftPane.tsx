@@ -157,9 +157,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         {fixOptions.map((option) => (
                           <DropdownItem
                             key={option.key}
-                            onPress={(label) =>
-                              onFix(label.toString().toLowerCase())
-                            }
+                            onPress={() => onFix(option.label.toLowerCase())}
                           >
                             {option.label}
                           </DropdownItem>
@@ -176,6 +174,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                             className="w-5 h-5 brightness-0 dark:brightness-100 dark:invert"
                           />
                         }
+                        textValue="Clear TIGER tags"
                       >
                         <div className="flex gap-2">
                           Clear TIGER tags
