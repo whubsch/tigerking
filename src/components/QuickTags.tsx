@@ -62,7 +62,7 @@ const QuickTags: React.FC = () => {
             <Tooltip
               content={
                 <p>
-                  Press <Kbd>{tag.keyboardShortcut}</Kbd>
+                  Shortcut: <Kbd>{tag.keyboardShortcut}</Kbd>
                 </p>
               }
               delay={1000}

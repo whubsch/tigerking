@@ -9,7 +9,7 @@ import {
   DropdownSection,
 } from "@nextui-org/dropdown";
 import { Chip } from "@nextui-org/chip";
-import { Tooltip } from "@nextui-org/react";
+import { Kbd, Tooltip } from "@nextui-org/react";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";
@@ -71,7 +71,15 @@ const MainNavbar: React.FC<NavbarProps> = ({
       <NavbarContent justify="end">
         {loggedIn ? (
           <>
-            <Tooltip content="Upload" delay={250}>
+            <Tooltip
+              content={
+                <div className="flex gap-2">
+                  <p>Upload</p>
+                  <Kbd>U</Kbd>
+                </div>
+              }
+              delay={250}
+            >
               <Button
                 variant="flat"
                 isDisabled={uploads.length === 0}

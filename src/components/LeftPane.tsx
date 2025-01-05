@@ -22,6 +22,8 @@ import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { BBox } from "../stores/useBboxStore";
 import BboxCard from "./BboxCard";
+import { Kbd } from "@nextui-org/kbd";
+import { Tooltip } from "@nextui-org/tooltip";
 
 interface LeftPaneProps {
   showRelationHeading: boolean;
@@ -87,7 +89,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
           </div>
         </div>
       )}
-      <div className="p-4 gap-2 flex flex-col md:grow">
+      <div className="px-4 gap-2 flex flex-col md:grow">
         {overpassWays && overpassWays.length > 0 ? (
           <>
             <WayHeading
@@ -175,19 +177,31 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           />
                         }
                       >
-                        Clear TIGER tags
+                        <div className="flex gap-2">
+                          Clear TIGER tags
+                          <Kbd className="hidden md:block">F</Kbd>
+                        </div>
                       </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
-                  <Button
-                    color="primary"
-                    size="md"
-                    className="flex-1"
-                    onPress={onSubmit}
-                    isDisabled={!surface || !lanes}
+                  <Tooltip
+                    content={
+                      <p>
+                        Shortcut: <Kbd>S</Kbd>
+                      </p>
+                    }
+                    delay={250}
                   >
-                    Submit
-                  </Button>
+                    <Button
+                      color="primary"
+                      size="md"
+                      className="flex-1"
+                      onPress={onSubmit}
+                      isDisabled={!surface || !lanes}
+                    >
+                      Submit
+                    </Button>
+                  </Tooltip>
                 </div>
               </>
             </div>

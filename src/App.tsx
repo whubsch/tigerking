@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import WayMap from "./components/WayMap";
 import MainNavbar from "./components/Navbar";
 
@@ -69,19 +75,25 @@ const App: React.FC = () => {
 
   const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
 
-  const handleNewWays = useCallback(
+  const uploadWaysRef = useRef(uploadWays);
+
+  // Update ref whenever uploadWays changes
+  useEffect(() => {
+    uploadWaysRef.current = uploadWays;
+  }, [uploadWays]);
+
+  const deduplicateNewWays = useCallback(
     (ways: OsmWay[]) => {
-      // Filter out ways that are already in uploadWays
       const unprocessedWays = ways.filter(
-        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
+        (way) =>
+          !uploadWaysRef.current.some(
+            (uploadedWay) => uploadedWay.id === way.id,
+          ),
       );
       const shuffledWays = shuffleArray(unprocessedWays);
       setOverpassWays(shuffledWays);
-      if (unprocessedWays.length === 0) {
-        setError("No unprocessed ways found in bounding box");
-      }
     },
-    [uploadWays, setOverpassWays, setError],
+    [], // No dependencies needed
   );
 
   useEffect(() => {
@@ -104,7 +116,7 @@ const App: React.FC = () => {
           if (ways.length === 0) {
             setError("No ways found in bounding box");
           } else {
-            handleNewWays(ways);
+            deduplicateNewWays(ways);
           }
         } catch (error) {
           setError("Error fetching OSM data: " + error);
@@ -115,7 +127,7 @@ const App: React.FC = () => {
     };
 
     fetchWaysInBoundingBox();
-  }, [bboxState, setOverpassWays, handleNewWays]);
+  }, [bboxState, deduplicateNewWays]);
 
   // Load saved ways when component mounts
   useEffect(() => {
@@ -193,13 +205,13 @@ const App: React.FC = () => {
     uploadWays,
   ]);
 
-  const handleEnd = () => {
+  const handleEnd = useCallback(() => {
     if (currentWay < overpassWays.length - 1) {
       setCurrentWay(currentWay + 1);
     } else {
       setShowFinishedModal(true);
     }
-  };
+  }, [currentWay, overpassWays.length, setCurrentWay, setShowFinishedModal]);
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -211,7 +223,7 @@ const App: React.FC = () => {
       if (ways.length === 0) {
         setError("No ways found in bounding box");
       } else {
-        handleNewWays(ways);
+        deduplicateNewWays(ways);
       }
     } catch (error) {
       setError("Error fetching OSM data: " + error);
@@ -221,61 +233,105 @@ const App: React.FC = () => {
     }
   };
 
-  const filterTigerTags = (tags: Tags): Tags => {
-    return Object.fromEntries(
-      Object.entries(tags).filter(([key]) => !key.startsWith("tiger")),
-    );
-  };
+  const filterTigerTags = useCallback(
+    (tags: Tags, keepReviewed: boolean = false): Tags => {
+      return Object.fromEntries(
+        Object.entries(tags).filter(([key]) =>
+          keepReviewed
+            ? !key.startsWith("tiger") || key === "tiger:reviewed"
+            : !key.startsWith("tiger"),
+        ),
+      );
+    },
+    [],
+  );
 
-  const handleActions = {
-    skip: () => {
-      setLanes("");
-      setSurface("");
-      handleEnd();
-    },
-    fix: (message: string) => {
-      const updatedWay = {
-        ...overpassWays[currentWay],
-        tags: {
-          ...overpassWays[currentWay].tags,
-          "fixme:tigerking": message,
-        },
-      };
-      setUploadWays((prevWays) => [...prevWays, updatedWay]);
-      handleEnd();
-    },
-    clearTiger: () => {
-      const updatedWay = {
-        ...overpassWays[currentWay],
-        tags: {
-          ...filterTigerTags(overpassWays[currentWay].tags),
-        },
-      };
-      console.log("Updated way:", updatedWay);
-      setUploadWays((prevWays) => [...prevWays, updatedWay]);
-      handleEnd();
-    },
-    submit: () => {
-      const updatedWay: OsmWay = {
-        ...overpassWays[currentWay],
-        tags: {
-          ...filterTigerTags(overpassWays[currentWay].tags),
-          surface: surface,
-          ...(lanes === "none" ? { lane_markings: "no" } : { lanes: lanes }),
-          ...(lanesForward ? { "lanes:forward": lanesForward.toString() } : {}),
-          ...(lanesBackward
-            ? { "lanes:backward": lanesBackward.toString() }
-            : {}),
-          ...(convertDriveway
-            ? { highway: "service", service: "driveway" }
-            : {}),
-        },
-      };
-      console.log("Updated way:", updatedWay);
-      setUploadWays((prevWays) => [...prevWays, updatedWay]);
-      handleEnd();
-    },
-  };
+  const handleActions = useMemo(
+    () => ({
+      skip: () => {
+        console.log("Skipped way");
+        setLanes("");
+        setSurface("");
+        handleEnd();
+      },
+      fix: (message: string) => {
+        const updatedWay = {
+          ...overpassWays[currentWay],
+          tags: {
+            ...filterTigerTags(overpassWays[currentWay].tags, true),
+            "fixme:tigerking": message,
+          },
+        };
+        console.info("Fixed way:", updatedWay);
+        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        handleEnd();
+      },
+      clearTiger: () => {
+        const updatedWay = {
+          ...overpassWays[currentWay],
+          tags: {
+            ...filterTigerTags(overpassWays[currentWay].tags),
+          },
+        };
+        console.info("Updated way:", updatedWay);
+        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        handleEnd();
+      },
+      submit: () => {
+        const updatedWay: OsmWay = {
+          ...overpassWays[currentWay],
+          tags: {
+            ...filterTigerTags(overpassWays[currentWay].tags),
+            surface: surface,
+            ...(lanes === "none" ? { lane_markings: "no" } : { lanes: lanes }),
+            ...(lanesForward
+              ? { "lanes:forward": lanesForward.toString() }
+              : {}),
+            ...(lanesBackward
+              ? { "lanes:backward": lanesBackward.toString() }
+              : {}),
+            ...(convertDriveway
+              ? { highway: "service", service: "driveway" }
+              : {}),
+          },
+        };
+        console.info("Submitted way:", updatedWay);
+        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        handleEnd();
+      },
+    }),
+    [
+      setLanes,
+      setSurface,
+      handleEnd,
+      overpassWays,
+      currentWay,
+      setUploadWays,
+      filterTigerTags,
+      surface,
+      lanes,
+      lanesForward,
+      lanesBackward,
+      convertDriveway,
+    ],
+  );
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "u") {
+        setShowFinishedModal(true);
+      } else if (event.key === "f") {
+        handleActions.clearTiger();
+      } else if (event.key === "s" && surface && lanes) {
+        handleActions.submit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [setShowFinishedModal, handleActions, lanes, surface]);
 
   return (
     <div className="flex flex-col md:h-screen">
