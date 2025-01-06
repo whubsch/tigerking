@@ -211,7 +211,7 @@ const WayMap: React.FC<WayMapProps> = ({
           selectedKeys={[selectedSourceId]}
           onChange={(e) => handleTileSourceChange(e.target.value)}
           className="max-w-xs"
-          isVirtualized
+          // isVirtualized={false}
         >
           {/* waiting for nextui SelectSection component to be fixed
             https://github.com/nextui-org/nextui/pull/4462 */}

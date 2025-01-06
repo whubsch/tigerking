@@ -16,6 +16,7 @@ import logo from "../assets/tiger.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
 import upload from "../assets/upload.svg";
+import question from "../assets/question.svg";
 import UserCard from "./UserCard";
 import packageJson from "../../package.json";
 
@@ -25,6 +26,7 @@ interface NavbarProps {
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   setShowFinishedModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowHelpModal: (show: boolean) => void;
 }
 
 const LinkIcon = () => {
@@ -34,6 +36,7 @@ const LinkIcon = () => {
 const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
   setShowFinishedModal,
+  setShowHelpModal,
 }) => {
   const {
     loggedIn,
@@ -73,9 +76,9 @@ const MainNavbar: React.FC<NavbarProps> = ({
           <>
             <Tooltip
               content={
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                   <p>Upload</p>
-                  <Kbd>U</Kbd>
+                  <Kbd>u</Kbd>
                 </div>
               }
               delay={250}
@@ -139,6 +142,18 @@ const MainNavbar: React.FC<NavbarProps> = ({
                     </DropdownItem>
                   ))}
                 </DropdownSection>
+                <DropdownItem
+                  key="help"
+                  onPress={() => setShowHelpModal(true)}
+                  endContent={
+                    <img
+                      src={question}
+                      className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
+                    />
+                  }
+                >
+                  Help
+                </DropdownItem>
                 <DropdownItem key="version" className="text-sm" isDisabled>
                   version {packageJson.version}
                 </DropdownItem>

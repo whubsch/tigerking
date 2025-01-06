@@ -12,6 +12,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import LeftPane from "./components/LeftPane";
 import ChangesetModal from "./components/ChangesetModal";
 import FinishedModal from "./components/FinishedModal";
+import HelpModal from "./components/HelpModal";
 import { overpassService } from "./services/overpass";
 import { shuffleArray } from "./services/shuffle";
 import useWayManagement from "./hooks/useWayManagement";
@@ -28,7 +29,8 @@ const App: React.FC = () => {
   const [isRelationLoading, setIsRelationLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [showLaneDirection, setShowLaneDirection] = useState(false);
-  const [convertDriveway, setConvertDriveway] = useState(false);
+  const [convertDriveway, setConvertDriveway] = useState<string>("");
+  const [showHelpModal, setShowHelpModal] = useState(false);
   const { relationId, setHost, setSource, setDescription } =
     useChangesetStore();
   const {
@@ -204,7 +206,7 @@ const App: React.FC = () => {
       }
 
       setShowLaneDirection(false);
-      setConvertDriveway(false);
+      setConvertDriveway("");
     }
   }, [
     currentWay,
@@ -310,9 +312,11 @@ const App: React.FC = () => {
             ...(lanesBackward
               ? { "lanes:backward": lanesBackward.toString() }
               : {}),
-            ...(convertDriveway
+            ...(convertDriveway === "driveway"
               ? { highway: "service", service: "driveway" }
-              : {}),
+              : convertDriveway === "track"
+                ? { highway: "track" }
+                : {}),
           },
         };
         console.info("Submitted way:", updatedWay);
@@ -339,6 +343,16 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
+      // Only handle keypress if no modifiers are pressed
+      if (event.ctrlKey || event.altKey || event.metaKey) return;
+
+      // Only handle keypress if not typing in an input
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement
+      )
+        return;
+
       if (event.key === "u") {
         setShowFinishedModal(true);
       } else if (event.key === "f") {
@@ -352,10 +366,14 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [setShowFinishedModal, handleActions, lanes, surface]);
+  }, [handleActions, lanes, surface, setShowFinishedModal]);
 
   return (
     <div className="flex flex-col md:h-screen">
+      <HelpModal
+        isOpen={showHelpModal}
+        onClose={() => setShowHelpModal(false)}
+      />
       <ErrorModal
         isOpen={Boolean(error)}
         onClose={() => setError("")}
@@ -385,6 +403,7 @@ const App: React.FC = () => {
         setChangeset={setLatestChangeset}
         setError={setError}
         setShowFinishedModal={setShowFinishedModal}
+        setShowHelpModal={setShowHelpModal}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane

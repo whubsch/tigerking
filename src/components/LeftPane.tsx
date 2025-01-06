@@ -34,8 +34,8 @@ interface LeftPaneProps {
   isLoading: boolean;
   showLaneDirection: boolean;
   setShowLaneDirection: (value: boolean) => void;
-  convertDriveway: boolean;
-  setConvertDriveway: (value: boolean) => void;
+  convertDriveway: string;
+  setConvertDriveway: (value: string) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onClearTiger: () => void;
@@ -120,23 +120,39 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           This residential way has no name
                         </span>
                         <span className="text-xs">
-                          Consider converting to a driveway if appropriate
+                          Consider converting to a driveway or track if
+                          appropriate
                         </span>
                       </div>
-                      <Button
-                        size="sm"
-                        color="warning"
-                        variant="flat"
-                        onPress={() =>
-                          setConvertDriveway(convertDriveway ? false : true)
-                        }
-                      >
-                        {convertDriveway ? (
-                          <img src={check} alt="check" className="h-6 w-6" />
-                        ) : (
-                          "Convert"
-                        )}
-                      </Button>
+                      <Dropdown>
+                        <DropdownTrigger>
+                          <Button size="sm" color="warning" variant="flat">
+                            {convertDriveway ? (
+                              <img
+                                src={check}
+                                alt="check"
+                                className="h-6 w-6"
+                              />
+                            ) : (
+                              "Convert"
+                            )}
+                          </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Convert options">
+                          <DropdownItem
+                            key="driveway"
+                            onPress={() => setConvertDriveway("driveway")}
+                          >
+                            driveway
+                          </DropdownItem>
+                          <DropdownItem
+                            key="track"
+                            onPress={() => setConvertDriveway("track")}
+                          >
+                            track
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
                     </div>
                   )}
                 <div className="flex gap-2 w-full mt-4">
@@ -178,17 +194,17 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         }
                         textValue="Clear TIGER tags"
                       >
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 items-center">
                           Clear TIGER tags
-                          <Kbd className="hidden md:block">F</Kbd>
+                          <Kbd className="hidden md:block">f</Kbd>
                         </div>
                       </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                   <Tooltip
                     content={
-                      <p>
-                        Shortcut: <Kbd>S</Kbd>
+                      <p className="items-center">
+                        Shortcut: <Kbd>s</Kbd>
                       </p>
                     }
                     delay={250}
