@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { useChangesetStore } from "../stores/useChangesetStore";
 
 const RelationIdPlaceholder: React.FC = () => {

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Card } from "@nextui-org/card";
 import { Kbd } from "@nextui-org/kbd";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/tooltip";
 
 const QuickTags: React.FC = () => {
   const {
