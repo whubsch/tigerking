@@ -26,7 +26,7 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
           <img
             src={info}
             alt="surface"
-            className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
+            className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
           />
         </Link>
       </Tooltip>

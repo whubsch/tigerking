@@ -131,14 +131,18 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                               <img
                                 src={check}
                                 alt="check"
-                                className="h-6 w-6"
+                                className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
                               />
                             ) : (
                               "Convert"
                             )}
                           </Button>
                         </DropdownTrigger>
-                        <DropdownMenu aria-label="Convert options">
+                        <DropdownMenu
+                          aria-label="Convert options"
+                          selectionMode="single"
+                          selectedKeys={[convertDriveway]}
+                        >
                           <DropdownItem
                             key="driveway"
                             onPress={() => setConvertDriveway("driveway")}

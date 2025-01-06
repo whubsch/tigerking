@@ -8,7 +8,7 @@ import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface UploadButtonProps {
   uploads: OsmWay[];
-  setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
+  setUploadWays: (ways: OsmWay[]) => void;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }

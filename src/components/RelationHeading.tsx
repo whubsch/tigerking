@@ -5,6 +5,7 @@ import { Spinner } from "@nextui-org/spinner";
 import TagSelection from "./TagSelection";
 import CardHeading from "./CardHeading";
 import { useChangesetStore } from "../stores/useChangesetStore";
+import { useWayStore } from "../stores/useWayStore";
 
 interface RelationDetails {
   tags: Record<string, string>;
@@ -16,7 +17,15 @@ const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { relationId, setDescription } = useChangesetStore();
+  const { relationId, setRelationId, setDescription } = useChangesetStore();
+  const { resetWays } = useWayStore();
+
+  const handleReset = () => {
+    resetWays();
+    setRelationId("");
+    setTags({});
+    setDescription("");
+  };
 
   useEffect(() => {
     const fetchRelationTags = async () => {
@@ -88,7 +97,12 @@ const RelationTags: React.FC = () => {
 
   return (
     <>
-      <CardHeading name={tags.name} id={relationId} type={"relation"} />
+      <CardHeading
+        name={tags.name}
+        id={relationId}
+        type="relation"
+        onReset={handleReset} // Add this prop
+      />
       <TagSelection tags={tags} onTagClick={handleTagClick} scroll={true} />
     </>
   );

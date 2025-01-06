@@ -63,11 +63,14 @@ const TagSelection: React.FC<TagSelectionProps> = ({
         variant={key.startsWith("tiger") ? "bordered" : "solid"}
         endContent={
           key.startsWith("tiger") ? (
-            <img src={cancel} className="h-4 w-4 fill-red-600" />
+            <img
+              src={cancel}
+              className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
+            />
           ) : null
         }
         className="max-w-full cursor-pointer"
-        onClick={() => onTagClick?.(key, value)}
+        onKeyDown={() => onTagClick?.(key, value)}
       >
         <span className="font-semibold">{key}</span>
         {!key.startsWith("tiger") ? (

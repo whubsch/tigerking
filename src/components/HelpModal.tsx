@@ -32,14 +32,22 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
         },
       }}
     >
-      <ModalContent>
+      <ModalContent className="max-h-[80vh] overflow-y-auto">
         <ModalHeader className="flex flex-col gap-1">
-          <h2 className="text-2xl font-bold">TIGER King Help Guide</h2>
+          <h2 className="text-2xl font-bold text-blue-600">
+            TIGER King Guide 📖
+          </h2>
+          <p className="text-sm text-gray-500">Learn how to use TIGER King</p>
         </ModalHeader>
         <ModalBody className="py-6">
           <div className="space-y-4">
             <section>
-              <h3 className="text-lg font-semibold mb-2">Keyboard Shortcuts</h3>
+              <div className="gap-4 items-center mb-2">
+                <h3 className="text-lg font-semibold">Keyboard Shortcuts</h3>
+                <h4 className="text-sm text-gray-500">
+                  Not available on mobile
+                </h4>
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="bg-default-100 p-2 rounded flex flex-row">
                   <div className="flex gap-2">
@@ -113,7 +121,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
                 </li>
               </ul>
             </section>
-            <div className="flex justify-center pt-4 gap-2">
+            <div className="flex justify-center pt-4 gap-2 flex-col md:flex-row">
               <Button
                 showAnchorIcon
                 as={Link}

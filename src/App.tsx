@@ -21,6 +21,7 @@ import { OsmWay, Tags } from "./objects";
 import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
 import { useBBoxStore } from "./stores/useBboxStore";
+import { useWayStore } from "./stores/useWayStore";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
@@ -75,15 +76,16 @@ const App: React.FC = () => {
     );
   }, [setHost]); // Empty dependency array since this only needs to run once
 
+  const { currentWayCoordinates } = useWayManagement();
   const {
     overpassWays,
-    setOverpassWays,
     currentWay,
-    setCurrentWay,
     uploadWays,
+    setOverpassWays,
+    setCurrentWay,
     setUploadWays,
-    currentWayCoordinates,
-  } = useWayManagement();
+    addToUpload,
+  } = useWayStore();
 
   const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
 
@@ -244,6 +246,9 @@ const App: React.FC = () => {
       if (ways.length === 0) {
         setError("No ways found in bounding box");
       } else {
+        setOverpassWays([]);
+        setCurrentWay(0);
+
         deduplicateNewWays(ways);
       }
     } catch (error) {
@@ -284,7 +289,7 @@ const App: React.FC = () => {
           },
         };
         console.info("Fixed way:", updatedWay);
-        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        addToUpload(updatedWay);
         handleEnd();
       },
       clearTiger: () => {
@@ -295,7 +300,7 @@ const App: React.FC = () => {
           },
         };
         console.info("Updated way:", updatedWay);
-        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        addToUpload(updatedWay);
         handleEnd();
       },
       submit: () => {
@@ -320,7 +325,7 @@ const App: React.FC = () => {
           },
         };
         console.info("Submitted way:", updatedWay);
-        setUploadWays((prevWays) => [...prevWays, updatedWay]);
+        addToUpload(updatedWay);
         handleEnd();
       },
     }),
@@ -338,6 +343,7 @@ const App: React.FC = () => {
       lanesBackward,
       convertDriveway,
       laneMarkings,
+      addToUpload,
     ],
   );
 
@@ -399,9 +405,6 @@ const App: React.FC = () => {
       />
       <MainNavbar
         uploads={uploadWays}
-        setUploadWays={setUploadWays}
-        setChangeset={setLatestChangeset}
-        setError={setError}
         setShowFinishedModal={setShowFinishedModal}
         setShowHelpModal={setShowHelpModal}
       />

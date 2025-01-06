@@ -48,7 +48,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
         },
       }}
     >
-      <ModalContent>
+      <ModalContent className="max-h-[80vh] overflow-y-auto">
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-red-600 flex items-center gap-2">
             {title}

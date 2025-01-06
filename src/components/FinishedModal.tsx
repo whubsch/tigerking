@@ -13,7 +13,7 @@ interface FinishedModalProps {
   ways: number;
   onClose: () => void;
   uploads: OsmWay[];
-  setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
+  setUploadWays: (ways: OsmWay[]) => void;
   setChangeset: React.Dispatch<React.SetStateAction<number>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -56,7 +56,7 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
         },
       }}
     >
-      <ModalContent>
+      <ModalContent className="max-h-[80vh] overflow-y-auto">
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-blue-600">
             Ready to Upload? 🚀

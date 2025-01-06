@@ -22,9 +22,6 @@ import packageJson from "../../package.json";
 
 interface NavbarProps {
   uploads: OsmWay[];
-  setUploadWays: React.Dispatch<React.SetStateAction<OsmWay[]>>;
-  setChangeset: React.Dispatch<React.SetStateAction<number>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
   setShowFinishedModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowHelpModal: (show: boolean) => void;
 }
@@ -94,12 +91,13 @@ const MainNavbar: React.FC<NavbarProps> = ({
                   />
                 }
                 onPress={() => setShowFinishedModal(true)}
+                aria-label="Upload"
               >
                 <Chip>{uploads ? uploads.length : 0}</Chip>
               </Button>
             </Tooltip>
             <Dropdown>
-              <DropdownTrigger>
+              <DropdownTrigger textValue="Menu">
                 <Button isIconOnly>
                   <img
                     src={menu}
@@ -108,12 +106,16 @@ const MainNavbar: React.FC<NavbarProps> = ({
                   />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu aria-label="Navigation menu">
+              <DropdownMenu
+                aria-label="Navigation menu"
+                disabledKeys={["version"]}
+              >
                 <DropdownSection title="Account">
                   <DropdownItem
                     key="user"
                     target="_blank"
                     href={`https://www.openstreetmap.org/user/${osmUser}`}
+                    textValue={`User details for ${osmUser}`}
                   >
                     <UserCard
                       name={osmUser}
@@ -137,6 +139,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
                       href={item.href}
                       target="_blank"
                       endContent={<LinkIcon />}
+                      textValue={item.label}
                     >
                       {item.label}
                     </DropdownItem>
@@ -151,10 +154,11 @@ const MainNavbar: React.FC<NavbarProps> = ({
                       className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
                     />
                   }
+                  textValue="Help"
                 >
                   Help
                 </DropdownItem>
-                <DropdownItem key="version" className="text-sm" isDisabled>
+                <DropdownItem key="version" className="text-sm">
                   version {packageJson.version}
                 </DropdownItem>
               </DropdownMenu>

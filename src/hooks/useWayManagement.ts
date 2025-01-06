@@ -1,20 +1,8 @@
-import { useState, useMemo } from "react";
-import { OsmWay } from "../objects";
+import { useMemo } from "react";
+import { useWayStore } from "../stores/useWayStore";
 
 const useWayManagement = () => {
-  const [overpassWays, setOverpassWays] = useState<OsmWay[]>([]);
-  const [currentWay, setCurrentWay] = useState<number>(0);
-  const [uploadWays, setUploadWays] = useState<OsmWay[]>([]);
-
-  const addToUpload = (way: OsmWay) => {
-    setUploadWays((prevWays) => [...prevWays, way]);
-  };
-
-  const resetWays = () => {
-    setOverpassWays([]);
-    setCurrentWay(0);
-    setUploadWays([]);
-  };
+  const { overpassWays, currentWay } = useWayStore();
 
   const currentWayCoordinates = useMemo(
     () =>
@@ -25,14 +13,6 @@ const useWayManagement = () => {
   );
 
   return {
-    overpassWays,
-    setOverpassWays,
-    currentWay,
-    setCurrentWay,
-    uploadWays,
-    setUploadWays,
-    addToUpload,
-    resetWays,
     currentWayCoordinates,
   };
 };

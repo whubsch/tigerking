@@ -2,8 +2,7 @@ import { OsmWay } from "../objects";
 
 const BASE_OVERPASS_QUERY = `
 (
-  way(area.hood)[highway]["tiger:reviewed"=no][!surface][!"fixme:tigerking"];
-  way(area.hood)[highway]["tiger:reviewed"=no][!lanes][!"fixme:tigerking"];
+  way(area.hood)[highway]["tiger:reviewed"=no][!"fixme:tigerking"];
 )->.tigers;
 
 (

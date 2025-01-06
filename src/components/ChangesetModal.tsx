@@ -41,7 +41,7 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
         },
       }}
     >
-      <ModalContent>
+      <ModalContent className="max-h-[80vh] overflow-y-auto">
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-green-600">Success! 🎉</h2>
           <p className="text-sm text-gray-500">
