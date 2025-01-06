@@ -5,7 +5,7 @@ import info from "../assets/info.svg";
 
 interface TagButtonHeadingProps {
   header: string;
-  tooltip: string;
+  tooltip: string | React.ReactNode;
 }
 
 const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
@@ -18,7 +18,7 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
         <h2 className="text-lg font-bold">{header}</h2>
         <p>=</p>
       </div>
-      <Tooltip content={tooltip}>
+      <Tooltip content={tooltip} className="max-w-64">
         <Link
           href={`https://wiki.openstreetmap.org/wiki/Key:${header}`}
           target="_blank"

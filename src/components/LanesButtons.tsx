@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { Slider } from "@nextui-org/slider";
+import { Code } from "@nextui-org/code";
 import TagButtonHeading from "./TagButtonHeading";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import kebab from "../assets/kebab.svg";
@@ -30,7 +31,19 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
     <div className="w-full">
       <TagButtonHeading
         header="lanes"
-        tooltip="The number of lanes on the road as indicated by painted strips."
+        tooltip={
+          <p>
+            The number of lanes on the road as indicated by painted stripes.{" "}
+            <Code className="py-1" size="sm">
+              lanes=none
+            </Code>{" "}
+            will be converted to{" "}
+            <Code className="py-1" size="sm">
+              lane_markings=no
+            </Code>
+            .
+          </p>
+        }
       />
       <ButtonGroup
         variant="bordered"

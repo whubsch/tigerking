@@ -101,12 +101,12 @@ const FinishedModal: React.FC<FinishedModalProps> = ({
                 setError={setError}
               />
 
-              <Button onPress={onClose} variant="light" className="w-full">
+              <Button onPress={onClose} variant="flat" className="w-full">
                 Cancel
               </Button>
               <Button
                 color="danger"
-                variant="light"
+                variant="flat"
                 onPress={() => {
                   setUploadWays([]);
                   onClose();

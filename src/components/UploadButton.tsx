@@ -39,6 +39,8 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   return (
     <Button
       variant="flat"
+      color="primary"
+      className="hover:border-2 hover:border-primary"
       isDisabled={uploads.length === 0 || isLoading}
       isLoading={isLoading}
       startContent={

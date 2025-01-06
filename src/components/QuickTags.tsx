@@ -5,8 +5,14 @@ import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { Tooltip } from "@nextui-org/react";
 
 const QuickTags: React.FC = () => {
-  const { surface, setSurface, lanes, setLanes, setLaneMarkings } =
-    useWayTagsStore();
+  const {
+    surface,
+    setSurface,
+    lanes,
+    setLanes,
+    laneMarkings,
+    setLaneMarkings,
+  } = useWayTagsStore();
   const quickTagsData = useMemo(
     () => [
       {
@@ -62,7 +68,9 @@ const QuickTags: React.FC = () => {
       <h3 className="text-lg font-light">Quick Tags</h3>
       <div className="grid grid-cols-3 gap-4">
         {quickTagsData.map((tag) => {
-          const isActive = tag.surface === surface && tag.lanes === lanes;
+          const isActive =
+            tag.surface === surface &&
+            (tag.lanes === lanes || (tag.lanes == "none" && !laneMarkings));
           return (
             <Tooltip
               key={tag.id}

@@ -70,8 +70,8 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
             </div>
             <ChangesetTagTable description={description} source={source} />
 
-            <div className="flex justify-center pt-4">
-              <Button color="primary" variant="light" onPress={onClose}>
+            <div className="flex justify-center pt-4 flex-col">
+              <Button color="default" variant="flat" onPress={onClose}>
                 Close
               </Button>
             </div>

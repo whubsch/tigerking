@@ -51,8 +51,8 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-red-600 flex items-center gap-2">
-            <span className="text-2xl">⚠️</span>
             {title}
+            <span className="text-2xl">⚠️</span>
           </h2>
           <p className="text-sm text-gray-500">
             Please review the error details below
