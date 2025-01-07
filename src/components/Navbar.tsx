@@ -29,7 +29,13 @@ interface NavbarProps {
 }
 
 const LinkIcon = () => {
-  return <img src={link} alt="link" className="w-6 h-6" />;
+  return (
+    <img
+      src={link}
+      alt="link"
+      className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
+    />
+  );
 };
 
 const MainNavbar: React.FC<NavbarProps> = ({
@@ -52,11 +58,6 @@ const MainNavbar: React.FC<NavbarProps> = ({
       key: "github",
       href: "https://github.com/whubsch/tigerking",
       label: "GitHub",
-    },
-    {
-      key: "tiger_map",
-      href: "https://watmildon.github.io/TIGERMap/",
-      label: "TIGER Map",
     },
     {
       key: "openstreetmap",
