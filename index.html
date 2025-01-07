@@ -6,6 +6,26 @@
         <link rel="manifest" href="/manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>TIGER King</title>
+        <script>
+            // Check if user prefers dark mode
+            if (
+                window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+                document.body.classList.add("dark");
+            }
+
+            // Listen for changes in color scheme preference
+            window
+                .matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", (e) => {
+                    if (e.matches) {
+                        document.body.classList.add("dark");
+                    } else {
+                        document.body.classList.remove("dark");
+                    }
+                });
+        </script>
     </head>
     <body>
         <div id="root"></div>
