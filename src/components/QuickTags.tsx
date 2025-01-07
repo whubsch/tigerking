@@ -47,6 +47,7 @@ const QuickTags: React.FC = () => {
         if (quickTag.lanes !== "none") {
           setLanes(quickTag.lanes);
         } else {
+          setLanes("none");
           setLaneMarkings(true);
         }
       }
