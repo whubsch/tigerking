@@ -44,7 +44,11 @@ const QuickTags: React.FC = () => {
       );
       if (quickTag) {
         setSurface(quickTag.surface);
-        setLanes(quickTag.lanes);
+        if (quickTag.lanes !== "none") {
+          setLanes(quickTag.lanes);
+        } else {
+          setLaneMarkings(true);
+        }
       }
     };
 
@@ -52,7 +56,7 @@ const QuickTags: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [setSurface, setLanes, quickTagsData]);
+  }, [setSurface, setLanes, quickTagsData, setLaneMarkings]);
 
   const handleCardPress = (surface: string, lanes: string): void => {
     setSurface(surface);
