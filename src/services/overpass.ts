@@ -30,7 +30,7 @@ const isOsmWay = (element: any): element is OsmWay => {
 };
 
 export const overpassService = {
-  async fetchWaysInArea(query: string): Promise<OsmWay[]> {
+  async fetchQuery(query: string): Promise<OsmWay[]> {
     try {
       const response = await fetch("https://overpass-api.de/api/interpreter", {
         method: "POST",
@@ -56,7 +56,7 @@ export const overpassService = {
       `
 [out:json][bbox:${bbox.join(",")}];
       ` + BASE_OVERPASS_QUERY;
-    return overpassService.fetchWaysInArea(query.replaceAll("(area.hood)", ""));
+    return overpassService.fetchQuery(query.replaceAll("(area.hood)", ""));
   },
   /**
    * Fetches ways within a relation that need surface tags
@@ -70,6 +70,15 @@ export const overpassService = {
 rel(${relationId});
 map_to_area->.hood;
       ` + BASE_OVERPASS_QUERY;
-    return overpassService.fetchWaysInArea(query);
+    return overpassService.fetchQuery(query);
+  },
+
+  async fetchWays(wayIds: string[]): Promise<OsmWay[]> {
+    const query = `
+[out:json];
+way(${wayIds.join(",")});
+out meta geom;
+      `;
+    return overpassService.fetchQuery(query);
   },
 };

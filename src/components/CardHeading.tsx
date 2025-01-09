@@ -1,19 +1,20 @@
 import React from "react";
 import { EditorLinks } from "./EditDropdown";
 import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 
 interface CardHeadingProps {
   name: string;
   type: string;
   id: string;
-  onReset?: () => void; // Add this prop
+  sendHome?: boolean;
 }
 
 const CardHeading: React.FC<CardHeadingProps> = ({
   name,
   type,
   id,
-  onReset,
+  sendHome,
 }) => {
   return (
     <div className="flex gap-2 mb-4 justify-between items-center">
@@ -23,8 +24,14 @@ const CardHeading: React.FC<CardHeadingProps> = ({
         {name ? name : "no name"}
       </h3>
       <div className="flex gap-2">
-        {onReset && (
-          <Button size="sm" variant="light" color="danger" onPress={onReset}>
+        {sendHome && (
+          <Button
+            size="sm"
+            variant="light"
+            color="danger"
+            href="/tigerking/"
+            as={Link}
+          >
             Clear
           </Button>
         )}

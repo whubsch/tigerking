@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const { relationId, setHost, setSource, setDescription } =
+  const { relationId, setRelationId, setHost, setSource, setDescription } =
     useChangesetStore();
   const {
     lanes,
@@ -52,6 +52,30 @@ const App: React.FC = () => {
   const { params, isBoundingBox } = useMemo(
     () => getMapParams(window.location.search),
     [],
+  );
+  const { currentWayCoordinates } = useWayManagement();
+  const {
+    overpassWays,
+    currentWay,
+    uploadWays,
+    setOverpassWays,
+    setCurrentWay,
+    setUploadWays,
+    addToUpload,
+  } = useWayStore();
+
+  const deduplicateNewWays = useCallback(
+    (ways: OsmWay[]) => {
+      const unprocessedWays = ways.filter(
+        (way) =>
+          !uploadWaysRef.current.some(
+            (uploadedWay) => uploadedWay.id === way.id,
+          ),
+      );
+      const shuffledWays = shuffleArray(unprocessedWays);
+      setOverpassWays(shuffledWays);
+    },
+    [], // No dependencies needed
   );
 
   // Get search parameters from URL
@@ -74,17 +98,6 @@ const App: React.FC = () => {
     );
   }, [setHost]);
 
-  const { currentWayCoordinates } = useWayManagement();
-  const {
-    overpassWays,
-    currentWay,
-    uploadWays,
-    setOverpassWays,
-    setCurrentWay,
-    setUploadWays,
-    addToUpload,
-  } = useWayStore();
-
   const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
 
   const uploadWaysRef = useRef(uploadWays);
@@ -94,52 +107,97 @@ const App: React.FC = () => {
     uploadWaysRef.current = uploadWays;
   }, [uploadWays]);
 
-  const deduplicateNewWays = useCallback(
-    (ways: OsmWay[]) => {
-      const unprocessedWays = ways.filter(
-        (way) =>
-          !uploadWaysRef.current.some(
-            (uploadedWay) => uploadedWay.id === way.id,
-          ),
-      );
-      const shuffledWays = shuffleArray(unprocessedWays);
-      setOverpassWays(shuffledWays);
-    },
-    [], // No dependencies needed
-  );
-
   useEffect(() => {
-    const fetchWaysInBoundingBox = async () => {
-      if (
-        bboxState.north &&
-        bboxState.south &&
-        bboxState.east &&
-        bboxState.west
-      ) {
-        setIsRelationLoading(true);
-        try {
-          const ways = await overpassService.fetchWaysInBbox([
-            bboxState.south,
-            bboxState.west,
-            bboxState.north,
-            bboxState.east,
-          ]);
+    if (params.relation) {
+      const fetchWays = async (relationId: string) => {
+        // Only fetch if overpassWays is empty
+        if (relationId && overpassWays.length === 0) {
+          setIsRelationLoading(true);
+          setShowRelationHeading(true);
+          try {
+            const ways = await overpassService.fetchWaysInRelation(relationId);
+            if (ways.length === 0) {
+              setError("No ways found in bounding box");
+            } else {
+              setOverpassWays([]);
+              setCurrentWay(0);
 
-          if (ways.length === 0) {
-            setError("No ways found in bounding box");
-          } else {
-            deduplicateNewWays(ways);
+              deduplicateNewWays(ways);
+            }
+          } catch (error) {
+            setError("Error fetching OSM data: " + error);
+          } finally {
+            setIsRelationLoading(false);
           }
+        }
+      };
+
+      setRelationId(params.relation);
+      fetchWays(relationId);
+    } else if (params.way) {
+      const fetchWay = async (wayId: string) => {
+        setShowRelationHeading(false);
+        try {
+          const ways = await overpassService.fetchWays([wayId]);
+          setOverpassWays([]);
+          setCurrentWay(0);
+
+          deduplicateNewWays(ways);
         } catch (error) {
           setError("Error fetching OSM data: " + error);
         } finally {
           setIsRelationLoading(false);
         }
-      }
-    };
+      };
+      fetchWay(params.way);
+    } else if (
+      bboxState.north &&
+      bboxState.south &&
+      bboxState.east &&
+      bboxState.west &&
+      overpassWays.length === 0
+    ) {
+      // Only fetch bounding box ways if overpassWays is empty
+      const fetchWaysInBoundingBox = async () => {
+        if (
+          bboxState.north &&
+          bboxState.south &&
+          bboxState.east &&
+          bboxState.west
+        ) {
+          setIsRelationLoading(true);
+          try {
+            const ways = await overpassService.fetchWaysInBbox([
+              bboxState.south,
+              bboxState.west,
+              bboxState.north,
+              bboxState.east,
+            ]);
 
-    fetchWaysInBoundingBox();
-  }, [bboxState, deduplicateNewWays]);
+            if (ways.length === 0) {
+              setError("No ways found in bounding box");
+            } else {
+              deduplicateNewWays(ways);
+            }
+          } catch (error) {
+            setError("Error fetching OSM data: " + error);
+          } finally {
+            setIsRelationLoading(false);
+          }
+        }
+      };
+      fetchWaysInBoundingBox();
+    }
+  }, [
+    params,
+    bboxState,
+    overpassWays.length,
+    deduplicateNewWays,
+    relationId,
+    setCurrentWay,
+    setOverpassWays,
+    setRelationId,
+  ]);
 
   // Load saved ways when component mounts
   useEffect(() => {
@@ -236,25 +294,7 @@ const App: React.FC = () => {
 
   const handleRelationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowRelationHeading(true);
-    setIsRelationLoading(true);
-
-    try {
-      const ways = await overpassService.fetchWaysInRelation(relationId);
-      if (ways.length === 0) {
-        setError("No ways found in bounding box");
-      } else {
-        setOverpassWays([]);
-        setCurrentWay(0);
-
-        deduplicateNewWays(ways);
-      }
-    } catch (error) {
-      setError("Error fetching OSM data: " + error);
-      // Handle error in UI (maybe set an error state)
-    } finally {
-      setIsRelationLoading(false); // Set loading to false when done
-    }
+    window.location.href = `/tigerking/?relation=${relationId}`;
   };
 
   const filterTigerTags = useCallback(

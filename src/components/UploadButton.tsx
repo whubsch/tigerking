@@ -55,7 +55,9 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       onPress={() => handleUpload(uploads)}
     >
       Upload
-      <Chip>{uploads ? uploads.length : 0}</Chip>
+      <Chip color="primary" variant="flat">
+        {uploads ? uploads.length : 0}
+      </Chip>
     </Button>
   );
 };

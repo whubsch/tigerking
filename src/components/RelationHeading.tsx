@@ -5,22 +5,13 @@ import { Spinner } from "@nextui-org/spinner";
 import TagSelection from "./TagSelection";
 import CardHeading from "./CardHeading";
 import { useChangesetStore } from "../stores/useChangesetStore";
-import { useWayStore } from "../stores/useWayStore";
 import { fetchElementTags } from "../services/osmApi";
 
 const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { relationId, setRelationId, setDescription } = useChangesetStore();
-  const { resetWays } = useWayStore();
-
-  const handleReset = () => {
-    resetWays();
-    setRelationId("");
-    setTags({});
-    setDescription("");
-  };
+  const { relationId, setDescription } = useChangesetStore();
 
   useEffect(() => {
     const loadRelationTags = async () => {
@@ -30,9 +21,9 @@ const RelationTags: React.FC = () => {
       setError(null);
 
       try {
-        const { tags, name } = await fetchElementTags(relationId, "relation");
+        const { tags } = await fetchElementTags(relationId, "relation");
         setTags(tags);
-        setDescription(name);
+        setDescription(tags?.name || "");
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to fetch relation tags",
@@ -82,7 +73,7 @@ const RelationTags: React.FC = () => {
         name={tags.name}
         id={relationId}
         type="relation"
-        onReset={handleReset} // Add this prop
+        sendHome={true}
       />
       <TagSelection tags={tags} onTagClick={handleTagClick} scroll={true} />
     </>

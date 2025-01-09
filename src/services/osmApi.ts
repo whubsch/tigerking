@@ -19,13 +19,10 @@ export const fetchElementTags = async (id: string, elementType: string) => {
     }
 
     const data = await response.json();
-    const relationData = data.elements[0] as ElementDetails;
+    const elementData = data.elements[0] as ElementDetails;
 
-    if (relationData && relationData.tags) {
-      return {
-        tags: relationData.tags,
-        name: relationData.tags.name,
-      };
+    if (elementData && elementData.tags) {
+      return elementData;
     } else {
       throw new Error(`No tags found for this ${elementType}`);
     }
