@@ -9,14 +9,6 @@ import {
   DropdownItem,
 } from "@nextui-org/dropdown";
 import { Spinner } from "@nextui-org/spinner";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@nextui-org/modal";
-import { Textarea } from "@nextui-org/input";
 import RelationTags from "./RelationHeading";
 import RelationForm from "./RelationForm";
 import WayHeading from "./WayHeading";
@@ -24,6 +16,7 @@ import SurfaceButtons from "./SurfaceButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import NoRelationPlaceholder from "./NoRelationPlaceholder";
+import CustomMessageModal from "./CustomMessageModal";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
@@ -89,37 +82,13 @@ const LeftPane: React.FC<LeftPaneProps> = ({
 
   return (
     <>
-      <Modal
+      <CustomMessageModal
         isOpen={isModalOpen}
         onOpenChange={setIsModalOpen}
-        placement="center"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Custom Fix Message
-              </ModalHeader>
-              <ModalBody>
-                <Textarea
-                  label="Message"
-                  placeholder="Enter your custom fix message"
-                  value={customFixMessage}
-                  onChange={(e) => setCustomFixMessage(e.target.value)}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Cancel
-                </Button>
-                <Button color="primary" onPress={handleCustomFix}>
-                  Submit
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+        customMessage={customFixMessage}
+        setCustomMessage={setCustomFixMessage}
+        onSubmit={handleCustomFix}
+      />
       <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
         <Card>
           {bbox.north && bbox.south && bbox.east && bbox.west ? (

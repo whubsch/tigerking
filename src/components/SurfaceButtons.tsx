@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonGroup } from "@nextui-org/button";
+import { ButtonGroup } from "@nextui-org/button";
 import {
   Dropdown,
   DropdownTrigger,
@@ -8,12 +8,51 @@ import {
   DropdownSection,
 } from "@nextui-org/dropdown";
 import TagButtonHeading from "./TagButtonHeading";
+import toggleButton from "./ToggleButton";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
-import kebab from "../assets/kebab.svg";
 
 const SurfaceButtons: React.FC = () => {
-  const commonSurfaces = ["concrete", "asphalt", "compacted"];
+  const COMMON_SURFACES = ["concrete", "asphalt", "compacted"];
   const { surface, setSurface } = useWayTagsStore();
+
+  const renderDropdownButton = () => {
+    const isCustomSurface = Boolean(
+      surface && !COMMON_SURFACES.includes(surface),
+    );
+
+    return (
+      <Dropdown>
+        <DropdownTrigger>
+          {toggleButton(
+            isCustomSurface ? surface : "other",
+            isCustomSurface,
+            undefined,
+            true,
+          )}
+        </DropdownTrigger>
+        <DropdownMenu
+          aria-label="Surface selection"
+          selectedKeys={surface ? new Set([surface]) : new Set()}
+          selectionMode="single"
+          variant="flat"
+          onSelectionChange={(keys) =>
+            setSurface(Array.from(keys)[0] as string)
+          }
+          className="max-h-[300px]"
+        >
+          <DropdownSection showDivider title="generic">
+            <DropdownItem key="paved">paved</DropdownItem>
+            <DropdownItem key="unpaved">unpaved</DropdownItem>
+          </DropdownSection>
+          <DropdownSection title="uncommon">
+            <DropdownItem key="brick">brick</DropdownItem>
+            <DropdownItem key="gravel">gravel</DropdownItem>
+            <DropdownItem key="ground">ground</DropdownItem>
+          </DropdownSection>
+        </DropdownMenu>
+      </Dropdown>
+    );
+  };
 
   return (
     <div className="w-full">
@@ -27,62 +66,12 @@ const SurfaceButtons: React.FC = () => {
         radius="sm"
         size="md"
       >
-        {commonSurfaces.map((surfaceKeys) => (
-          <Button
-            key={surfaceKeys}
-            className={`flex-1 border-1 transition-all duration-200 ${
-              surfaceKeys === surface
-                ? "bg-primary-100 shadow-lg border-primary"
-                : "hover:bg-primary/10"
-            }`}
-            onPress={() => setSurface(surfaceKeys)}
-          >
-            {surfaceKeys}
-          </Button>
-        ))}
-
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              className={`flex-1 border-1 ${
-                !commonSurfaces.includes(surface) && surface
-                  ? "bg-primary-100 shadow-lg border-primary"
-                  : "hover:bg-primary/10"
-              }`}
-              isIconOnly
-            >
-              {!commonSurfaces.includes(surface) && surface ? (
-                surface
-              ) : (
-                <img
-                  src={kebab}
-                  alt="kebab"
-                  className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
-                />
-              )}
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            aria-label="Surface selection"
-            selectedKeys={surface}
-            selectionMode="single"
-            variant="flat"
-            onSelectionChange={(keys) =>
-              setSurface(Array.from(keys)[0] as string)
-            }
-            className="max-h-[300px]"
-          >
-            <DropdownSection showDivider title="generic">
-              <DropdownItem key="paved">paved</DropdownItem>
-              <DropdownItem key="unpaved">unpaved</DropdownItem>
-            </DropdownSection>
-            <DropdownSection title="uncommon">
-              <DropdownItem key="brick">brick</DropdownItem>
-              <DropdownItem key="gravel">gravel</DropdownItem>
-              <DropdownItem key="ground">ground</DropdownItem>
-            </DropdownSection>
-          </DropdownMenu>
-        </Dropdown>
+        {COMMON_SURFACES.map((surfaceKey) =>
+          toggleButton(surfaceKey, surfaceKey === surface, () =>
+            setSurface(surfaceKey),
+          ),
+        )}
+        {renderDropdownButton()}
       </ButtonGroup>
     </div>
   );

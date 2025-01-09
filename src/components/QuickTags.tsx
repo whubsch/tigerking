@@ -1,8 +1,15 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Card } from "@nextui-org/card";
 import { Kbd } from "@nextui-org/kbd";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { Tooltip } from "@nextui-org/tooltip";
+
+interface QuickTag {
+  id: number;
+  surface: string;
+  lanes: string;
+  keyboardShortcut: string;
+}
 
 const QuickTags: React.FC = () => {
   const {
@@ -13,107 +20,79 @@ const QuickTags: React.FC = () => {
     laneMarkings,
     setLaneMarkings,
   } = useWayTagsStore();
-  const quickTagsData = useMemo(
+
+  const QUICK_TAGS: QuickTag[] = useMemo(
     () => [
-      {
-        id: 1,
-        surface: "asphalt",
-        lanes: "none",
-        keyboardShortcut: "1",
-      },
-      {
-        id: 2,
-        surface: "compacted",
-        lanes: "none",
-        keyboardShortcut: "2",
-      },
-      {
-        id: 3,
-        surface: "asphalt",
-        lanes: "2",
-        keyboardShortcut: "3",
-      },
+      { id: 1, surface: "asphalt", lanes: "none", keyboardShortcut: "1" },
+      { id: 2, surface: "compacted", lanes: "none", keyboardShortcut: "2" },
+      { id: 3, surface: "asphalt", lanes: "2", keyboardShortcut: "3" },
     ],
     [],
   );
 
+  const applyQuickTag = useCallback(
+    (tag: QuickTag) => {
+      setSurface(tag.surface);
+      if (tag.lanes === "none") {
+        setLaneMarkings(false);
+      } else {
+        setLanes(tag.lanes);
+      }
+    },
+    [setSurface, setLanes, setLaneMarkings],
+  );
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      const quickTag = quickTagsData.find(
+      const quickTag = QUICK_TAGS.find(
         (tag) => tag.keyboardShortcut === event.key,
       );
-      if (quickTag) {
-        setSurface(quickTag.surface);
-        if (quickTag.lanes !== "none") {
-          setLanes(quickTag.lanes);
-        } else {
-          setLanes("none");
-          setLaneMarkings(true);
-        }
-      }
+      if (quickTag) applyQuickTag(quickTag);
     };
 
     window.addEventListener("keydown", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [setSurface, setLanes, quickTagsData, setLaneMarkings]);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [setSurface, setLanes, QUICK_TAGS, setLaneMarkings, applyQuickTag]);
 
-  const handleCardPress = (surface: string, lanes: string): void => {
-    setSurface(surface);
-    if (lanes === "none") {
-      setLaneMarkings(false);
-    } else {
-      setLanes(lanes);
-    }
-  };
+  const isTagActive = (tag: QuickTag) =>
+    tag.surface === surface &&
+    (tag.lanes === lanes || (tag.lanes === "none" && !laneMarkings));
+
+  const renderTagTooltip = (tag: QuickTag) => (
+    <Tooltip
+      key={tag.id}
+      content={
+        <p>
+          Shortcut: <Kbd>{tag.keyboardShortcut}</Kbd>
+        </p>
+      }
+      delay={1000}
+    >
+      <Card
+        className={`
+          transition-all duration-200
+          ${
+            isTagActive(tag)
+              ? "outline outline-2 outline-primary bg-primary/10 shadow-lg"
+              : "hover:bg-gray-100 dark:hover:bg-gray-800 shadow-md"
+          }
+        `}
+        isPressable
+        onPress={() => applyQuickTag(tag)}
+      >
+        <div className="p-3 gap-1 text-sm flex flex-col">
+          <span className="flex">{tag.surface}</span>
+          <span className="flex">{tag.lanes}</span>
+        </div>
+      </Card>
+    </Tooltip>
+  );
 
   return (
     <>
       <h3 className="text-lg font-light">Quick Tags</h3>
       <div className="grid grid-cols-3 gap-4">
-        {quickTagsData.map((tag) => {
-          const isActive =
-            tag.surface === surface &&
-            (tag.lanes === lanes || (tag.lanes == "none" && !laneMarkings));
-          return (
-            <Tooltip
-              key={tag.id}
-              content={
-                <p>
-                  Shortcut: <Kbd>{tag.keyboardShortcut}</Kbd>
-                </p>
-              }
-              delay={1000}
-            >
-              <Card
-                className={`
-              transition-all duration-200
-              ${
-                isActive
-                  ? "outline outline-2 outline-primary bg-primary/10 shadow-lg"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-800 shadow-md"
-              }
-            `}
-                isPressable
-                onPress={() => handleCardPress(tag.surface, tag.lanes)}
-              >
-                <div className="p-3 relative">
-                  <div className="space-y-1 text-sm">
-                    <div className="flex items-center gap-2">
-                      {/* <span className="font-medium">Surface:</span> */}
-                      <span>{tag.surface}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {/* <span className="font-medium">Lanes:</span> */}
-                      <span>{tag.lanes}</span>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </Tooltip>
-          );
-        })}
+        {QUICK_TAGS.map(renderTagTooltip)}
       </div>
     </>
   );
