@@ -191,7 +191,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                     <Dropdown>
                       <DropdownTrigger>
                         <Button color="default" size="md" className="flex-1">
-                          Fix
+                          Fix...
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu aria-label="Fix options">
@@ -206,7 +206,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           ))}
                         </>
                         <DropdownItem
-                          key="clear-tiger"
+                          key="custom-fix-message"
                           color="primary"
                           onPress={() => setIsModalOpen(true)}
                           endContent={

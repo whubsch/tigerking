@@ -6,12 +6,7 @@ import TagSelection from "./TagSelection";
 import CardHeading from "./CardHeading";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayStore } from "../stores/useWayStore";
-
-interface RelationDetails {
-  tags: Record<string, string>;
-  id: number;
-  type: string;
-}
+import { fetchElementTags } from "../services/osmApi";
 
 const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
@@ -28,30 +23,16 @@ const RelationTags: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchRelationTags = async () => {
+    const loadRelationTags = async () => {
       if (!relationId) return;
 
       setLoading(true);
       setError(null);
 
       try {
-        const response = await fetch(
-          `https://api.openstreetmap.org/api/0.6/relation/${relationId}.json`,
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const relationData = data.elements[0] as RelationDetails;
-
-        if (relationData && relationData.tags) {
-          setTags(relationData.tags);
-          setDescription(relationData.tags.name);
-        } else {
-          setError("No tags found for this relation");
-        }
+        const { tags, name } = await fetchElementTags(relationId, "relation");
+        setTags(tags);
+        setDescription(name);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to fetch relation tags",
@@ -61,7 +42,7 @@ const RelationTags: React.FC = () => {
       }
     };
 
-    fetchRelationTags();
+    loadRelationTags();
   }, [relationId, setDescription]);
 
   if (loading) {

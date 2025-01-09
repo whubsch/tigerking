@@ -22,6 +22,7 @@ import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
 import { useBBoxStore } from "./stores/useBboxStore";
 import { useWayStore } from "./stores/useWayStore";
+import { getMapParams } from "./services/params";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
@@ -48,25 +49,22 @@ const App: React.FC = () => {
     resetTags,
   } = useWayTagsStore();
   const { bboxState, updateFromZXY } = useBBoxStore();
+  const { params, isBoundingBox } = useMemo(
+    () => getMapParams(window.location.search),
+    [],
+  );
 
   // Get search parameters from URL
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-
-    const zoom = searchParams.get("zoom");
-    const lon = searchParams.get("x");
-    const lat = searchParams.get("y");
-
-    if (zoom && lat && lon) {
+    if (isBoundingBox) {
       updateFromZXY({
-        zoom: Number(zoom),
-        x: Number(lon),
-        y: Number(lat),
+        zoom: Number(params.zoom),
+        x: Number(params.x),
+        y: Number(params.y),
       });
     }
-  }, [updateFromZXY]);
+  }, [updateFromZXY, isBoundingBox, params]);
 
-  // Should be inside a useEffect:
   useEffect(() => {
     setHost(
       window.location.protocol +
@@ -74,7 +72,7 @@ const App: React.FC = () => {
         window.location.host +
         window.location.pathname,
     );
-  }, [setHost]); // Empty dependency array since this only needs to run once
+  }, [setHost]);
 
   const { currentWayCoordinates } = useWayManagement();
   const {
@@ -335,7 +333,6 @@ const App: React.FC = () => {
       handleEnd,
       overpassWays,
       currentWay,
-      setUploadWays,
       filterTigerTags,
       surface,
       lanes,
