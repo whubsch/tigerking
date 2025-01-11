@@ -21,6 +21,10 @@ View the changesets that have used TIGER King [here](https://resultmaps.neis-one
 3. Verify changes on the map
 4. Submit updates to OpenStreetMap
 
+## URL Parameters
+
+The application supports various URL parameters to configure data loading and enable links from other applications. See [PARAMETERS.md](PARAMETERS.md) for more information.
+
 ## Requirements
 
 - OpenStreetMap account for submitting changes

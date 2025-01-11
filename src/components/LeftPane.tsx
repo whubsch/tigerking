@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Card } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
@@ -21,10 +21,12 @@ import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
 import edit from "../assets/edit.svg";
+import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { BBox } from "../stores/useBboxStore";
 import BboxCard from "./BboxCard";
+import LoginModal from "./LoginModal";
 import { Kbd } from "@nextui-org/kbd";
 import { Tooltip } from "@nextui-org/tooltip";
 
@@ -61,8 +63,9 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   onSubmit,
   handleRelationSubmit,
 }) => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [customFixMessage, setCustomFixMessage] = React.useState("");
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isFixModalOpen, setIsFixModalOpen] = useState(false);
+  const [customFixMessage, setCustomFixMessage] = useState("");
   const fixOptions = [
     { key: "bad-geometry", label: "Bad geometry" },
     { key: "needs-splitting", label: "Needs splitting" },
@@ -71,23 +74,64 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   ];
   const { relationId } = useChangesetStore();
   const { lanes, surface, laneMarkings } = useWayTagsStore();
+  const { loggedIn, handleLogin } = useOsmAuthContext();
 
-  const handleCustomFix = () => {
+  const onCustomFix = () => {
     if (customFixMessage.trim()) {
       onFix(customFixMessage);
       setCustomFixMessage("");
-      setIsModalOpen(false);
+      setIsFixModalOpen(false);
     }
+  };
+
+  const handleFix = (message: string) => {
+    if (!loggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    onFix(message);
+  };
+
+  const handleSubmit = () => {
+    if (!loggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    onSubmit();
+  };
+
+  const handleClearTiger = () => {
+    if (!loggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    onClearTiger();
+  };
+
+  const handleCustomFix = () => {
+    if (!loggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    onCustomFix();
   };
 
   return (
     <>
       <CustomMessageModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
+        isOpen={isFixModalOpen}
+        onOpenChange={setIsFixModalOpen}
         customMessage={customFixMessage}
         setCustomMessage={setCustomFixMessage}
-        onSubmit={handleCustomFix}
+        onSubmit={onCustomFix}
+      />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onLogin={() => {
+          handleLogin();
+          setIsLoginModalOpen(false);
+        }}
       />
       <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
         <Card>
@@ -199,7 +243,9 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           {fixOptions.map((option) => (
                             <DropdownItem
                               key={option.key}
-                              onPress={() => onFix(option.label.toLowerCase())}
+                              onPress={() =>
+                                handleFix(option.label.toLowerCase())
+                              }
                             >
                               {option.label}
                             </DropdownItem>
@@ -208,7 +254,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         <DropdownItem
                           key="custom-fix-message"
                           color="primary"
-                          onPress={() => setIsModalOpen(true)}
+                          onPress={handleCustomFix}
                           endContent={
                             <img
                               src={edit}
@@ -225,7 +271,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         <DropdownItem
                           key="clear-tiger"
                           color="primary"
-                          onPress={onClearTiger}
+                          onPress={handleClearTiger}
                           endContent={
                             <img
                               src={lightning}
@@ -254,7 +300,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         color="primary"
                         size="md"
                         className="flex-1"
-                        onPress={onSubmit}
+                        onPress={handleSubmit}
                         isDisabled={!surface || (!lanes && laneMarkings)}
                       >
                         Submit

@@ -14,7 +14,7 @@ import ChangesetModal from "./components/ChangesetModal";
 import FinishedModal from "./components/FinishedModal";
 import HelpModal from "./components/HelpModal";
 import { overpassService } from "./services/overpass";
-import { shuffleArray } from "./services/shuffle";
+import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
 import useWayManagement from "./hooks/useWayManagement";
 import ErrorModal from "./components/ErrorModal";
 import { OsmWay, Tags } from "./objects";
@@ -49,7 +49,7 @@ const App: React.FC = () => {
     resetTags,
   } = useWayTagsStore();
   const { bboxState, updateFromZXY } = useBBoxStore();
-  const { params, isBoundingBox } = useMemo(
+  const { params, isBoundingBox, isCenterPoint } = useMemo(
     () => getMapParams(window.location.search),
     [],
   );
@@ -136,6 +136,7 @@ const App: React.FC = () => {
       fetchWays(relationId);
     } else if (params.way) {
       const fetchWay = async (wayId: string) => {
+        setIsRelationLoading(true);
         setShowRelationHeading(false);
         try {
           const ways = await overpassService.fetchWays([wayId]);
@@ -150,21 +151,10 @@ const App: React.FC = () => {
         }
       };
       fetchWay(params.way);
-    } else if (
-      bboxState.north &&
-      bboxState.south &&
-      bboxState.east &&
-      bboxState.west &&
-      overpassWays.length === 0
-    ) {
+    } else if (isBoundingBox && overpassWays.length === 0) {
       // Only fetch bounding box ways if overpassWays is empty
       const fetchWaysInBoundingBox = async () => {
-        if (
-          bboxState.north &&
-          bboxState.south &&
-          bboxState.east &&
-          bboxState.west
-        ) {
+        if (bboxState.north) {
           setIsRelationLoading(true);
           try {
             const ways = await overpassService.fetchWaysInBbox([
@@ -187,6 +177,42 @@ const App: React.FC = () => {
         }
       };
       fetchWaysInBoundingBox();
+    } else if (isCenterPoint && overpassWays.length === 0) {
+      if (!bboxState.north) {
+        updateFromZXY({
+          zoom: 15,
+          x: Number(params.x) || 0,
+          y: Number(params.y) || 0,
+        });
+      }
+      const fetchWaysAroundCenterPoint = async () => {
+        if (bboxState.north) {
+          setIsRelationLoading(true);
+          try {
+            const waysCenter = await overpassService.fetchWaysInBbox([
+              bboxState.south,
+              bboxState.west,
+              bboxState.north,
+              bboxState.east,
+            ]);
+
+            if (waysCenter.length === 0) {
+              setError("No ways found around center point");
+            } else {
+              deduplicateNewWays(waysCenter);
+              sortWaysByDistance(waysCenter, {
+                lat: Number(params.x) || 0,
+                lon: Number(params.y) || 0,
+              });
+            }
+          } catch (error) {
+            setError("Error fetching OSM data: " + error);
+          } finally {
+            setIsRelationLoading(false);
+          }
+        }
+      };
+      fetchWaysAroundCenterPoint();
     }
   }, [
     params,
@@ -197,6 +223,9 @@ const App: React.FC = () => {
     setCurrentWay,
     setOverpassWays,
     setRelationId,
+    isBoundingBox,
+    isCenterPoint,
+    updateFromZXY,
   ]);
 
   // Load saved ways when component mounts
@@ -313,7 +342,7 @@ const App: React.FC = () => {
   const handleActions = useMemo(
     () => ({
       skip: () => {
-        console.log("Skipped way");
+        console.log("Skipped way", overpassWays[currentWay].id);
         setLanes("");
         setSurface("");
         handleEnd();

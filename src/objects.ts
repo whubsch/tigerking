@@ -5,7 +5,7 @@ interface Bounds {
   maxlon: number;
 }
 
-interface Coordinate {
+export interface Coordinate {
   lat: number;
   lon: number;
 }
