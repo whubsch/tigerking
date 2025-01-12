@@ -15,6 +15,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
 }) => {
   return (
     <BaseModal
+      modalType="narrow"
       isOpen={isOpen}
       onClose={onClose}
       title={{
@@ -37,10 +38,12 @@ const LoginModal: React.FC<LoginModalProps> = ({
       ]}
     >
       <div className="space-y-6">
-        <div className="text-center p-6">
-          <p className="mb-4">By logging in, you'll be able to:</p>
+        <div className="px-6">
+          <p className="mb-4 font-semibold">
+            By logging in, you'll be able to:
+          </p>
           <ul className="text-left list-disc list-inside">
-            <li>Edit TIGER data</li>
+            <li>Edit and correct imported TIGER data</li>
             <li>Make improvements to OpenStreetMap</li>
             <li>Contribute to your local map data</li>
           </ul>

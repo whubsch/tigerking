@@ -24,7 +24,23 @@ interface BaseModalProps {
   }[];
   size?: ButtonProps["size"];
   closeButton?: boolean;
+  modalType?: "default" | "wide" | "narrow";
 }
+
+const modalSizes = {
+  default: {
+    content: "max-h-[80vh] overflow-y-auto",
+    body: "py-6 px-6",
+  },
+  wide: {
+    content: "max-h-[80vh] overflow-y-auto md:min-w-[600px]",
+    body: "py-6 px-8",
+  },
+  narrow: {
+    content: "max-h-[80vh] overflow-y-auto md:max-w-[500px]",
+    body: "py-6 px-4",
+  },
+};
 
 const BaseModal: React.FC<BaseModalProps> = ({
   isOpen,
@@ -38,7 +54,11 @@ const BaseModal: React.FC<BaseModalProps> = ({
   actions = [],
   size = "md",
   closeButton = true,
+  modalType = "default",
 }) => {
+  const modalStyles = modalSizes[modalType];
+  const finalContentClassName = contentClassName || modalStyles.content;
+  const finalBodyClassName = bodyClassName || modalStyles.body;
   return (
     <Modal
       isOpen={isOpen}
@@ -66,7 +86,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
         },
       }}
     >
-      <ModalContent className={contentClassName}>
+      <ModalContent className={finalContentClassName}>
         {title && (
           <ModalHeader className={`flex flex-col gap-1 ${headerClassName}`}>
             <div className="flex items-center gap-2">
@@ -79,7 +99,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
           </ModalHeader>
         )}
 
-        <ModalBody className={bodyClassName}>
+        <ModalBody className={finalBodyClassName}>
           <div className="space-y-4">
             {children}
 

@@ -4,6 +4,7 @@ import { Link } from "@nextui-org/link";
 import { Card } from "@nextui-org/card";
 import UploadButton from "./UploadButton";
 import WayAccordion from "./WayAccordion";
+import WayCountBadge from "./WayCountBadge";
 import { OsmWay } from "../objects";
 import ChangesetTagTable from "./ChangesetTags";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
@@ -33,6 +34,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
 
   return (
     <BaseModal
+      modalType="wide"
       isOpen={show && uploads.length > 0}
       onClose={onClose}
       title={{
@@ -63,12 +65,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
     >
       <div className="space-y-6">
         <div className="flex flex-col items-center gap-2">
-          <div className="bg-gray-100 px-6 py-3 rounded-full">
-            <span className="text-2xl font-bold text-gray-700">{ways}</span>
-            <span className="text-gray-600 ml-2">
-              {ways !== 1 ? "ways" : "way"} reviewed
-            </span>
-          </div>
+          <WayCountBadge count={ways} verb="reviewed" />
           <p className="text-center text-medium font-medium">
             The changes you upload as
             <Link

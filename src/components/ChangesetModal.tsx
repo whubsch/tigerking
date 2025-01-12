@@ -1,8 +1,10 @@
 import React from "react";
 import BaseModal from "./BaseModal";
 import { Link } from "@nextui-org/link";
+import { Button } from "@nextui-org/button";
 import ChangesetTagTable from "./ChangesetTags";
 import { useChangesetStore } from "../stores/useChangesetStore";
+import { Alert } from "@nextui-org/react";
 
 interface ChangesetModalProps {
   latestChangeset: number;
@@ -24,7 +26,7 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
         emoji: "🎉",
         colorClass: "text-green-600",
       }}
-      subtitle="Your changeset has been uploaded successfully"
+      subtitle="Your changes have been uploaded successfully"
       actions={[
         {
           label: "Close",
@@ -35,24 +37,26 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
       ]}
     >
       <div className="space-y-4">
-        <div className="bg-green-50 p-4 rounded-lg">
-          <p className="text-center text-lg font-medium text-green-800">
-            Thank you for helping to tame the TIGER!
-          </p>
-        </div>
-
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-gray-600">Changeset ID:</p>
-          <Link
-            href={`https://www.openstreetmap.org/changeset/${latestChangeset}`}
-            target="_blank"
-            className="text-lg font-semibold hover:text-blue-600 transition-colors"
-            isExternal
-            showAnchorIcon
-          >
-            {latestChangeset}
-          </Link>
-        </div>
+        <Alert
+          color="success"
+          variant="faded"
+          title={"Changeset " + latestChangeset.toString()}
+          description={"Thanks for helping to tame the TIGER!"}
+          endContent={
+            <Button
+              color="success"
+              variant="flat"
+              as={Link}
+              href={`https://www.openstreetmap.org/changeset/${latestChangeset}`}
+              target="_blank"
+              // className="text-white"
+              isExternal
+              showAnchorIcon
+            >
+              View
+            </Button>
+          }
+        />
 
         <ChangesetTagTable description={description} source={source} />
       </div>

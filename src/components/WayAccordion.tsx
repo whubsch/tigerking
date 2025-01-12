@@ -47,31 +47,40 @@ const WayAccordion: React.FC<WayAccordionProps> = ({
                   >
                     {isFlagged ? "Flagged" : "Fixed"}
                   </Chip>
-                  <span className="font-medium">w{way.id}</span>
+                  {way.tags.name ? (
+                    <span className="font-medium">{way.tags.name}</span>
+                  ) : (
+                    <span className="text-danger font-medium">no name</span>
+                  )}
                 </div>
-                {editable && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onRemoveWay(index);
-                    }}
-                    className="ml-4 text-red-500 hover:bg-red-50 p-2 rounded-full"
-                    aria-label="Remove way"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
+                <div>
+                  <span className="text-gray-500 text-sm">
+                    {way.tags.highway}
+                  </span>
+                  {editable && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveWay(index);
+                      }}
+                      className="ml-4 text-red-500 hover:bg-red-50 p-2 rounded-full"
+                      aria-label="Remove way"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
             }
           >

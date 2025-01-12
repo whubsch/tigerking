@@ -93,6 +93,15 @@ const WayAccordionItemContent: React.FC<WayAccordionItemContentProps> = ({
   const tagChanges = compareTagChanges();
   const isFlagged = way.tags?.["fixme:tigerking"] !== undefined;
 
+  const statusClassMap = {
+    unchanged: "hover:bg-gray-100 dark:hover:bg-gray-800",
+    added:
+      "bg-green-50 hover:bg-green-100 dark:bg-green-900 dark:hover:bg-green-800",
+    removed: "bg-red-50 hover:bg-red-100 dark:bg-red-900 dark:hover:bg-red-800",
+    changed:
+      "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900 dark:hover:bg-yellow-800",
+  };
+
   return (
     <div className="space-y-4">
       {isFlagged && way.tags?.["fixme:tigerking"] && (
@@ -113,23 +122,7 @@ const WayAccordionItemContent: React.FC<WayAccordionItemContentProps> = ({
           {tagChanges.map((change) => (
             <TableRow
               key={change.tag}
-              className={`
-                ${
-                  change.status === "added"
-                    ? "bg-green-50 hover:bg-green-100 dark:bg-green-900 dark:hover:bg-green-800"
-                    : ""
-                }
-                ${
-                  change.status === "removed"
-                    ? "bg-red-50 hover:bg-red-100 dark:bg-red-900 dark:hover:bg-red-800"
-                    : ""
-                }
-                ${
-                  change.status === "changed"
-                    ? "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900 dark:hover:bg-yellow-800"
-                    : ""
-                }
-              `}
+              className={statusClassMap[change.status]}
             >
               <TableCell className="font-medium">{change.tag}</TableCell>
               <TableCell

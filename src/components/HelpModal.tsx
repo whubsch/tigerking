@@ -82,6 +82,7 @@ const externalLinks = [
 const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
   return (
     <BaseModal
+      modalType="narrow"
       isOpen={isOpen}
       onClose={onClose}
       size="lg"
