@@ -9,6 +9,7 @@ interface ChangesetStoreState {
   setSource: (source: string) => void;
   setHost: (host: string) => void;
   setDescription: (location: string) => void;
+  resetDescription: () => void;
 }
 
 export const useChangesetStore = create<ChangesetStoreState>((set) => ({
@@ -22,5 +23,10 @@ export const useChangesetStore = create<ChangesetStoreState>((set) => ({
   setDescription: (location) =>
     set({
       description: `Adding details to and removing tiger tags from \`tiger:reviewed=no\` ways${location ? ` in ${location}` : ""}`,
+    }),
+  resetDescription: () =>
+    set({
+      description:
+        "Adding details to and removing tiger tags from `tiger:reviewed=no` ways",
     }),
 }));

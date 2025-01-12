@@ -33,11 +33,11 @@ const UploadModal: React.FC<UploadModalProps> = ({
 
   return (
     <BaseModal
-      isOpen={show}
+      isOpen={show && uploads.length > 0}
       onClose={onClose}
       title={{
         label: "Ready to Upload?",
-        colorClass: "text-blue-600",
+        colorClass: "text-blue-600 dark:text-blue-400",
         emoji: "🚀",
       }}
       subtitle="Time to make your changes permanent!"

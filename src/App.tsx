@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import WayMap from "./components/WayMap";
 import MainNavbar from "./components/Navbar";
 
@@ -33,7 +27,7 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const { relationId, setRelationId, setHost, setSource, setDescription } =
+  const { relationId, setRelationId, setHost, setSource, resetDescription } =
     useChangesetStore();
   const {
     lanes,
@@ -64,18 +58,19 @@ const App: React.FC = () => {
     addToUpload,
   } = useWayStore();
 
+  useEffect(() => {
+    resetDescription();
+  }, [resetDescription]);
+
   const deduplicateNewWays = useCallback(
     (ways: OsmWay[]) => {
       const unprocessedWays = ways.filter(
-        (way) =>
-          !uploadWaysRef.current.some(
-            (uploadedWay) => uploadedWay.id === way.id,
-          ),
+        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
       );
       const shuffledWays = shuffleArray(unprocessedWays);
       setOverpassWays(shuffledWays);
     },
-    [], // No dependencies needed
+    [uploadWays, setOverpassWays], // Add uploadWays as dependency
   );
 
   // Get search parameters from URL
@@ -97,15 +92,6 @@ const App: React.FC = () => {
         window.location.pathname,
     );
   }, [setHost]);
-
-  const UPLOAD_WAYS_STORAGE_KEY = "tigerking_upload_ways";
-
-  const uploadWaysRef = useRef(uploadWays);
-
-  // Update ref whenever uploadWays changes
-  useEffect(() => {
-    uploadWaysRef.current = uploadWays;
-  }, [uploadWays]);
 
   useEffect(() => {
     if (params.relation) {
@@ -227,33 +213,6 @@ const App: React.FC = () => {
     isCenterPoint,
     updateFromZXY,
   ]);
-
-  // Load saved ways when component mounts
-  useEffect(() => {
-    setDescription("");
-
-    const savedWays = localStorage.getItem(UPLOAD_WAYS_STORAGE_KEY);
-    if (savedWays) {
-      try {
-        const parsedWays = JSON.parse(savedWays);
-        setUploadWays(parsedWays);
-      } catch (e) {
-        console.error("Error loading saved ways:", e);
-      }
-    }
-  }, [setDescription, setUploadWays]);
-
-  // Save ways whenever they change
-  useEffect(() => {
-    if (uploadWays.length > 0) {
-      localStorage.setItem(UPLOAD_WAYS_STORAGE_KEY, JSON.stringify(uploadWays));
-    }
-  }, [uploadWays]);
-
-  // Clear saved ways on upload or clear
-  const clearSavedWays = () => {
-    localStorage.removeItem(UPLOAD_WAYS_STORAGE_KEY);
-  };
 
   // Handle current way and tags
   useEffect(() => {
@@ -460,12 +419,7 @@ const App: React.FC = () => {
         ways={currentWay}
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
-        setUploadWays={(ways) => {
-          setUploadWays(ways);
-          if (ways.length === 0) {
-            clearSavedWays();
-          }
-        }}
+        setUploadWays={setUploadWays}
         setChangeset={setLatestChangeset}
         setError={setError}
       />

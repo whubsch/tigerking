@@ -20,7 +20,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       title={{
         label: "Welcome to TIGER King",
         emoji: "👋",
-        colorClass: "text-blue-600",
+        colorClass: "text-blue-600 dark:text-blue-400",
       }}
       subtitle="Log in with your OpenStreetMap account to get started"
       actions={[

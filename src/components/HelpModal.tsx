@@ -36,8 +36,12 @@ const commonActions = [
   },
   {
     title: "Fix",
-    description:
-      "Mark the way with a fixme:tigerking tag when there are issues",
+    description: (
+      <>
+        Mark the way with a <Code>fixme:tigerking</Code> tag when there are
+        issues
+      </>
+    ),
   },
   {
     title: "Clear TIGER tags",
@@ -84,7 +88,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
       title={{
         label: "TIGER King Guide",
         emoji: "📖",
-        colorClass: "text-blue-600",
+        colorClass: "text-blue-600 dark:text-blue-400",
       }}
       subtitle="Learn how to use TIGER King"
       actions={[
