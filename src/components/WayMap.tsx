@@ -3,6 +3,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Select, SelectItem } from "@nextui-org/select";
 import imagery_json from "../assets/filtered.json";
+import arrowIcon from "../assets/arrow.svg";
 
 interface Attribution {
   required?: boolean;
@@ -130,7 +131,6 @@ const WayMap: React.FC<WayMapProps> = ({
       fitBoundsOptions: { padding: 50 },
     });
 
-    // Add a marker
     map.current.on("load", () => {
       // Add the line source
       map.current?.addSource("way-line", {
@@ -183,6 +183,57 @@ const WayMap: React.FC<WayMapProps> = ({
           ],
         },
       });
+
+      // Load the arrow image
+      const arrow = new Image(60, 60);
+      arrow.onload = () => {
+        // Ensure the image is added before creating the symbol layer
+        map.current?.addImage("arrow", arrow, {});
+
+        // Only add the arrow layer if showLaneDirection is true
+        map.current?.addLayer({
+          id: "way-line-arrows",
+          type: "symbol",
+          source: "way-line",
+          layout: {
+            "symbol-placement": "line",
+            "symbol-spacing": 150,
+            "icon-image": "arrow",
+            "icon-size": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              10,
+              0.1, // At zoom level 10, icon is 0.3 times original size
+              13,
+              0.2, // At zoom level 13, icon is 0.4 times original size
+              15,
+              0.5, // At zoom level 15, icon is 0.5 times original size
+              19,
+              1, // At zoom level 17, icon is 0.7 times original size
+            ],
+            "icon-rotate": -90,
+          },
+          paint: {
+            "icon-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              12,
+              0, // At zoom level 12, still completely transparent
+              15,
+              0.2, // At zoom level 13, start becoming slightly visible
+              17,
+              0.5, // At zoom level 15, more opaque
+              19,
+              0.7, // At zoom level 17, very visible
+            ],
+          },
+        });
+      };
+
+      // Set the src after setting up onload
+      arrow.src = decodeURIComponent(arrowIcon);
     });
 
     // Cleanup on unmount
