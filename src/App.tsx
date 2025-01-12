@@ -11,7 +11,7 @@ import MainNavbar from "./components/Navbar";
 import "maplibre-gl/dist/maplibre-gl.css";
 import LeftPane from "./components/LeftPane";
 import ChangesetModal from "./components/ChangesetModal";
-import FinishedModal from "./components/FinishedModal";
+import UploadModal from "././components/UploadModal";
 import HelpModal from "./components/HelpModal";
 import { overpassService } from "./services/overpass";
 import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
@@ -455,7 +455,7 @@ const App: React.FC = () => {
         latestChangeset={latestChangeset}
         onClose={() => setLatestChangeset(0)}
       />
-      <FinishedModal
+      <UploadModal
         show={showFinishedModal && !latestChangeset}
         ways={currentWay}
         onClose={() => setShowFinishedModal(false)}

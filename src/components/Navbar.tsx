@@ -88,7 +88,9 @@ const MainNavbar: React.FC<NavbarProps> = ({
         variant="flat"
         isDisabled={uploads.length === 0}
         startContent={<IconImage src={upload} alt="upload" />}
-        onPress={() => setShowFinishedModal(true)}
+        onPress={() =>
+          loggedIn ? setShowFinishedModal(true) : setShowLoginModal(true)
+        }
         aria-label="Upload"
       >
         <Chip>{uploads.length || 0}</Chip>
@@ -105,26 +107,34 @@ const MainNavbar: React.FC<NavbarProps> = ({
       </DropdownTrigger>
       <DropdownMenu aria-label="Navigation menu" disabledKeys={["version"]}>
         <DropdownSection title="Account">
-          <DropdownItem
-            key="user"
-            target="_blank"
-            href={`https://www.openstreetmap.org/user/${osmUser}`}
-            textValue={`User details for ${osmUser}`}
-          >
-            <UserCard
-              name={osmUser}
-              imageUrl={userImage}
-              changes={changesetCount}
-            />
-          </DropdownItem>
-          <DropdownItem
-            key="logout"
-            className="text-danger"
-            color="danger"
-            onPress={handleLogout}
-          >
-            Log Out
-          </DropdownItem>
+          {loggedIn ? (
+            <>
+              <DropdownItem
+                key="user"
+                target="_blank"
+                href={`https://www.openstreetmap.org/user/${osmUser}`}
+                textValue={`User details for ${osmUser}`}
+              >
+                <UserCard
+                  name={osmUser}
+                  imageUrl={userImage}
+                  changes={changesetCount}
+                />
+              </DropdownItem>
+              <DropdownItem
+                key="logout"
+                className="text-danger"
+                color="danger"
+                onPress={handleLogout}
+              >
+                Log Out
+              </DropdownItem>
+            </>
+          ) : (
+            <DropdownItem key="login" onPress={() => setShowLoginModal(true)}>
+              Login
+            </DropdownItem>
+          )}
         </DropdownSection>
 
         <DropdownSection title="Links">
@@ -168,20 +178,10 @@ const MainNavbar: React.FC<NavbarProps> = ({
         </NavbarBrand>
 
         <NavbarContent justify="end">
-          {loggedIn ? (
-            <>
-              {renderUploadButton()}
-              {renderDropdownMenu()}
-            </>
-          ) : (
-            <Button
-              color="primary"
-              variant="solid"
-              onPress={() => setShowLoginModal(true)}
-            >
-              Login
-            </Button>
-          )}
+          <>
+            {renderUploadButton()}
+            {renderDropdownMenu()}
+          </>
         </NavbarContent>
       </Navbar>
 

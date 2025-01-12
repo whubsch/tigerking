@@ -12,7 +12,7 @@ const UserCard: React.FC<UserCardProps> = ({ name, imageUrl, changes }) => {
     <div className="flex flex-row justify-between">
       <div className="flex flex-col">
         <h2 className="text-sm font-bold">{name}</h2>
-        <p className="text-sm text-gray-600">{changes}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{changes}</p>
       </div>
       <Avatar radius="sm" src={imageUrl} />
     </div>
