@@ -9,14 +9,14 @@ import {
   DropdownItem,
 } from "@nextui-org/dropdown";
 import { Spinner } from "@nextui-org/spinner";
-import RelationTags from "./RelationHeading";
-import RelationForm from "./RelationForm";
+import RelationHeading from "./RelationHeading";
 import WayHeading from "./WayHeading";
 import SurfaceButtons from "./SurfaceButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import NoRelationPlaceholder from "./NoRelationPlaceholder";
 import CustomMessageModal from "./CustomMessageModal";
+import SearchBar from "./LocationAutocomplete";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
@@ -44,7 +44,6 @@ interface LeftPaneProps {
   onFix: (message: string) => void;
   onClearTiger: () => void;
   onSubmit: () => void;
-  handleRelationSubmit: (e: React.FormEvent) => Promise<void>; // Add type definition
 }
 
 const LeftPane: React.FC<LeftPaneProps> = ({
@@ -61,7 +60,6 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   onFix,
   onClearTiger,
   onSubmit,
-  handleRelationSubmit,
 }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isFixModalOpen, setIsFixModalOpen] = useState(false);
@@ -140,9 +138,9 @@ const LeftPane: React.FC<LeftPaneProps> = ({
           ) : (
             <div className="p-4">
               {relationId && showRelationHeading ? (
-                <RelationTags />
+                <RelationHeading />
               ) : (
-                <RelationForm onSubmit={handleRelationSubmit} />
+                <SearchBar />
               )}
             </div>
           )}

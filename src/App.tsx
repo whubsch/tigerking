@@ -280,11 +280,6 @@ const App: React.FC = () => {
     resetTags,
   ]);
 
-  const handleRelationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    window.location.href = `/tigerking/?relation=${relationId}`;
-  };
-
   const filterTigerTags = useCallback(
     (tags: Tags, keepReviewed: boolean = false): Tags => {
       return Object.fromEntries(
@@ -443,7 +438,6 @@ const App: React.FC = () => {
           onFix={handleActions.fix}
           onClearTiger={handleActions.clearTiger}
           onSubmit={handleActions.submit}
-          handleRelationSubmit={handleRelationSubmit}
         />
         <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">
           <WayMap

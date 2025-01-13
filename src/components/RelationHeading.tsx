@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "@nextui-org/card";
 import { Spinner } from "@nextui-org/spinner";
 
 import TagSelection from "./TagSelection";
@@ -38,28 +37,18 @@ const RelationTags: React.FC = () => {
 
   if (loading) {
     return (
-      <Card className="p-4">
-        <div className="flex justify-center items-center">
-          <Spinner label="Loading area tags..." />
-        </div>
-      </Card>
+      <div className="flex justify-center items-center">
+        <Spinner label="Loading area tags..." />
+      </div>
     );
   }
 
   if (error) {
-    return (
-      <Card className="p-4 bg-danger-50">
-        <p className="text-danger">Error: {error}</p>
-      </Card>
-    );
+    return <p className="text-danger">Error: {error}</p>;
   }
 
   if (Object.keys(tags).length === 0) {
-    return (
-      <Card className="p-4">
-        <p className="text-gray-500">No tags available</p>
-      </Card>
-    );
+    return <p className="text-gray-500">No tags available</p>;
   }
 
   const handleTagClick = (key: string, value: string) => {

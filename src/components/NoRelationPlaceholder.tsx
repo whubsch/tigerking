@@ -15,10 +15,10 @@ const RelationIdPlaceholder: React.FC = () => {
     <Card className="w-full max-w-md mx-auto mt-8">
       <CardHeader className="flex flex-col items-center gap-3 px-6 py-4">
         <h3 className="text-xl font-semibold text-default-700">
-          No Relation ID Selected
+          No location selected
         </h3>
         <p className="text-sm text-default-500 text-center">
-          Please enter a relation ID or choose one of the example values below:
+          Please select a location or choose one of the example values below:
         </p>
       </CardHeader>
       <CardBody className="flex flex-col gap-4 px-6 py-4">
@@ -28,7 +28,10 @@ const RelationIdPlaceholder: React.FC = () => {
               key={id.value}
               variant="flat"
               color="primary"
-              onPress={() => setRelationId(id.value)}
+              onPress={() => {
+                setRelationId(id.value);
+                window.location.href = `/?relation=${id.value}`;
+              }}
               className="px-4 py-2"
             >
               {id.name}
@@ -36,7 +39,7 @@ const RelationIdPlaceholder: React.FC = () => {
           ))}
         </div>
         <p className="text-xs text-default-400 text-center mt-4">
-          Click any button above to set the relation ID
+          Click any button above to try out the app
         </p>
       </CardBody>
     </Card>

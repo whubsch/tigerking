@@ -4,7 +4,7 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import ChangesetTagTable from "./ChangesetTags";
 import { useChangesetStore } from "../stores/useChangesetStore";
-import { Alert } from "@nextui-org/react";
+import { Alert } from "@nextui-org/alert";
 
 interface ChangesetModalProps {
   latestChangeset: number;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { OsmWay } from "../objects";
 import WayAccordionItemContent from "./WayAccordionItemContent";
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/chip";
 
 interface WayAccordionProps {
   ways: OsmWay[];

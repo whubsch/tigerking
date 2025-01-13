@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
-import { Alert } from "@nextui-org/react";
+import { Alert } from "@nextui-org/alert";
 
 interface WayAccordionItemContentProps {
   way: OsmWay;
