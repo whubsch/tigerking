@@ -30,7 +30,7 @@ const RelationIdPlaceholder: React.FC = () => {
               color="primary"
               onPress={() => {
                 setRelationId(id.value);
-                window.location.href = `/?relation=${id.value}`;
+                window.location.href = `/tigerking/?relation=${id.value}`;
               }}
               className="px-4 py-2"
             >
