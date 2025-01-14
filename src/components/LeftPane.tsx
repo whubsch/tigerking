@@ -70,7 +70,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     { key: "doesnt-exist", label: "Doesn't exist" },
     { key: "check-highway", label: "Check highway value" },
   ];
-  const { relationId } = useChangesetStore();
+  const { relation } = useChangesetStore();
   const { lanes, surface, laneMarkings } = useWayTagsStore();
   const { loggedIn, handleLogin } = useOsmAuthContext();
 
@@ -137,7 +137,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
             <BboxCard bbox={bbox} />
           ) : (
             <div className="p-4">
-              {relationId && showRelationHeading ? (
+              {relation.id && showRelationHeading ? (
                 <RelationHeading />
               ) : (
                 <SearchBar />

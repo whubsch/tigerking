@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const { relationId, setRelationId, setHost, setSource, resetDescription } =
+  const { relation, setRelation, setHost, setSource, resetDescription } =
     useChangesetStore();
   const {
     lanes,
@@ -118,8 +118,8 @@ const App: React.FC = () => {
         }
       };
 
-      setRelationId(params.relation);
-      fetchWays(relationId);
+      setRelation({ id: params.relation });
+      fetchWays(relation.id);
     } else if (params.way) {
       const fetchWay = async (wayId: string) => {
         setIsRelationLoading(true);
@@ -205,10 +205,10 @@ const App: React.FC = () => {
     bboxState,
     overpassWays.length,
     deduplicateNewWays,
-    relationId,
+    relation.id,
     setCurrentWay,
     setOverpassWays,
-    setRelationId,
+    setRelation,
     isBoundingBox,
     isCenterPoint,
     updateFromZXY,

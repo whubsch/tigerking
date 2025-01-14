@@ -10,17 +10,17 @@ const RelationTags: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { relationId, setDescription } = useChangesetStore();
+  const { relation, setDescription } = useChangesetStore();
 
   useEffect(() => {
     const loadRelationTags = async () => {
-      if (!relationId) return;
+      if (!relation) return;
 
       setLoading(true);
       setError(null);
 
       try {
-        const { tags } = await fetchElementTags(relationId, "relation");
+        const { tags } = await fetchElementTags(relation.id, "relation");
         setTags(tags);
         setDescription(tags?.name || "");
       } catch (err) {
@@ -33,7 +33,7 @@ const RelationTags: React.FC = () => {
     };
 
     loadRelationTags();
-  }, [relationId, setDescription]);
+  }, [relation, setDescription]);
 
   if (loading) {
     return (
@@ -59,8 +59,8 @@ const RelationTags: React.FC = () => {
   return (
     <>
       <CardHeading
-        name={tags.name}
-        id={relationId}
+        name={relation?.name || tags?.name || ""}
+        id={relation.id}
         type="relation"
         sendHome={true}
       />
