@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Button } from "@nextui-org/button";
 import { OsmWay } from "../objects";
 import WayAccordionItemContent from "./WayAccordionItemContent";
 import { Chip } from "@nextui-org/chip";
+import cancel from "../assets/cancel.svg";
 
 interface WayAccordionProps {
   ways: OsmWay[];
@@ -53,32 +55,24 @@ const WayAccordion: React.FC<WayAccordionProps> = ({
                     <span className="text-danger font-medium">no name</span>
                   )}
                 </div>
-                <div>
-                  <span className="text-gray-500 text-sm">
+                <div className="flex items-center h-full">
+                  <span className="text-gray-500 text-sm hidden md:inline">
                     {way.tags.highway}
                   </span>
                   {editable && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
+                    <Button
+                      isIconOnly
+                      onPress={() => {
                         onRemoveWay(index);
                       }}
-                      className="ml-4 text-red-500 hover:bg-red-50 p-2 rounded-full"
+                      className="ml-4 hover:bg-danger p-2 rounded-full"
                       aria-label="Remove way"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                      <img
+                        src={cancel}
+                        className="h-5 w-5 brightness-0 dark:brightness-100 dark:invert"
+                      />
+                    </Button>
                   )}
                 </div>
               </div>

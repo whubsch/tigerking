@@ -1,64 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { Select, SelectItem } from "@nextui-org/select";
+import ImagerySelect from "./ImagerySelect";
+import {
+  processImagerySources,
+  getDefaultImagerySourceId,
+} from "../services/imagery";
 import imagery_json from "../assets/filtered.json";
 import arrowIcon from "../assets/arrow.svg";
 
-interface Attribution {
-  required?: boolean;
-  text: string;
-  url: string;
-}
-
-interface TileSource {
-  name: string;
-  url: string;
-  attribution: Attribution;
-  maxZoom: number;
-}
-
-interface TileSources {
-  [key: string]: TileSource;
-}
-
-interface AccumulatorType {
-  countrywideSourcesMap: TileSources;
-  otherSourcesMap: TileSources;
-}
-
-const { countrywideSourcesMap, otherSourcesMap } =
-  imagery_json.features.reduce<AccumulatorType>(
-    (acc, feature) => {
-      const { properties } = feature;
-      const sourceObject = {
-        name: properties.name,
-        url: properties.url,
-        attribution: {
-          required: properties.attribution?.required || false,
-          text: properties.attribution?.text || "OpenStreetMap contributors",
-          url: properties.attribution?.url || "",
-        },
-        maxZoom: properties.max_zoom || 20,
-      };
-
-      if (properties.countrywide) {
-        acc.countrywideSourcesMap[properties.id] = sourceObject;
-      } else {
-        acc.otherSourcesMap[properties.id] = sourceObject;
-      }
-
-      return acc;
-    },
-    { countrywideSourcesMap: {}, otherSourcesMap: {} },
-  );
-
-const TILE_SOURCES: TileSources = {
-  ...countrywideSourcesMap,
-  ...otherSourcesMap,
-};
-const COUNTRYWIDE_TILE_SOURCES: TileSources = countrywideSourcesMap;
-const OTHER_TILE_SOURCES: TileSources = otherSourcesMap;
+const { TILE_SOURCES, COUNTRYWIDE_TILE_SOURCES, OTHER_TILE_SOURCES } =
+  processImagerySources(imagery_json);
 
 interface WayMapProps {
   coordinates: [number, number][];
@@ -73,12 +25,9 @@ const WayMap: React.FC<WayMapProps> = ({
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const [selectedSourceId, setSelectedSourceId] = useState(() => {
-    // Verify that the default ID exists, otherwise use the first available source
-    return TILE_SOURCES["EsriWorldImageryClarity"]
-      ? "EsriWorldImageryClarity"
-      : Object.keys(TILE_SOURCES)[0] || "";
-  });
+  const [selectedSourceId, setSelectedSourceId] = useState(() =>
+    getDefaultImagerySourceId(TILE_SOURCES),
+  );
   const tileSource = TILE_SOURCES[selectedSourceId]?.url || "";
 
   useEffect(() => {
@@ -256,31 +205,12 @@ const WayMap: React.FC<WayMapProps> = ({
   return (
     <div className="relative w-full h-full">
       <div className="absolute bottom-2 md:bottom-auto md:top-2 left-2 z-10 w-40 md:w-72">
-        <Select
-          size="sm"
-          label="Imagery"
-          selectedKeys={[selectedSourceId]}
-          onChange={(e) => handleTileSourceChange(e.target.value)}
-          className="max-w-xs"
-          // isVirtualized={false}
-        >
-          {/* waiting for nextui SelectSection component to be fixed
-            https://github.com/nextui-org/nextui/pull/4462 */}
-          <>
-            {Object.entries(COUNTRYWIDE_TILE_SOURCES).map(([id, source]) => (
-              <SelectItem key={id} value={id}>
-                {source.name}
-              </SelectItem>
-            ))}
-          </>
-          <>
-            {Object.entries(OTHER_TILE_SOURCES).map(([id, source]) => (
-              <SelectItem key={id} value={id}>
-                {source.name}
-              </SelectItem>
-            ))}
-          </>
-        </Select>
+        <ImagerySelect
+          selectedSourceId={selectedSourceId}
+          countrywideSourcesMap={COUNTRYWIDE_TILE_SOURCES}
+          otherSourcesMap={OTHER_TILE_SOURCES}
+          onSourceChange={handleTileSourceChange}
+        />
       </div>
       <div ref={mapContainer} className="w-full h-full rounded-lg shadow-lg" />
     </div>
