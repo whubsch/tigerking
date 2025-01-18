@@ -86,7 +86,11 @@ def filter_geojson(geojson_data: dict[str, Any]) -> dict[str, Any]:
                     props["countrywide"] = True
 
                 # Create new feature without geometry
-                filtered_feature = {"type": "Feature", "properties": props}
+                filtered_feature = {
+                    "type": "Feature",
+                    "properties": props,
+                    "geometry": feature["geometry"],
+                }
                 filtered_features.append(filtered_feature)
 
     # Sort filtered_features by name

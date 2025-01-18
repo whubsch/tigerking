@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useCallback } from "react";
-import { Card } from "@nextui-org/card";
-import { Kbd } from "@nextui-org/kbd";
+import { Card } from "@heroui/card";
+import { Kbd } from "@heroui/kbd";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@heroui/tooltip";
 
 interface QuickTag {
   id: number;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Button } from "@nextui-org/button";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Button } from "@heroui/button";
 import { OsmWay } from "../objects";
 import WayAccordionItemContent from "./WayAccordionItemContent";
-import { Chip } from "@nextui-org/chip";
+import { Chip } from "@heroui/chip";
 import cancel from "../assets/cancel.svg";
 
 interface WayAccordionProps {

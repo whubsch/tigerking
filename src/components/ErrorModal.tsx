@@ -1,6 +1,6 @@
 import React from "react";
 import BaseModal from "./BaseModal";
-import { ButtonProps } from "@nextui-org/button";
+import { ButtonProps } from "@heroui/button";
 
 interface ErrorModalProps {
   isOpen: boolean;

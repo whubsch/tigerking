@@ -1,6 +1,6 @@
 import React from "react";
 import BaseModal from "./BaseModal";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 interface LoginModalProps {
   isOpen: boolean;

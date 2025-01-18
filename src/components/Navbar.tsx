@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Navbar, NavbarContent, NavbarBrand } from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
+import { Navbar, NavbarContent, NavbarBrand } from "@heroui/navbar";
+import { Button } from "@heroui/button";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-} from "@nextui-org/dropdown";
-import { Chip } from "@nextui-org/chip";
-import { Kbd } from "@nextui-org/kbd";
-import { Tooltip } from "@nextui-org/tooltip";
-import { Link } from "@nextui-org/link";
+} from "@heroui/dropdown";
+import { Chip } from "@heroui/chip";
+import { Kbd } from "@heroui/kbd";
+import { Tooltip } from "@heroui/tooltip";
+import { Link } from "@heroui/link";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
 import logo from "../assets/tiger.svg";

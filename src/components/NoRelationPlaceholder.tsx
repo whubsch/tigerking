@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@nextui-org/button";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import fetchWikidataAdministrativeAreas from "../services/qlever"; // Adjust the import path
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 
 interface ExampleId {
   name: string;

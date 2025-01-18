@@ -1,7 +1,7 @@
 import React from "react";
 import { EditorLinks } from "./EditDropdown";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 
 interface CardHeadingProps {
   name: string;

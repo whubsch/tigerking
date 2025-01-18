@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
-import { Button } from "@nextui-org/button";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Button } from "@heroui/button";
 
 interface LocationFeature {
   properties: {

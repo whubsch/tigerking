@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { BBox } from "../stores/useBboxStore";
 
 interface BboxCardProps {

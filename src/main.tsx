@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import App from "./App";
 import { OsmAuthProvider } from "./contexts/AuthContext";
 import "./index.css";
@@ -14,7 +14,7 @@ function isDarkModeEnabled(): boolean {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <NextUIProvider
+    <HeroUIProvider
       className={`${
         isDarkModeEnabled() ? "dark" : "light"
       } text-foreground bg-background`}
@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <OsmAuthProvider>
         <App />
       </OsmAuthProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   </React.StrictMode>,
 );

@@ -6,11 +6,10 @@ import {
   processImagerySources,
   getDefaultImagerySourceId,
 } from "../services/imagery";
-import imagery_json from "../assets/filtered.json";
+import imageryJson from "../assets/filtered.json";
 import arrowIcon from "../assets/arrow.svg";
 
-const { TILE_SOURCES, COUNTRYWIDE_TILE_SOURCES, OTHER_TILE_SOURCES } =
-  processImagerySources(imagery_json);
+const { TILE_SOURCES } = processImagerySources(imageryJson);
 
 interface WayMapProps {
   coordinates: [number, number][];
@@ -202,14 +201,54 @@ const WayMap: React.FC<WayMapProps> = ({
     }
   };
 
+  const [mapCenter, setMapCenter] = useState<{
+    lng: number;
+    lat: number;
+    zoom: number;
+  }>({
+    lng: -98.66,
+    lat: 40.5,
+    zoom: zoom,
+  });
+
+  useEffect(() => {
+    if (map.current) {
+      // Set initial center when map is first created
+      const initialCenter = map.current.getCenter();
+      const initialZoom = map.current.getZoom();
+      setMapCenter({
+        lng: initialCenter.lng,
+        lat: initialCenter.lat,
+        zoom: initialZoom,
+      });
+
+      // Add event listener for subsequent moves
+      map.current.on("moveend", () => {
+        const center = map.current?.getCenter();
+        const currentZoom = map.current?.getZoom();
+        if (center) {
+          setMapCenter({
+            lng: center.lng,
+            lat: center.lat,
+            zoom: currentZoom || 5,
+          });
+        }
+      });
+    }
+  }, [coordinates]);
+
   return (
     <div className="relative w-full h-full">
       <div className="absolute bottom-2 md:bottom-auto md:top-2 left-2 z-10 w-40 md:w-72">
         <ImagerySelect
           selectedSourceId={selectedSourceId}
-          countrywideSourcesMap={COUNTRYWIDE_TILE_SOURCES}
-          otherSourcesMap={OTHER_TILE_SOURCES}
           onSourceChange={handleTileSourceChange}
+          center={{
+            lat: mapCenter.lat,
+            lon: mapCenter.lng,
+          }}
+          zoom={mapCenter.zoom}
+          tileSources={TILE_SOURCES}
         />
       </div>
       <div ref={mapContainer} className="w-full h-full rounded-lg shadow-lg" />

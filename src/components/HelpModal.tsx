@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-import { Code } from "@nextui-org/code";
-import { Link } from "@nextui-org/link";
+import { Button } from "@heroui/button";
+import { Kbd } from "@heroui/kbd";
+import { Code } from "@heroui/code";
+import { Link } from "@heroui/link";
 import BaseModal from "./BaseModal";
 
 interface HelpModalProps {

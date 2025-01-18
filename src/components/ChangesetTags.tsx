@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@nextui-org/table";
+} from "@heroui/table";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import packageJson from "../../package.json";
 

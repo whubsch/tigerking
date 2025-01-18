@@ -4,9 +4,9 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { Textarea } from "@nextui-org/input";
+} from "@heroui/modal";
+import { Button } from "@heroui/button";
+import { Textarea } from "@heroui/input";
 
 interface CustomMessageModalProps {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import React from "react";
-import { ButtonGroup } from "@nextui-org/button";
-import { Slider } from "@nextui-org/slider";
+import { ButtonGroup } from "@heroui/button";
+import { Slider } from "@heroui/slider";
 import TagButtonHeading from "./TagButtonHeading";
 import toggleButton from "./ToggleButton";
 import { useWayTagsStore } from "../stores/useWayTagsStore";

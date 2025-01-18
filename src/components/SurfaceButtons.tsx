@@ -1,12 +1,12 @@
 import React from "react";
-import { ButtonGroup } from "@nextui-org/button";
+import { ButtonGroup } from "@heroui/button";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
   DropdownSection,
-} from "@nextui-org/dropdown";
+} from "@heroui/dropdown";
 import TagButtonHeading from "./TagButtonHeading";
 import toggleButton from "./ToggleButton";
 import { useWayTagsStore } from "../stores/useWayTagsStore";

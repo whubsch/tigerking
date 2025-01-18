@@ -1,7 +1,7 @@
 import React from "react";
 import BaseModal from "./BaseModal";
-import { Link } from "@nextui-org/link";
-import { Card } from "@nextui-org/card";
+import { Link } from "@heroui/link";
+import { Card } from "@heroui/card";
 import UploadButton from "./UploadButton";
 import WayAccordion from "./WayAccordion";
 import WayCountBadge from "./WayCountBadge";

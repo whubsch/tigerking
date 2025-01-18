@@ -1,11 +1,11 @@
-import { Button, ButtonGroup } from "@nextui-org/button";
+import { Button, ButtonGroup } from "@heroui/button";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/dropdown";
-import { Link } from "@nextui-org/link";
+} from "@heroui/dropdown";
+import { Link } from "@heroui/link";
 import edit from "../assets/edit.svg";
 
 const EDITORS = [

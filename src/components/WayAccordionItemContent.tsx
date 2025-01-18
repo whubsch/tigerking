@@ -8,8 +8,8 @@ import {
   TableBody,
   TableRow,
   TableCell,
-} from "@nextui-org/table";
-import { Alert } from "@nextui-org/alert";
+} from "@heroui/table";
+import { Alert } from "@heroui/alert";
 
 interface WayAccordionItemContentProps {
   way: OsmWay;

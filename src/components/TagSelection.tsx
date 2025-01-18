@@ -1,7 +1,7 @@
 import React from "react";
-import { Chip } from "@nextui-org/chip";
-import { Link } from "@nextui-org/link";
-import { ScrollShadow } from "@nextui-org/scroll-shadow";
+import { Chip } from "@heroui/chip";
+import { Link } from "@heroui/link";
+import { ScrollShadow } from "@heroui/scroll-shadow";
 
 import cancel from "../assets/cancel.svg";
 

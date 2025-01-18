@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Button } from "@nextui-org/button";
-import { Card } from "@nextui-org/card";
-import { Divider } from "@nextui-org/divider";
+import { Button } from "@heroui/button";
+import { Card } from "@heroui/card";
+import { Divider } from "@heroui/divider";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/dropdown";
-import { Spinner } from "@nextui-org/spinner";
+} from "@heroui/dropdown";
+import { Spinner } from "@heroui/spinner";
 import RelationHeading from "./RelationHeading";
 import WayHeading from "./WayHeading";
 import SurfaceButtons from "./SurfaceButtons";
@@ -27,8 +27,8 @@ import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { BBox } from "../stores/useBboxStore";
 import BboxCard from "./BboxCard";
 import LoginModal from "./LoginModal";
-import { Kbd } from "@nextui-org/kbd";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Kbd } from "@heroui/kbd";
+import { Tooltip } from "@heroui/tooltip";
 
 interface LeftPaneProps {
   showRelationHeading: boolean;

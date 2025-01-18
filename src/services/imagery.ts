@@ -1,3 +1,7 @@
+import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
+import { Feature, FeatureCollection, Polygon } from "geojson";
+import { point } from "@turf/helpers";
+
 export interface Attribution {
   required?: boolean;
   text: string;
@@ -85,4 +89,33 @@ export function getDefaultImagerySourceId(tileSources: TileSources): string {
   return tileSources["EsriWorldImageryClarity"]
     ? "EsriWorldImageryClarity"
     : Object.keys(tileSources)[0] || "";
+}
+
+export function filterImageryLayersAtLocation(
+  geojsonFeatures: FeatureCollection<Polygon, Feature["properties"]>,
+  longitude: number,
+  latitude: number,
+): Feature[] {
+  // Create a point from the given coordinates
+  const pointObj = point([longitude, latitude]);
+
+  // Filter features that contain the point
+  const visibleFeatures = geojsonFeatures.features.filter((feature) => {
+    if (!feature) {
+      return false;
+    } else if (!feature.geometry) {
+      return true;
+    }
+
+    // Ensure the feature is a polygon
+    if (
+      feature.geometry.type === "Polygon" ||
+      feature.geometry.type === "MultiPolygon"
+    ) {
+      return booleanPointInPolygon(pointObj, feature);
+    }
+    return false;
+  });
+
+  return visibleFeatures;
 }
