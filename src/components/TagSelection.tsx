@@ -11,6 +11,7 @@ interface TagSelectionProps {
   commonTags?: string[]; // Make common tags configurable
   onTagClick?: (key: string, value: string) => void; // Optional click handler
   scroll: boolean;
+  style: "splitted" | "bordered";
 }
 
 const TagSelection: React.FC<TagSelectionProps> = ({
@@ -18,6 +19,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
   commonTags = ["type", "boundary", "admin_level", "wikidata"],
   onTagClick,
   scroll,
+  style = "splitted",
 }) => {
   const sortedTags = Object.entries(tags)
     .filter(([key]) => key !== "name")
@@ -102,9 +104,9 @@ const TagSelection: React.FC<TagSelectionProps> = ({
 
   return scroll ? (
     <Accordion
-      variant="splitted"
+      variant={style}
       isCompact
-      className="px-0"
+      className={style == "bordered" ? "" : "px-0"}
       defaultExpandedKeys={[]}
     >
       <AccordionItem

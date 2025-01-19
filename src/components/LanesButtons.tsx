@@ -46,7 +46,10 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
         showSteps={true}
         marks={[
           { value: 0, label: "0" },
-          { value: maxValue / 2, label: `${maxValue / 2}` },
+          { value: maxValue / 5, label: `${maxValue / 5}` },
+          { value: (maxValue * 2) / 5, label: `${(maxValue * 2) / 5}` },
+          { value: (maxValue * 3) / 5, label: `${(maxValue * 3) / 5}` },
+          { value: (maxValue * 4) / 5, label: `${(maxValue * 4) / 5}` },
           { value: maxValue, label: `${maxValue}` },
         ]}
       />

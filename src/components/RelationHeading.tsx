@@ -64,7 +64,12 @@ const RelationTags: React.FC = () => {
         type="relation"
         sendHome={true}
       />
-      <TagSelection tags={tags} onTagClick={handleTagClick} scroll={true} />
+      <TagSelection
+        tags={tags}
+        onTagClick={handleTagClick}
+        scroll={true}
+        style="bordered"
+      />
     </>
   );
 };
