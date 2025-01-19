@@ -20,7 +20,7 @@ const keyboardShortcuts = [
     description: "Clear TIGER tags",
   },
   {
-    keys: ["s"],
+    keys: ["Enter"],
     description: "Submit way",
   },
   {

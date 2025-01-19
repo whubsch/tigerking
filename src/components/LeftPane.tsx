@@ -290,7 +290,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                     <Tooltip
                       content={
                         <p className="items-center">
-                          Shortcut: <Kbd>s</Kbd>
+                          Key: <Kbd>Enter</Kbd>
                         </p>
                       }
                       delay={250}

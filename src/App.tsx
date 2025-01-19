@@ -379,11 +379,17 @@ const App: React.FC = () => {
       )
         return;
 
+      console.log("Keypress", event.key);
       if (event.key === "u") {
         setShowFinishedModal(true);
       } else if (event.key === "f") {
         handleActions.clearTiger();
-      } else if (event.key === "s" && surface && lanes) {
+      } else if (
+        event.key === "Enter" &&
+        surface &&
+        (lanes || laneMarkings == false)
+      ) {
+        console.log("Pressed s");
         handleActions.submit();
       }
     };
@@ -392,7 +398,7 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [handleActions, lanes, surface, setShowFinishedModal]);
+  }, [handleActions, lanes, laneMarkings, surface, setShowFinishedModal]);
 
   return (
     <div className="flex flex-col md:h-screen">

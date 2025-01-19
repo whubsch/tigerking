@@ -63,7 +63,7 @@ const QuickTags: React.FC = () => {
       key={tag.id}
       content={
         <p>
-          Shortcut: <Kbd>{tag.keyboardShortcut}</Kbd>
+          Key: <Kbd>{tag.keyboardShortcut}</Kbd>
         </p>
       }
       delay={1000}
