@@ -14,7 +14,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { Link } from "@heroui/link";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
-import logo from "../assets/tiger.svg";
+import logo from "../assets/tiger_outline.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
 import upload from "../assets/upload.svg";
@@ -170,7 +170,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
   return (
     <>
       <Navbar maxWidth="full" position="static" className="shadow">
-        <NavbarBrand className="gap-4" as={Link} href="/tigerking/">
+        <NavbarBrand className="gap-4 flex-grow-0" as={Link} href="/tigerking/">
           <img src={logo} alt="Logo" className="w-8 h-8" />
           <h1 className="text-xl font-bold text-black dark:text-white">
             TIGER King

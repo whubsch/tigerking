@@ -5,6 +5,7 @@ import { Button } from "@heroui/button";
 import ChangesetTagTable from "./ChangesetTags";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { Alert } from "@heroui/alert";
+import link from "../assets/link.svg";
 
 interface ChangesetModalProps {
   latestChangeset: number;
@@ -49,9 +50,14 @@ const ChangesetModal: React.FC<ChangesetModalProps> = ({
               as={Link}
               href={`https://www.openstreetmap.org/changeset/${latestChangeset}`}
               target="_blank"
-              // className="text-white"
-              isExternal
-              showAnchorIcon
+              endContent={
+                <img
+                  src={link}
+                  alt="external"
+                  className="h-5 w-5 fill-success"
+                />
+              }
+              // showAnchorIcon
             >
               View
             </Button>
