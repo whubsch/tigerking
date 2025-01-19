@@ -89,12 +89,9 @@ const QuickTags: React.FC = () => {
   );
 
   return (
-    <>
-      <h3 className="text-lg font-light">Quick Tags</h3>
-      <div className="grid grid-cols-3 gap-4">
-        {QUICK_TAGS.map(renderTagTooltip)}
-      </div>
-    </>
+    <div className="grid grid-cols-3 gap-4">
+      {QUICK_TAGS.map(renderTagTooltip)}
+    </div>
   );
 };
 

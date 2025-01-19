@@ -160,7 +160,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                 tags={overpassWays[currentWay].tags}
                 wayId={overpassWays[currentWay].id?.toString() ?? ""}
               />
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 md:grow">
                 <div className="py-2 flex flex-col gap-4">
                   <SurfaceButtons />
                   <LanesButtons
@@ -169,9 +169,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                   />
                 </div>
               </div>
-              <div className="grow">
+              <div className="flex-none">
                 <>
-                  <QuickTags />
                   {!overpassWays[currentWay].tags.name &&
                     overpassWays[currentWay].tags.highway === "residential" && (
                       <div
@@ -221,6 +220,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         </Dropdown>
                       </div>
                     )}
+                  <QuickTags />
+
                   <div className="flex gap-2 w-full mt-4">
                     <Button
                       color="default"

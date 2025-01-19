@@ -1,7 +1,8 @@
 import React from "react";
 import { Chip } from "@heroui/chip";
 import { Link } from "@heroui/link";
-import { ScrollShadow } from "@heroui/scroll-shadow";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import tag from "../assets/tag.svg";
 
 import cancel from "../assets/cancel.svg";
 
@@ -100,9 +101,33 @@ const TagSelection: React.FC<TagSelectionProps> = ({
   );
 
   return scroll ? (
-    <ScrollShadow className="flex flex-wrap gap-2 max-h-[100px]">
-      {tagsContainer}
-    </ScrollShadow>
+    <Accordion
+      variant="splitted"
+      isCompact
+      className="px-0"
+      defaultExpandedKeys={[]}
+    >
+      <AccordionItem
+        key="1"
+        aria-label="Tags"
+        title={
+          <div className="flex justify-between items-center w-full">
+            <span>{tags.highway ? tags.highway : "Tags"}</span>
+            <span className="text-gray-500">{sortedTags.length}</span>
+          </div>
+        }
+        indicator={
+          <img
+            src={tag}
+            className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
+          />
+        }
+      >
+        <div className="flex flex-wrap gap-2 py-1 overflow-clip">
+          {tagsContainer}
+        </div>
+      </AccordionItem>
+    </Accordion>
   ) : (
     <div className="flex flex-wrap gap-2">{tagsContainer}</div>
   );
