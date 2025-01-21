@@ -16,6 +16,7 @@ import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
 import { useBBoxStore } from "./stores/useBboxStore";
 import { useWayStore } from "./stores/useWayStore";
+import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { getMapParams } from "./services/params";
 
 const App: React.FC = () => {
@@ -57,6 +58,7 @@ const App: React.FC = () => {
     setUploadWays,
     addToUpload,
   } = useWayStore();
+  const { loggedIn } = useOsmAuthContext();
 
   useEffect(() => {
     resetDescription();
@@ -379,7 +381,9 @@ const App: React.FC = () => {
       )
         return;
 
-      console.log("Keypress", event.key);
+      // Only handle keypress if logged in
+      if (!loggedIn) return;
+
       if (event.key === "u") {
         setShowFinishedModal(true);
       } else if (event.key === "f") {
@@ -398,7 +402,14 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [handleActions, lanes, laneMarkings, surface, setShowFinishedModal]);
+  }, [
+    handleActions,
+    lanes,
+    laneMarkings,
+    surface,
+    setShowFinishedModal,
+    loggedIn,
+  ]);
 
   return (
     <div className="flex flex-col md:h-screen">
