@@ -8145,6 +8145,192 @@
       "type": "Feature",
       "properties": {
         "attribution": {
+          "required": true,
+          "text": "Cook County GIS",
+          "url": "https://hub-cookcountyil.opendata.arcgis.com/"
+        },
+        "available_projections": [
+          "CRS:84",
+          "EPSG:3435",
+          "EPSG:3857",
+          "EPSG:4326"
+        ],
+        "category": "photo",
+        "country_code": "US",
+        "description": "4-Band aerial imagery flown in 2023 for Cook County, Illinois at 6 inch pixel resolution",
+        "end_date": "2023",
+        "icon": "https://www.cookcountyil.gov/sites/g/files/ywwepo161/files/cook_county_logo_0.png",
+        "id": "Cook_IL_2024",
+        "license_url": "https://wiki.openstreetmap.org/wiki/Illinois/Cook_Central",
+        "max_zoom": 19,
+        "name": "Cook County Orthoimagery 2024",
+        "permission_osm": "explicit",
+        "privacy_policy_url": "https://cookcountyil.gov/privacy-policy/",
+        "start_date": "2023",
+        "type": "wms",
+        "url": "https://gis.cookcountyil.gov/imagery/rest/services/CookOrtho2024/ImageServer/exportImage?f=image&format=jpg&imageSR={wkid}&bboxSR={wkid}&bbox={bbox-epsg-3857}&size=256,256&foo=EPSG:3857",
+        "valid-georeference": true
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -87.50067,
+              41.45476
+            ],
+            [
+              -87.49767,
+              41.68777
+            ],
+            [
+              -87.5152,
+              41.73161
+            ],
+            [
+              -87.59708,
+              41.82583
+            ],
+            [
+              -87.59605,
+              41.88784
+            ],
+            [
+              -87.62953,
+              41.96306
+            ],
+            [
+              -87.65905,
+              42.04534
+            ],
+            [
+              -87.67862,
+              42.08013
+            ],
+            [
+              -87.72343,
+              42.10892
+            ],
+            [
+              -87.77465,
+              42.17679
+            ],
+            [
+              -88.2568,
+              42.17811
+            ],
+            [
+              -88.2568,
+              42.17128
+            ],
+            [
+              -88.26603,
+              42.17124
+            ],
+            [
+              -88.26613,
+              42.08892
+            ],
+            [
+              -88.28459,
+              42.0752
+            ],
+            [
+              -88.29373,
+              42.0752
+            ],
+            [
+              -88.2938,
+              41.98603
+            ],
+            [
+              -88.2846,
+              41.98603
+            ],
+            [
+              -88.28459,
+              41.96549
+            ],
+            [
+              -87.94451,
+              41.9648
+            ],
+            [
+              -87.9459,
+              41.73161
+            ],
+            [
+              -87.97354,
+              41.71108
+            ],
+            [
+              -88.04679,
+              41.71134
+            ],
+            [
+              -88.05593,
+              41.70458
+            ],
+            [
+              -88.05636,
+              41.62911
+            ],
+            [
+              -88.03808,
+              41.61531
+            ],
+            [
+              -87.93749,
+              41.61499
+            ],
+            [
+              -87.93783,
+              41.54642
+            ],
+            [
+              -87.92882,
+              41.53248
+            ],
+            [
+              -87.81929,
+              41.5321
+            ],
+            [
+              -87.81986,
+              41.45665
+            ],
+            [
+              -87.80175,
+              41.44279
+            ],
+            [
+              -87.55557,
+              41.44142
+            ],
+            [
+              -87.55547,
+              41.44827
+            ],
+            [
+              -87.50988,
+              41.44794
+            ],
+            [
+              -87.50977,
+              41.45484
+            ],
+            [
+              -87.50067,
+              41.45476
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "attribution": {
           "required": false,
           "text": "Crook County GIS",
           "url": "https://co.crook.or.us/gis"
@@ -10480,7 +10666,6 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
           "EPSG:4326",
           "EPSG:6347"
         ],
