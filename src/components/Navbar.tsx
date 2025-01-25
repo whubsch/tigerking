@@ -22,6 +22,7 @@ import question from "../assets/question.svg";
 import UserCard from "./UserCard";
 import LoginModal from "./LoginModal";
 import packageJson from "../../package.json";
+import LocationAutocomplete from "./LocationAutocomplete";
 
 interface NavbarProps {
   uploads: OsmWay[];
@@ -179,6 +180,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
 
         <NavbarContent justify="end">
           <>
+            <LocationAutocomplete compact className="hidden md:block" />
             {renderUploadButton()}
             {renderDropdownMenu()}
           </>

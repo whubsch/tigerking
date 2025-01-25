@@ -16,7 +16,7 @@ import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import NoRelationPlaceholder from "./NoRelationPlaceholder";
 import CustomMessageModal from "./CustomMessageModal";
-import SearchBar from "./LocationAutocomplete";
+import LocationAutocomplete from "./LocationAutocomplete";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
@@ -140,7 +140,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
               {relation.id && showRelationHeading ? (
                 <RelationHeading />
               ) : (
-                <SearchBar />
+                <LocationAutocomplete />
               )}
             </div>
           )}

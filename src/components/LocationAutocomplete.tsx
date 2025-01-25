@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
+import search from "../assets/search.svg";
 
 interface LocationFeature {
   properties: {
@@ -17,13 +18,20 @@ interface LocationFeature {
   };
 }
 
-export const LocationAutocomplete: React.FC = () => {
+interface LocationAutocompleteProps {
+  compact?: boolean;
+  className?: string;
+}
+
+export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
+  compact = false,
+  className = "",
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [selectedLocation, setSelectedLocation] =
     useState<LocationFeature | null>(null);
   const [suggestions, setSuggestions] = useState<LocationFeature[]>([]);
 
-  // Use useEffect instead of useMemo for side effects like API calls
   useEffect(() => {
     // Only fetch if input is long enough
     if (inputValue.length < 2) {
@@ -56,7 +64,7 @@ export const LocationAutocomplete: React.FC = () => {
     const timeoutId = setTimeout(fetchSuggestions, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [inputValue]); // Dependency array ensures this runs when inputValue changes
+  }, [inputValue]);
 
   const generateLocationDescription = (feature: LocationFeature): string => {
     const { state, county, type, osm_value } = feature.properties;
@@ -84,9 +92,17 @@ export const LocationAutocomplete: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className={`
+        flex
+        ${compact ? "flex-row items-center gap-2" : "flex-col gap-2"}
+        ${className}
+      `}
+    >
       <Autocomplete
-        label="Location"
+        label={!compact ? "Location" : undefined}
+        aria-label={compact ? "Location Search" : undefined}
+        className={compact ? "flex-grow" : ""}
         placeholder="Enter a location"
         listboxProps={{
           emptyContent: "No OSM relations found.",
@@ -94,16 +110,28 @@ export const LocationAutocomplete: React.FC = () => {
         value={inputValue}
         onInputChange={handleInputChange}
         onSelectionChange={(key) => {
-          // Convert key to number if it's a string
           const index = Number(key);
-
-          // Use the index to select the location
           if (!isNaN(index) && index >= 0 && index < suggestions.length) {
             setSelectedLocation(suggestions[index]);
           } else {
             setSelectedLocation(null);
           }
         }}
+        endContent={
+          compact ? (
+            <Button
+              size="sm"
+              isIconOnly
+              color="primary"
+              onPress={handleSubmit}
+              isDisabled={!selectedLocation}
+              className="rounded-full m-1"
+              aria-label="Load"
+            >
+              <img src={search} alt="search" className="w-4 h-4 stroke-white" />
+            </Button>
+          ) : null
+        }
       >
         {suggestions.map((feature, index) => (
           <AutocompleteItem
@@ -120,8 +148,10 @@ export const LocationAutocomplete: React.FC = () => {
         color="primary"
         onPress={handleSubmit}
         isDisabled={!selectedLocation}
-        className="w-full"
+        className={`${compact ? "hidden" : "w-full"}`}
+        aria-label="Load"
       >
+        <img src={search} alt="search" className="w-4 h-4 stroke-white" />
         Load
       </Button>
     </div>
