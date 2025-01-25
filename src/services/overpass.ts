@@ -76,7 +76,7 @@ map_to_area->.hood;
   async fetchWays(wayIds: string[]): Promise<OsmWay[]> {
     const query = `
 [out:json];
-way(${wayIds.join(",")});
+way(id:${wayIds.join(",")});
 out meta geom;
       `;
     return overpassService.fetchQuery(query);

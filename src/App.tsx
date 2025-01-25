@@ -65,12 +65,16 @@ const App: React.FC = () => {
   }, [resetDescription]);
 
   const deduplicateNewWays = useCallback(
-    (ways: OsmWay[]) => {
+    (ways: OsmWay[], shuffle = true) => {
       const unprocessedWays = ways.filter(
         (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
       );
-      const shuffledWays = shuffleArray(unprocessedWays);
-      setOverpassWays(shuffledWays);
+      if (shuffle) {
+        const shuffledWays = shuffleArray(unprocessedWays);
+        setOverpassWays(shuffledWays);
+      } else {
+        setOverpassWays(unprocessedWays);
+      }
     },
     [uploadWays, setOverpassWays], // Add uploadWays as dependency
   );
@@ -126,12 +130,13 @@ const App: React.FC = () => {
       const fetchWay = async (wayId: string) => {
         setIsRelationLoading(true);
         setShowRelationHeading(false);
+        const wayIds = wayId.split(",");
         try {
-          const ways = await overpassService.fetchWays([wayId]);
+          const ways = await overpassService.fetchWays(wayIds);
           setOverpassWays([]);
           setCurrentWay(0);
 
-          deduplicateNewWays(ways);
+          deduplicateNewWays(ways, false);
         } catch (error) {
           setError("Error fetching OSM data: " + error);
         } finally {

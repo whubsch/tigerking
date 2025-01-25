@@ -14,9 +14,9 @@ The TIGER King application supports several URL parameters to configure how and 
 ### Way
 
 - **Key**: `way`
-- **Description**: Loads a specific OSM way
-- **Example**: `?way=8796378`
-- **Usage**: Retrieves and displays the specified way for editing
+- **Description**: Loads specific **comma-separated** OSM ways
+- **Example**: `?way=8796378` or `?way=8796378,8796379`
+- **Usage**: Retrieves and displays the specified ways for editing
 
 ### Bounding Box
 
