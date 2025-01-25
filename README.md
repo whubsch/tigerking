@@ -2,7 +2,7 @@
 
 > I went to work every day prepared to die in a [TIGER cage](https://youtu.be/LeWcZ6WDZP4?si=9tZN0w9JqoHxUWCF).
 
-![TIGER King with Joe Exotic](./public/img/Tiger-King joe.jpg)
+![TIGER King with Joe Exotic](./public/img/tiger_king_joe.jpg)
 
 This repository provides mappers a web application to quickly fix outdated TIGER road data in OpenStreetMap. It is not meant as a general-purpose editor, but rather to add `surface` and `lanes` tags to roadways and remove the various legacy TIGER import tags.
 
