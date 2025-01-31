@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
+import ConfirmationModal from "./ConfirmationModal";
 import search from "../assets/search.svg";
 
 interface LocationFeature {
@@ -31,6 +32,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
   const [selectedLocation, setSelectedLocation] =
     useState<LocationFeature | null>(null);
   const [suggestions, setSuggestions] = useState<LocationFeature[]>([]);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   useEffect(() => {
     // Only fetch if input is long enough
@@ -99,6 +101,17 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
         ${className}
       `}
     >
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={handleSubmit}
+        confirmText="Change"
+      >
+        <p>
+          This will reset your progress, although your edits will remain
+          available. Are you sure you want to change the area?
+        </p>
+      </ConfirmationModal>
       <Autocomplete
         label={!compact ? "Location" : undefined}
         aria-label={compact ? "Location Search" : undefined}
@@ -123,7 +136,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
               size="sm"
               isIconOnly
               color="primary"
-              onPress={handleSubmit}
+              onPress={() => setIsConfirmModalOpen(true)}
               isDisabled={!selectedLocation}
               className="rounded-full m-1"
               aria-label="Load"
