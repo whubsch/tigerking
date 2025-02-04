@@ -39,8 +39,8 @@ const WayMap: React.FC<WayMapProps> = ({
           new maplibregl.LngLatBounds(coordinates[0], coordinates[0]),
         )
       : new maplibregl.LngLatBounds(
-          [-124.848974, 24.396308], // Southwest coordinates [lng, lat]
-          [-66.885444, 49.384358], // Northeast coordinates [lng, lat]
+          [-124.848974, 24.396308],
+          [-66.885444, 49.384358],
         );
 
     setImagery(TILE_SOURCES[selectedSourceId].name);
@@ -117,7 +117,6 @@ const WayMap: React.FC<WayMapProps> = ({
             22,
             14,
           ],
-          "line-dasharray": [2, 2],
           "line-opacity": [
             "interpolate",
             ["linear"],
@@ -125,9 +124,9 @@ const WayMap: React.FC<WayMapProps> = ({
             10,
             0.9, // At zoom level 10, opacity is 0.8
             15,
-            0.5, // At zoom level 15, opacity is 0.5
+            0.5,
             20,
-            0.2, // At zoom level 20, opacity is 0.2
+            0.35,
           ],
         },
       });
@@ -152,13 +151,13 @@ const WayMap: React.FC<WayMapProps> = ({
               ["linear"],
               ["zoom"],
               10,
-              0.1, // At zoom level 10, icon is 0.3 times original size
+              0.1, // At zoom level 10, icon is 0.1 times original size
               13,
-              0.2, // At zoom level 13, icon is 0.4 times original size
+              0.2,
               15,
-              0.5, // At zoom level 15, icon is 0.5 times original size
+              0.5,
               19,
-              1, // At zoom level 17, icon is 0.7 times original size
+              0.7,
             ],
             "icon-rotate": -90,
           },
@@ -170,11 +169,11 @@ const WayMap: React.FC<WayMapProps> = ({
               12,
               0, // At zoom level 12, still completely transparent
               15,
-              0.2, // At zoom level 13, start becoming slightly visible
+              0.2,
               17,
-              0.5, // At zoom level 15, more opaque
+              0.5,
               19,
-              0.7, // At zoom level 17, very visible
+              0.7,
             ],
           },
         });
