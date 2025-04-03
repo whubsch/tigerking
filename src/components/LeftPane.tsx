@@ -111,7 +111,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
       setIsLoginModalOpen(true);
       return;
     }
-    onCustomFix();
+    setIsFixModalOpen(true);
   };
 
   return (

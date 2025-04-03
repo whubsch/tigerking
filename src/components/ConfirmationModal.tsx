@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@heroui/modal";
-import { Button } from "@heroui/button";
+import BaseModal from "./BaseModal";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -33,23 +26,30 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalContent>
-        <ModalHeader>{title}</ModalHeader>
-        <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <Button variant="flat" onPress={onClose}>
-            Cancel
-          </Button>
-          <Button
-            color={isDangerous ? "danger" : "primary"}
-            onPress={handleConfirm}
-          >
-            {confirmText}
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <BaseModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={{
+        label: title,
+        emoji: "⚠️",
+      }}
+      modalType="narrow"
+      actions={[
+        {
+          label: "Cancel",
+          color: "default",
+          variant: "flat",
+          onClick: onClose,
+        },
+        {
+          label: confirmText,
+          color: isDangerous ? "danger" : "primary",
+          onClick: handleConfirm,
+        },
+      ]}
+    >
+      {children}
+    </BaseModal>
   );
 };
 

@@ -33,7 +33,7 @@ const RelationTags: React.FC = () => {
     };
 
     loadRelationTags();
-  }, [relation]);
+  }, [relation, setDescription]);
 
   if (loading) {
     return (
