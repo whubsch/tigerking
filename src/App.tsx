@@ -7,6 +7,7 @@ import LeftPane from "./components/LeftPane";
 import ChangesetModal from "./components/ChangesetModal";
 import UploadModal from "././components/UploadModal";
 import HelpModal from "./components/HelpModal";
+import AreaCompletedModal from "./components/AreaCompletedModal";
 import { overpassService } from "./services/overpass";
 import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
 import useWayManagement from "./hooks/useWayManagement";
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
   const { relation, setRelation, setHost, setSource, resetDescription } =
     useChangesetStore();
   const {
@@ -109,7 +111,7 @@ const App: React.FC = () => {
           try {
             const ways = await overpassService.fetchWaysInRelation(relationId);
             if (ways.length === 0) {
-              setError("No ways found in bounding box");
+              setShowAreaCompletedModal(true);
             } else {
               setOverpassWays([]);
               setCurrentWay(0);
@@ -158,7 +160,7 @@ const App: React.FC = () => {
             ]);
 
             if (ways.length === 0) {
-              setError("No ways found in bounding box");
+              setShowAreaCompletedModal(true);
             } else {
               deduplicateNewWays(ways);
             }
@@ -190,7 +192,7 @@ const App: React.FC = () => {
             ]);
 
             if (waysCenter.length === 0) {
-              setError("No ways found around center point");
+              setShowAreaCompletedModal(true);
             } else {
               deduplicateNewWays(waysCenter);
               sortWaysByDistance(waysCenter, {
@@ -439,6 +441,11 @@ const App: React.FC = () => {
         setUploadWays={setUploadWays}
         setChangeset={setLatestChangeset}
         setError={setError}
+      />
+      <AreaCompletedModal
+        isOpen={showAreaCompletedModal}
+        onClose={() => setShowAreaCompletedModal(false)}
+        areaName={relation.name || ""}
       />
       <MainNavbar
         uploads={uploadWays}
