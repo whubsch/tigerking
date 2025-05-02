@@ -12076,6 +12076,7 @@
         },
         "available_projections": [
           "CRS:84",
+          "EPSG:3857",
           "EPSG:4326",
           "EPSG:6347"
         ],
@@ -14270,7 +14271,6 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
           "EPSG:4326",
           "EPSG:6347"
         ],
@@ -14942,7 +14942,6 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
           "EPSG:4326",
           "EPSG:6347"
         ],
@@ -28048,25 +28047,21 @@
           "text": "KyFromAbove",
           "url": "https://kyfromabove.ky.gov/"
         },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3857",
-          "EPSG:4326"
-        ],
+        "best": true,
         "category": "photo",
         "country_code": "US",
-        "description": "6-inch aerial imagery captured from 2018 to 2022 through the Kentucky Aerial Photography and Elevation Data Program (KyFromAbove) and published by the Kentucky Division of Geographic Information (DGI).",
-        "end_date": "2022",
-        "id": "KYAPED_Phase_2",
+        "description": "3-inch aerial imagery captured from 2022 to 2024 through the Kentucky Aerial Photography and Elevation Data Program (KyFromAbove) and published by the Kentucky Division of Geographic Information (DGI).",
+        "end_date": "2024",
+        "id": "KYAPED_Phase_3",
         "license_url": "https://kygeonet.ky.gov/kyfromabove/pdfs/KyFromAboveDistributionPolicy.pdf",
         "max_zoom": 20,
         "min_zoom": 3,
-        "name": "KyFromAbove Aerial Imagery (2018-2022)",
+        "name": "KyFromAbove Aerial Imagery (2022-2024)",
         "permission_osm": "implicit",
         "privacy_policy_url": "https://kentucky.gov/policies/Pages/default.aspx",
-        "start_date": "2018",
-        "type": "wms",
-        "url": "https://kyraster.ky.gov/arcgis/services/ImageServices/Ky_KYAPED_Phase2_6IN_WGS84WM/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
+        "start_date": "2022",
+        "type": "tms",
+        "url": "https://kygisserver.ky.gov/arcgis/rest/services/WGS84WM_Services/Ky_Imagery_Phase3_3IN_WGS84WM/MapServer/tile/{z}/{y}/{x}"
       },
       "geometry": {
         "coordinates": [
@@ -31133,24 +31128,88 @@
                 36.6651
               ],
               [
-                -87.85355,
-                36.63303
+                -87.8523,
+                36.72363
               ],
               [
-                -87.81577,
-                36.63427
+                -87.83557,
+                36.72437
               ],
               [
-                -87.81886,
-                36.73826
+                -87.83646,
+                36.75184
               ],
               [
-                -87.40945,
-                36.74484
+                -87.81946,
+                36.75179
               ],
               [
-                -87.40717,
-                36.64113
+                -87.82037,
+                36.79334
+              ],
+              [
+                -87.78611,
+                36.79377
+              ],
+              [
+                -87.78656,
+                36.80752
+              ],
+              [
+                -87.64997,
+                36.80981
+              ],
+              [
+                -87.6494,
+                36.78236
+              ],
+              [
+                -87.63231,
+                36.78266
+              ],
+              [
+                -87.63123,
+                36.74145
+              ],
+              [
+                -87.56295,
+                36.74252
+              ],
+              [
+                -87.56333,
+                36.75625
+              ],
+              [
+                -87.54626,
+                36.75656
+              ],
+              [
+                -87.54659,
+                36.77029
+              ],
+              [
+                -87.42714,
+                36.77205
+              ],
+              [
+                -87.42682,
+                36.75834
+              ],
+              [
+                -87.40976,
+                36.75857
+              ],
+              [
+                -87.40825,
+                36.69004
+              ],
+              [
+                -87.39124,
+                36.69018
+              ],
+              [
+                -87.39016,
+                36.64126
               ],
               [
                 -86.9982,
@@ -31163,6 +31222,22 @@
               [
                 -86.56427,
                 36.63359
+              ],
+              [
+                -86.55123,
+                36.63802
+              ],
+              [
+                -86.54997,
+                36.64473
+              ],
+              [
+                -86.54336,
+                36.64387
+              ],
+              [
+                -86.54378,
+                36.64046
               ],
               [
                 -86.50781,
@@ -40889,6 +40964,7 @@
         },
         "available_projections": [
           "EPSG:3857",
+          "EPSG:4326",
           "EPSG:26915"
         ],
         "category": "photo",
@@ -58427,7 +58503,7 @@
         "attribution": {
           "required": false,
           "text": "New York State Statewide Digital Orthoimagery Program",
-          "url": "http://gis.ny.gov/gateway/mg/index.html"
+          "url": "https://gis.ny.gov/orthoimagery"
         },
         "available_projections": [
           "CRS:84",
@@ -59815,7 +59891,7 @@
         "attribution": {
           "required": false,
           "text": "New York State Statewide Digital Orthoimagery Program",
-          "url": "http://gis.ny.gov/gateway/mg/index.html"
+          "url": "https://gis.ny.gov/orthoimagery"
         },
         "available_projections": [
           "CRS:84",
@@ -59834,7 +59910,7 @@
         "privacy_policy_url": "https://its.ny.gov/its-internet-security-and-privacy-policy",
         "start_date": "2020",
         "type": "wms",
-        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3,4&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -61356,15 +61432,10 @@
           "text": "Ohio Statewide Imagery Program",
           "url": "https://das.ohio.gov/technology-and-strategy/ogrip/projects/osip"
         },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3857",
-          "EPSG:4326"
-        ],
         "category": "photo",
         "country_code": "US",
         "description": "Ohio Statewide Imagery Program III most current orthoimagery of every county at resolutions from 1 foot to 3 inches from 2017 through 2020.",
-        "end_date": "2020",
+        "end_date": "2024",
         "i18n": true,
         "id": "OSIP",
         "license_url": "https://gis1.oit.ohio.gov/OGRIPWeb/WebContent/OSIP/OSIP%20III%20RFP%200A1177.pdf#page=26",
@@ -61374,8 +61445,8 @@
         "permission_osm": "implicit",
         "privacy_policy_url": "https://das.ohio.gov/help-center/privacy-notice-and-policies/privacy-notice-and-policies",
         "start_date": "2017",
-        "type": "wms",
-        "url": "https://geo1.oit.ohio.gov/arcgis/services/OSIP/OSIPIII_MostCurrent/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
+        "type": "tms",
+        "url": "https://maps.ohio.gov/image/rest/services/osip_most_current_cache/MapServer/tile/{z}/{y}/{x}"
       },
       "geometry": {
         "coordinates": [
@@ -61639,1206 +61710,6 @@
           ]
         ],
         "type": "Polygon"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "attribution": {
-          "required": false,
-          "text": "Ohio Statewide Imagery Program",
-          "url": "https://das.ohio.gov/technology-and-strategy/ogrip/projects/osip"
-        },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3754",
-          "EPSG:3857",
-          "EPSG:4326"
-        ],
-        "category": "photo",
-        "country_code": "US",
-        "description": "Ohio Statewide Imagery Program II orthoimagery of all 88 counties at 1-foot resolution from 2011 through 2014.",
-        "end_date": "2014",
-        "i18n": true,
-        "id": "OSIP_1ft",
-        "license_url": "https://gis1.oit.ohio.gov/OGRIPWeb/WebContent/OSIP/OSIP%20II%20RFP%20112920101153360A1078.pdf#page=27",
-        "max_zoom": 20,
-        "min_zoom": 8,
-        "name": "Ohio Statewide Imagery Program 1-Foot",
-        "permission_osm": "implicit",
-        "privacy_policy_url": "https://das.ohio.gov/help-center/privacy-notice-and-policies/privacy-notice-and-policies",
-        "start_date": "2011",
-        "type": "wms",
-        "url": "https://geo1.oit.ohio.gov/arcgis/services/OSIP/osip_best_avail_1ft/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
-      },
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -83.1356,
-              41.75081
-            ],
-            [
-              -83.13438,
-              41.64959
-            ],
-            [
-              -83.44737,
-              41.76038
-            ],
-            [
-              -84.82898,
-              41.70637
-            ],
-            [
-              -84.84471,
-              39.08477
-            ],
-            [
-              -84.74086,
-              39.11164
-            ],
-            [
-              -84.64015,
-              39.05545
-            ],
-            [
-              -84.49223,
-              39.07255
-            ],
-            [
-              -84.34117,
-              38.99922
-            ],
-            [
-              -84.22157,
-              38.7812
-            ],
-            [
-              -84.08624,
-              38.75421
-            ],
-            [
-              -83.9635,
-              38.76403
-            ],
-            [
-              -83.74635,
-              38.63385
-            ],
-            [
-              -83.65193,
-              38.61172
-            ],
-            [
-              -83.54178,
-              38.69283
-            ],
-            [
-              -83.46625,
-              38.64614
-            ],
-            [
-              -83.39387,
-              38.64368
-            ],
-            [
-              -83.30575,
-              38.58466
-            ],
-            [
-              -83.14524,
-              38.59942
-            ],
-            [
-              -83.00676,
-              38.71002
-            ],
-            [
-              -82.91235,
-              38.73212
-            ],
-            [
-              -82.8494,
-              38.56006
-            ],
-            [
-              -82.73925,
-              38.53545
-            ],
-            [
-              -82.57875,
-              38.39745
-            ],
-            [
-              -82.29865,
-              38.43198
-            ],
-            [
-              -82.26718,
-              38.57236
-            ],
-            [
-              -82.16017,
-              38.58712
-            ],
-            [
-              -82.16647,
-              38.72475
-            ],
-            [
-              -82.19794,
-              38.78856
-            ],
-            [
-              -82.12555,
-              38.8278
-            ],
-            [
-              -82.11611,
-              38.92336
-            ],
-            [
-              -82.02799,
-              38.99922
-            ],
-            [
-              -81.9084,
-              38.93315
-            ],
-            [
-              -81.95875,
-              38.89397
-            ],
-            [
-              -81.9021,
-              38.85477
-            ],
-            [
-              -81.73216,
-              38.9258
-            ],
-            [
-              -81.72586,
-              39.19461
-            ],
-            [
-              -81.54333,
-              39.26288
-            ],
-            [
-              -81.515,
-              39.35054
-            ],
-            [
-              -81.45521,
-              39.38704
-            ],
-            [
-              -81.38912,
-              39.31159
-            ],
-            [
-              -81.19399,
-              39.37974
-            ],
-            [
-              -80.85095,
-              39.625
-            ],
-            [
-              -80.58973,
-              40.2812
-            ],
-            [
-              -80.58344,
-              40.49933
-            ],
-            [
-              -80.6275,
-              40.59021
-            ],
-            [
-              -80.51105,
-              40.62127
-            ],
-            [
-              -80.50161,
-              41.99939
-            ],
-            [
-              -81.10587,
-              41.84484
-            ],
-            [
-              -81.39541,
-              41.7369
-            ],
-            [
-              -81.72901,
-              41.52048
-            ],
-            [
-              -82.0217,
-              41.53462
-            ],
-            [
-              -82.49063,
-              41.40492
-            ],
-            [
-              -82.68575,
-              41.50634
-            ],
-            [
-              -82.64799,
-              41.62408
-            ],
-            [
-              -82.75184,
-              41.63584
-            ],
-            [
-              -82.76758,
-              41.73925
-            ],
-            [
-              -82.8494,
-              41.7463
-            ],
-            [
-              -82.89032,
-              41.69462
-            ],
-            [
-              -82.89032,
-              41.54404
-            ],
-            [
-              -82.95011,
-              41.54404
-            ],
-            [
-              -83.0796,
-              41.62936
-            ],
-            [
-              -83.08101,
-              41.7511
-            ],
-            [
-              -83.1356,
-              41.75081
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "attribution": {
-          "required": false,
-          "text": "Ohio Statewide Imagery Program",
-          "url": "https://das.ohio.gov/technology-and-strategy/ogrip/projects/osip"
-        },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3753",
-          "EPSG:3857",
-          "EPSG:4326"
-        ],
-        "category": "photo",
-        "country_code": "US",
-        "description": "Ohio Statewide Imagery Program III orthoimagery of 40 counties captured at 6-inch resolution in 2017 and 2018, plus OSIP I and OSIP II imagery in 16 more counties from 2010 through 2014.",
-        "end_date": "2018",
-        "i18n": true,
-        "id": "OSIP_6in",
-        "license_url": "https://gis1.oit.ohio.gov/OGRIPWeb/WebContent/OSIP/OSIP%20III%20RFP%200A1177.pdf#page=26",
-        "max_zoom": 20,
-        "min_zoom": 8,
-        "name": "Ohio Statewide Imagery Program 6-Inch",
-        "permission_osm": "implicit",
-        "privacy_policy_url": "https://das.ohio.gov/help-center/privacy-notice-and-policies/privacy-notice-and-policies",
-        "start_date": "2010",
-        "type": "wms",
-        "url": "https://geo1.oit.ohio.gov/arcgis/services/OSIP/OSIP_6in_best_avail/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
-      },
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              [
-                -82.76447,
-                38.60466
-              ],
-              [
-                -82.82967,
-                38.58054
-              ],
-              [
-                -82.82389,
-                38.55757
-              ],
-              [
-                -82.71004,
-                38.53207
-              ],
-              [
-                -82.62589,
-                38.46333
-              ],
-              [
-                -82.60242,
-                38.40637
-              ],
-              [
-                -82.54208,
-                38.3889
-              ],
-              [
-                -82.31673,
-                38.43442
-              ],
-              [
-                -82.28712,
-                38.48991
-              ],
-              [
-                -82.26884,
-                38.58221
-              ],
-              [
-                -82.28295,
-                38.59689
-              ],
-              [
-                -82.34199,
-                38.59912
-              ],
-              [
-                -82.34329,
-                38.68764
-              ],
-              [
-                -82.45307,
-                38.69579
-              ],
-              [
-                -82.4484,
-                38.74265
-              ],
-              [
-                -82.47238,
-                38.78367
-              ],
-              [
-                -82.5627,
-                38.79213
-              ],
-              [
-                -82.56363,
-                38.85551
-              ],
-              [
-                -82.65229,
-                38.8632
-              ],
-              [
-                -82.66783,
-                38.8528
-              ],
-              [
-                -82.67995,
-                38.76321
-              ],
-              [
-                -82.71303,
-                38.7535
-              ],
-              [
-                -82.72024,
-                38.69223
-              ],
-              [
-                -82.78193,
-                38.68361
-              ],
-              [
-                -82.78442,
-                38.64167
-              ],
-              [
-                -82.76447,
-                38.60466
-              ]
-            ]
-          ],
-          [
-            [
-              [
-                -82.63588,
-                39.61218
-              ],
-              [
-                -82.638,
-                39.57917
-              ],
-              [
-                -82.74519,
-                39.57791
-              ],
-              [
-                -82.76731,
-                39.36857
-              ],
-              [
-                -82.75362,
-                39.35371
-              ],
-              [
-                -82.63757,
-                39.34661
-              ],
-              [
-                -82.61744,
-                39.36019
-              ],
-              [
-                -82.51118,
-                39.35562
-              ],
-              [
-                -82.49729,
-                39.3806
-              ],
-              [
-                -82.30984,
-                39.37063
-              ],
-              [
-                -82.3169,
-                39.29299
-              ],
-              [
-                -82.27994,
-                39.27938
-              ],
-              [
-                -82.27719,
-                39.19064
-              ],
-              [
-                -81.75373,
-                39.16595
-              ],
-              [
-                -81.67732,
-                39.21789
-              ],
-              [
-                -81.66931,
-                39.26102
-              ],
-              [
-                -81.55664,
-                39.258
-              ],
-              [
-                -81.53281,
-                39.34333
-              ],
-              [
-                -81.44829,
-                39.39578
-              ],
-              [
-                -81.42416,
-                39.38179
-              ],
-              [
-                -81.40555,
-                39.34019
-              ],
-              [
-                -81.37772,
-                39.3277
-              ],
-              [
-                -81.26394,
-                39.37175
-              ],
-              [
-                -81.20636,
-                39.37585
-              ],
-              [
-                -81.16965,
-                39.42313
-              ],
-              [
-                -81.1175,
-                39.43727
-              ],
-              [
-                -81.02454,
-                39.5304
-              ],
-              [
-                -81.0184,
-                39.57424
-              ],
-              [
-                -81.03596,
-                39.58651
-              ],
-              [
-                -81.24593,
-                39.59347
-              ],
-              [
-                -81.26019,
-                39.61943
-              ],
-              [
-                -81.34017,
-                39.60755
-              ],
-              [
-                -81.37642,
-                39.61557
-              ],
-              [
-                -81.40588,
-                39.64389
-              ],
-              [
-                -81.476,
-                39.65995
-              ],
-              [
-                -81.49136,
-                39.64869
-              ],
-              [
-                -81.49245,
-                39.59826
-              ],
-              [
-                -81.72641,
-                39.59544
-              ],
-              [
-                -81.7424,
-                39.5487
-              ],
-              [
-                -81.72498,
-                39.49713
-              ],
-              [
-                -81.82702,
-                39.50758
-              ],
-              [
-                -81.84272,
-                39.46446
-              ],
-              [
-                -82.0366,
-                39.4727
-              ],
-              [
-                -82.02894,
-                39.54978
-              ],
-              [
-                -82.03937,
-                39.56366
-              ],
-              [
-                -82.24415,
-                39.57555
-              ],
-              [
-                -82.25403,
-                39.60391
-              ],
-              [
-                -82.35985,
-                39.61015
-              ],
-              [
-                -82.36638,
-                39.66805
-              ],
-              [
-                -82.49233,
-                39.6761
-              ],
-              [
-                -82.50821,
-                39.66577
-              ],
-              [
-                -82.51339,
-                39.61824
-              ],
-              [
-                -82.62001,
-                39.62308
-              ],
-              [
-                -82.63588,
-                39.61218
-              ]
-            ]
-          ],
-          [
-            [
-              [
-                -83.11112,
-                41.97385
-              ],
-              [
-                -83.42404,
-                41.7481
-              ],
-              [
-                -84.82004,
-                41.70609
-              ],
-              [
-                -84.83855,
-                39.12098
-              ],
-              [
-                -84.83509,
-                39.09701
-              ],
-              [
-                -84.81276,
-                39.0915
-              ],
-              [
-                -84.74492,
-                39.13298
-              ],
-              [
-                -84.69755,
-                39.08944
-              ],
-              [
-                -84.61907,
-                39.0588
-              ],
-              [
-                -84.54439,
-                39.08439
-              ],
-              [
-                -84.49955,
-                39.08157
-              ],
-              [
-                -84.46247,
-                39.1068
-              ],
-              [
-                -84.44095,
-                39.04406
-              ],
-              [
-                -84.35509,
-                39.02423
-              ],
-              [
-                -84.32374,
-                39.00054
-              ],
-              [
-                -84.30555,
-                38.94947
-              ],
-              [
-                -84.25178,
-                38.88671
-              ],
-              [
-                -84.24952,
-                38.82742
-              ],
-              [
-                -84.22491,
-                38.79466
-              ],
-              [
-                -84.07407,
-                38.75603
-              ],
-              [
-                -83.96347,
-                38.77275
-              ],
-              [
-                -83.8753,
-                38.74739
-              ],
-              [
-                -83.84975,
-                38.70729
-              ],
-              [
-                -83.80082,
-                38.68935
-              ],
-              [
-                -83.77254,
-                38.63949
-              ],
-              [
-                -83.65504,
-                38.61325
-              ],
-              [
-                -83.63005,
-                38.62747
-              ],
-              [
-                -83.6152,
-                38.66677
-              ],
-              [
-                -83.52167,
-                38.68824
-              ],
-              [
-                -83.47446,
-                38.66162
-              ],
-              [
-                -83.36862,
-                38.64277
-              ],
-              [
-                -83.30763,
-                38.58432
-              ],
-              [
-                -83.2803,
-                38.58514
-              ],
-              [
-                -83.25174,
-                38.6091
-              ],
-              [
-                -83.2526,
-                39.01867
-              ],
-              [
-                -83.30649,
-                39.06513
-              ],
-              [
-                -83.36374,
-                39.06874
-              ],
-              [
-                -83.32528,
-                39.23274
-              ],
-              [
-                -83.33174,
-                39.26141
-              ],
-              [
-                -83.36552,
-                39.27065
-              ],
-              [
-                -83.36579,
-                39.3214
-              ],
-              [
-                -83.35484,
-                39.37206
-              ],
-              [
-                -83.24886,
-                39.51176
-              ],
-              [
-                -83.23468,
-                39.70013
-              ],
-              [
-                -83.63315,
-                39.73021
-              ],
-              [
-                -83.63046,
-                39.75697
-              ],
-              [
-                -83.57063,
-                39.76491
-              ],
-              [
-                -83.49343,
-                40.00733
-              ],
-              [
-                -83.48637,
-                40.09669
-              ],
-              [
-                -83.17068,
-                40.09249
-              ],
-              [
-                -83.15159,
-                40.10402
-              ],
-              [
-                -83.1549,
-                40.24986
-              ],
-              [
-                -83.2302,
-                40.25905
-              ],
-              [
-                -83.23062,
-                40.51269
-              ],
-              [
-                -83.39659,
-                40.51998
-              ],
-              [
-                -83.40203,
-                40.69219
-              ],
-              [
-                -83.43299,
-                40.7156
-              ],
-              [
-                -83.4766,
-                40.71593
-              ],
-              [
-                -83.47717,
-                40.81774
-              ],
-              [
-                -83.49647,
-                40.83238
-              ],
-              [
-                -83.49563,
-                40.89031
-              ],
-              [
-                -83.45897,
-                40.8995
-              ],
-              [
-                -83.43864,
-                40.9773
-              ],
-              [
-                -83.13191,
-                40.97885
-              ],
-              [
-                -83.13009,
-                40.70296
-              ],
-              [
-                -83.11858,
-                40.6898
-              ],
-              [
-                -82.72745,
-                40.69674
-              ],
-              [
-                -82.70796,
-                40.71121
-              ],
-              [
-                -82.70531,
-                40.98106
-              ],
-              [
-                -82.42903,
-                40.97871
-              ],
-              [
-                -82.41388,
-                40.99059
-              ],
-              [
-                -82.41684,
-                41.05103
-              ],
-              [
-                -82.19101,
-                41.04947
-              ],
-              [
-                -82.19118,
-                40.98673
-              ],
-              [
-                -82.14816,
-                40.9775
-              ],
-              [
-                -82.13948,
-                40.65806
-              ],
-              [
-                -81.66816,
-                40.65339
-              ],
-              [
-                -81.6874,
-                40.6324
-              ],
-              [
-                -81.68815,
-                40.45893
-              ],
-              [
-                -81.72823,
-                40.44538
-              ],
-              [
-                -81.72832,
-                40.36293
-              ],
-              [
-                -81.636,
-                40.35419
-              ],
-              [
-                -81.64081,
-                40.23623
-              ],
-              [
-                -81.68308,
-                40.23087
-              ],
-              [
-                -81.68868,
-                40.1662
-              ],
-              [
-                -81.73524,
-                40.15288
-              ],
-              [
-                -81.74723,
-                39.92999
-              ],
-              [
-                -81.71029,
-                39.91717
-              ],
-              [
-                -81.71029,
-                39.83468
-              ],
-              [
-                -81.57697,
-                39.82495
-              ],
-              [
-                -81.56204,
-                39.83602
-              ],
-              [
-                -81.56013,
-                39.88221
-              ],
-              [
-                -81.45816,
-                39.88045
-              ],
-              [
-                -81.44464,
-                39.90858
-              ],
-              [
-                -81.37464,
-                39.91047
-              ],
-              [
-                -81.36718,
-                39.93563
-              ],
-              [
-                -81.22124,
-                39.94064
-              ],
-              [
-                -81.20822,
-                40.17534
-              ],
-              [
-                -81.32028,
-                40.18562
-              ],
-              [
-                -81.31614,
-                40.28984
-              ],
-              [
-                -81.2686,
-                40.29011
-              ],
-              [
-                -81.25645,
-                40.30312
-              ],
-              [
-                -81.24542,
-                40.56737
-              ],
-              [
-                -81.30199,
-                40.58064
-              ],
-              [
-                -81.2991,
-                40.63714
-              ],
-              [
-                -81.22824,
-                40.63995
-              ],
-              [
-                -81.21897,
-                40.70858
-              ],
-              [
-                -81.18312,
-                40.7145
-              ],
-              [
-                -80.93633,
-                40.71253
-              ],
-              [
-                -80.93596,
-                40.63836
-              ],
-              [
-                -80.88022,
-                40.62854
-              ],
-              [
-                -80.87664,
-                40.59016
-              ],
-              [
-                -80.76606,
-                40.58299
-              ],
-              [
-                -80.75086,
-                40.56897
-              ],
-              [
-                -80.66334,
-                40.56846
-              ],
-              [
-                -80.62024,
-                40.60579
-              ],
-              [
-                -80.56595,
-                40.60166
-              ],
-              [
-                -80.50024,
-                40.63618
-              ],
-              [
-                -80.5031,
-                41.14139
-              ],
-              [
-                -80.98337,
-                41.14867
-              ],
-              [
-                -80.9839,
-                41.48689
-              ],
-              [
-                -80.50144,
-                41.4936
-              ],
-              [
-                -80.50489,
-                42.33137
-              ],
-              [
-                -81.25303,
-                42.22098
-              ],
-              [
-                -82.40298,
-                41.69103
-              ],
-              [
-                -82.67404,
-                41.69103
-              ],
-              [
-                -83.05287,
-                41.87301
-              ],
-              [
-                -83.11112,
-                41.97385
-              ]
-            ],
-            [
-              [
-                -83.5405,
-                40.49627
-              ],
-              [
-                -83.56862,
-                40.24514
-              ],
-              [
-                -83.99449,
-                40.28677
-              ],
-              [
-                -83.99293,
-                40.30123
-              ],
-              [
-                -83.97487,
-                40.52076
-              ],
-              [
-                -83.5405,
-                40.49627
-              ]
-            ]
-          ]
-        ],
-        "type": "MultiPolygon"
       }
     },
     {
@@ -76431,6 +75302,264 @@
       "properties": {
         "attribution": {
           "required": false,
+          "text": "Strategic Mapping Program (StratMap). Brazos County Imagery, 2019-01-29",
+          "url": "https://data.tnris.org/collection/?c=aa2cd74e-9c2d-4f00-bae5-609b5e898093"
+        },
+        "available_projections": [
+          "CRS:84",
+          "EPSG:3857",
+          "EPSG:4326"
+        ],
+        "best": true,
+        "category": "photo",
+        "country_code": "US",
+        "end_date": "2019",
+        "id": "brazos_county_2019_wms",
+        "license_url": "https://data.tnris.org/collection/?c=aa2cd74e-9c2d-4f00-bae5-609b5e898093",
+        "min_zoom": 3,
+        "name": "StratMap Brazos County Imagery (2019)",
+        "privacy_policy_url": "https://tnris.org/site-policies/#privacy-and-security-policy",
+        "start_date": "2019",
+        "type": "wms",
+        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap19_NCCIR_6in_Brazos/ImageServer/WMSServer?LAYERS=StratMap19_NCCIR_6in_Brazos&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -96.15,
+              30.33
+            ],
+            [
+              -96.12,
+              30.33
+            ],
+            [
+              -96.12,
+              30.36
+            ],
+            [
+              -96.09,
+              30.36
+            ],
+            [
+              -96.09,
+              30.39
+            ],
+            [
+              -96.06,
+              30.39
+            ],
+            [
+              -96.06,
+              30.45
+            ],
+            [
+              -96.12,
+              30.45
+            ],
+            [
+              -96.12,
+              30.54
+            ],
+            [
+              -96.15,
+              30.54
+            ],
+            [
+              -96.15,
+              30.87
+            ],
+            [
+              -96.18,
+              30.87
+            ],
+            [
+              -96.18,
+              30.96
+            ],
+            [
+              -96.21,
+              30.96
+            ],
+            [
+              -96.21,
+              30.99
+            ],
+            [
+              -96.27,
+              30.99
+            ],
+            [
+              -96.27,
+              30.96
+            ],
+            [
+              -96.33,
+              30.96
+            ],
+            [
+              -96.33,
+              30.93
+            ],
+            [
+              -96.36,
+              30.93
+            ],
+            [
+              -96.36,
+              30.9
+            ],
+            [
+              -96.39,
+              30.9
+            ],
+            [
+              -96.39,
+              30.87
+            ],
+            [
+              -96.42,
+              30.87
+            ],
+            [
+              -96.42,
+              30.81
+            ],
+            [
+              -96.45,
+              30.81
+            ],
+            [
+              -96.45,
+              30.78
+            ],
+            [
+              -96.48,
+              30.78
+            ],
+            [
+              -96.48,
+              30.75
+            ],
+            [
+              -96.54,
+              30.75
+            ],
+            [
+              -96.54,
+              30.72
+            ],
+            [
+              -96.57,
+              30.72
+            ],
+            [
+              -96.57,
+              30.69
+            ],
+            [
+              -96.6,
+              30.69
+            ],
+            [
+              -96.6,
+              30.66
+            ],
+            [
+              -96.63,
+              30.66
+            ],
+            [
+              -96.63,
+              30.63
+            ],
+            [
+              -96.57,
+              30.63
+            ],
+            [
+              -96.57,
+              30.6
+            ],
+            [
+              -96.48,
+              30.6
+            ],
+            [
+              -96.48,
+              30.57
+            ],
+            [
+              -96.45,
+              30.57
+            ],
+            [
+              -96.45,
+              30.54
+            ],
+            [
+              -96.42,
+              30.54
+            ],
+            [
+              -96.42,
+              30.51
+            ],
+            [
+              -96.36,
+              30.51
+            ],
+            [
+              -96.36,
+              30.45
+            ],
+            [
+              -96.33,
+              30.45
+            ],
+            [
+              -96.33,
+              30.36
+            ],
+            [
+              -96.3,
+              30.36
+            ],
+            [
+              -96.3,
+              30.33
+            ],
+            [
+              -96.24,
+              30.33
+            ],
+            [
+              -96.24,
+              30.36
+            ],
+            [
+              -96.18,
+              30.36
+            ],
+            [
+              -96.18,
+              30.33
+            ],
+            [
+              -96.15,
+              30.33
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "attribution": {
+          "required": false,
           "text": "Strategic Mapping Program (StratMap). CapArea & McLennan Imagery",
           "url": "https://tnris.org/stratmap/"
         },
@@ -76445,13 +75574,13 @@
         "end_date": "2020-01-29",
         "icon": "https://cdn.tnris.org/images/tnris_logo.svg",
         "id": "Stratmap20_NCCIR_CapArea_McLennan",
-        "license_url": "https://betadata.tnris.org/collection?c=db231fff-9b85-4ba9-9428-e780ac72ddd2",
+        "license_url": "https://data.tnris.org/collection/?c=db231fff-9b85-4ba9-9428-e780ac72ddd2",
         "max_zoom": 19,
         "name": "StratMap CapArea & McLennan Imagery (Natural Color 2020)",
         "privacy_policy_url": "https://www.tnris.org/site-policies/#privacy-and-security-policy",
         "start_date": "2020-01-29",
         "type": "wms",
-        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap20_NCCIR_CapArea_McLennan/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap",
+        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap20_NCCIR_CapArea_McLennan/ImageServer/WMSServer?LAYERS=StratMap20_NCCIR_CapArea_McLennan&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap",
         "valid-georeference": true
       },
       "geometry": {
@@ -77680,13 +76809,13 @@
         "end_date": "2021-01-17",
         "icon": "https://cdn.tnris.org/images/tnris_logo.svg",
         "id": "StratMap21_NCCIR_CapArea_Brazos_Kerr",
-        "license_url": "https://betadata.tnris.org/collection?c=3e1530dc-d5be-4683-811b-9d4b162f0aa9",
+        "license_url": "https://data.tnris.org/collection/?c=3e1530dc-d5be-4683-811b-9d4b162f0aa9",
         "max_zoom": 19,
         "name": "StratMap CapArea, Brazos & Kerr Imagery (Natural Color 2021)",
         "privacy_policy_url": "https://www.tnris.org/site-policies/#privacy-and-security-policy",
         "start_date": "2021-01-17",
         "type": "wms",
-        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap21_NCCIR_CapArea_Brazos_Kerr/ImageServer/WMSServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap21_NCCIR_CapArea_Brazos_Kerr/ImageServer/WMSServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=StratMap21_NCCIR_CapArea_Brazos_Kerr&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -82105,264 +81234,6 @@
             [
               -90.32418,
               34.98378
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "attribution": {
-          "required": false,
-          "text": "Strategic Mapping Program (StratMap). Brazos County Imagery, 2019-01-29",
-          "url": "https://data.tnris.org/collection/aa2cd74e-9c2d-4f00-bae5-609b5e898093"
-        },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3857",
-          "EPSG:4326"
-        ],
-        "best": true,
-        "category": "photo",
-        "country_code": "US",
-        "end_date": "2019",
-        "id": "brazos_county_2019_wms",
-        "license_url": "https://data.tnris.org/collection/aa2cd74e-9c2d-4f00-bae5-609b5e898093",
-        "min_zoom": 3,
-        "name": "TX: Brazos County Imagery 2019",
-        "privacy_policy_url": "https://tnris.org/site-policies/#privacy-and-security-policy",
-        "start_date": "2019",
-        "type": "wms",
-        "url": "https://imagery.tnris.org/server/services/StratMap/StratMap19_NCCIR_6in_Brazos/ImageServer/WMSServer?LAYERS=0&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&FORMAT=image/jpeg&WIDTH=256&HEIGHT=256&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap"
-      },
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -96.15,
-              30.33
-            ],
-            [
-              -96.12,
-              30.33
-            ],
-            [
-              -96.12,
-              30.36
-            ],
-            [
-              -96.09,
-              30.36
-            ],
-            [
-              -96.09,
-              30.39
-            ],
-            [
-              -96.06,
-              30.39
-            ],
-            [
-              -96.06,
-              30.45
-            ],
-            [
-              -96.12,
-              30.45
-            ],
-            [
-              -96.12,
-              30.54
-            ],
-            [
-              -96.15,
-              30.54
-            ],
-            [
-              -96.15,
-              30.87
-            ],
-            [
-              -96.18,
-              30.87
-            ],
-            [
-              -96.18,
-              30.96
-            ],
-            [
-              -96.21,
-              30.96
-            ],
-            [
-              -96.21,
-              30.99
-            ],
-            [
-              -96.27,
-              30.99
-            ],
-            [
-              -96.27,
-              30.96
-            ],
-            [
-              -96.33,
-              30.96
-            ],
-            [
-              -96.33,
-              30.93
-            ],
-            [
-              -96.36,
-              30.93
-            ],
-            [
-              -96.36,
-              30.9
-            ],
-            [
-              -96.39,
-              30.9
-            ],
-            [
-              -96.39,
-              30.87
-            ],
-            [
-              -96.42,
-              30.87
-            ],
-            [
-              -96.42,
-              30.81
-            ],
-            [
-              -96.45,
-              30.81
-            ],
-            [
-              -96.45,
-              30.78
-            ],
-            [
-              -96.48,
-              30.78
-            ],
-            [
-              -96.48,
-              30.75
-            ],
-            [
-              -96.54,
-              30.75
-            ],
-            [
-              -96.54,
-              30.72
-            ],
-            [
-              -96.57,
-              30.72
-            ],
-            [
-              -96.57,
-              30.69
-            ],
-            [
-              -96.6,
-              30.69
-            ],
-            [
-              -96.6,
-              30.66
-            ],
-            [
-              -96.63,
-              30.66
-            ],
-            [
-              -96.63,
-              30.63
-            ],
-            [
-              -96.57,
-              30.63
-            ],
-            [
-              -96.57,
-              30.6
-            ],
-            [
-              -96.48,
-              30.6
-            ],
-            [
-              -96.48,
-              30.57
-            ],
-            [
-              -96.45,
-              30.57
-            ],
-            [
-              -96.45,
-              30.54
-            ],
-            [
-              -96.42,
-              30.54
-            ],
-            [
-              -96.42,
-              30.51
-            ],
-            [
-              -96.36,
-              30.51
-            ],
-            [
-              -96.36,
-              30.45
-            ],
-            [
-              -96.33,
-              30.45
-            ],
-            [
-              -96.33,
-              30.36
-            ],
-            [
-              -96.3,
-              30.36
-            ],
-            [
-              -96.3,
-              30.33
-            ],
-            [
-              -96.24,
-              30.33
-            ],
-            [
-              -96.24,
-              30.36
-            ],
-            [
-              -96.18,
-              30.36
-            ],
-            [
-              -96.18,
-              30.33
-            ],
-            [
-              -96.15,
-              30.33
             ]
           ]
         ],
