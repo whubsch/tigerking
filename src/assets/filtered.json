@@ -1327,17 +1327,17 @@
         },
         "category": "photo",
         "country_code": "US",
-        "description": "2022 3 inch resolution imagery for Calaveras County in the State of California",
-        "end_date": "2022",
+        "description": "2024 imagery for Calaveras County in the State of California",
+        "end_date": "2024",
         "icon": "https://www.calaverasgov.us/portals/0/Images/County%20Seal.png",
-        "id": "Calaveras_CA_2022",
+        "id": "Calaveras_CA_2024",
         "license_url": "https://wiki.openstreetmap.org/wiki/California#Publicly_Available_Data",
         "max_zoom": 23,
-        "name": "Calaveras County Orthoimagery (2022)",
+        "name": "Calaveras County Orthoimagery (2024)",
         "privacy_policy_url": "https://www.calaverasgov.us/privacy-statement",
-        "start_date": "2022",
+        "start_date": "2024",
         "type": "tms",
-        "url": "https://gisportal.calaverascounty.gov/image/rest/services/CC_Aug2022_Cache/ImageServer/tile/{z}/{y}/{x}"
+        "url": "https://gisportal.calaverascounty.gov/image/rest/services/Orthos_2024/ImageServer/tile/{z}/{y}/{x}"
       },
       "geometry": {
         "coordinates": [
@@ -4413,112 +4413,6 @@
       "properties": {
         "attribution": {
           "required": false,
-          "text": "Charlotte County Geographic Information Systems",
-          "url": "https://www.charlottecountyfl.gov/gis/"
-        },
-        "available_projections": [
-          "CRS:84",
-          "EPSG:3857"
-        ],
-        "category": "photo",
-        "country_code": "US",
-        "description": "The 2024 orthoimagery for Charlotte County in the State of Florida",
-        "end_date": "2024",
-        "id": "Charlotte_Ortho_2024",
-        "license_url": "https://wiki.openstreetmap.org/wiki/Florida#Publicly_Available_Data",
-        "max_zoom": 22,
-        "name": "Charlotte County Orthoimagery (2024)",
-        "privacy_policy_url": "https://www.charlottecountyfl.gov/website-policies/",
-        "start_date": "2024",
-        "type": "wms",
-        "url": "https://agis.charlottecountyfl.gov/arcgis/rest/services/Aerials/Aerials2024/MapServer/export?f=image&format=jpg&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256",
-        "valid-georeference": true
-      },
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -82.26451,
-              26.94701
-            ],
-            [
-              -82.38809,
-              26.94605
-            ],
-            [
-              -82.26123,
-              26.69942
-            ],
-            [
-              -82.06476,
-              26.7683
-            ],
-            [
-              -82.00362,
-              26.76846
-            ],
-            [
-              -82.00362,
-              26.79597
-            ],
-            [
-              -81.98823,
-              26.79592
-            ],
-            [
-              -81.98828,
-              26.82343
-            ],
-            [
-              -81.97289,
-              26.82343
-            ],
-            [
-              -81.97286,
-              26.83721
-            ],
-            [
-              -81.95752,
-              26.83719
-            ],
-            [
-              -81.95746,
-              26.87845
-            ],
-            [
-              -81.94222,
-              26.87854
-            ],
-            [
-              -81.94215,
-              26.98851
-            ],
-            [
-              -81.98825,
-              26.98844
-            ],
-            [
-              -81.98817,
-              27.04348
-            ],
-            [
-              -82.2647,
-              27.0433
-            ],
-            [
-              -82.26451,
-              26.94701
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "attribution": {
-          "required": false,
           "text": "Citrus County Property Appraiser's Office",
           "url": "https://www.citruspa.org/"
         },
@@ -6366,17 +6260,17 @@
         ],
         "category": "photo",
         "country_code": "US",
-        "description": "2022 3-inch resolution imagery for Santa Rosa in the State of California",
-        "end_date": "2022",
+        "description": "2025 3-inch resolution imagery for Santa Rosa in the State of California",
+        "end_date": "2025",
         "icon": "https://www.srcity.org/ImageRepository/Document?documentID=32",
-        "id": "Santa_Rosa_CA_2022",
+        "id": "Santa_Rosa_CA_2025",
         "license_url": "https://wiki.openstreetmap.org/wiki/California#Publicly_Available_Data",
         "max_zoom": 23,
-        "name": "City of Santa Rosa Orthoimagery (2022)",
+        "name": "City of Santa Rosa Orthoimagery (2025)",
         "privacy_policy_url": "https://www.srcity.org/124/Privacy-Policy",
-        "start_date": "2022",
+        "start_date": "2025",
         "type": "wms",
-        "url": "https://ags2maps.srcity.org/arcgis/rest/services/2022Sep_Aerial/MapServer/export?f=image&format=jpg&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256"
+        "url": "https://ags2maps.srcity.org/arcgis/rest/services/Aerial_2025_SR/MapServer/export?f=image&format=jpg&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256"
       },
       "geometry": {
         "coordinates": [
@@ -11664,7 +11558,6 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
           "EPSG:4326",
           "EPSG:6347"
         ],
@@ -36040,17 +35933,17 @@
         ],
         "category": "photo",
         "country_code": "US",
-        "description": "Winter 2024 orthoimagery for Mecklenburg County in the State of North Carolina",
-        "end_date": "2024-01-02",
+        "description": "Winter 2025 orthoimagery for Mecklenburg County in the State of North Carolina",
+        "end_date": "2025-01-20",
         "icon": "https://blog.mecknc.gov/wp-content/uploads/2017/11/Blue_Wide_Logo-768x766.jpg",
-        "id": "Mecklenburg_NC_2024",
+        "id": "Mecklenburg_NC_2025",
         "license_url": "https://maps.mecknc.gov/openmapping/data.html",
         "max_zoom": 21,
-        "name": "Mecklenburg County Orthoimagery (2024)",
+        "name": "Mecklenburg County Orthoimagery (2025)",
         "privacy_policy_url": "https://www.mecknc.gov/admin/Pages/PrivacyNotice.aspx",
-        "start_date": "2023-12-31",
+        "start_date": "2024-12-26",
         "type": "wms",
-        "url": "https://polaris2.mecklenburgcountync.gov/server/rest/services/Aerial2024/MapServer/export?f=image&format=jpg&layers=&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256",
+        "url": "https://meckaerial.mecklenburgcountync.gov/server/rest/services/aerial2025/MapServer/export?f=image&format=jpg&layers=&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256",
         "valid-georeference": true
       },
       "geometry": {
@@ -44890,8 +44783,8 @@
         "icon": "https://osmlab.github.io/editor-layer-index/sources/north-america/us/USDA.png",
         "id": "USDA-NAIP",
         "license_url": "https://www.usda.gov/policies-and-links/",
-        "max_zoom": 20,
-        "min_zoom": 12,
+        "max_zoom": 18,
+        "min_zoom": 3,
         "name": "National Agriculture Imagery Program",
         "privacy_policy_url": "https://www.usda.gov/privacy-policy",
         "start_date": "2021",
@@ -49163,8 +49056,8 @@
         "icon": "https://osmlab.github.io/editor-layer-index/sources/north-america/us/USDA.png",
         "id": "USDA-NAIP-HI",
         "license_url": "https://www.usda.gov/policies-and-links/",
-        "max_zoom": 20,
-        "min_zoom": 12,
+        "max_zoom": 18,
+        "min_zoom": 8,
         "name": "National Agriculture Imagery Program (HI)",
         "privacy_policy_url": "https://www.usda.gov/privacy-policy",
         "start_date": "2021",
@@ -49215,8 +49108,8 @@
         "icon": "https://osmlab.github.io/editor-layer-index/sources/north-america/us/USDA.png",
         "id": "USDA-NAIP-PR",
         "license_url": "https://www.usda.gov/policies-and-links/",
-        "max_zoom": 20,
-        "min_zoom": 12,
+        "max_zoom": 19,
+        "min_zoom": 8,
         "name": "National Agriculture Imagery Program (PR/USVI)",
         "privacy_policy_url": "https://www.usda.gov/privacy-policy",
         "start_date": "2021",
@@ -55023,7 +54916,7 @@
         "privacy_policy_url": "https://www.usnh.edu/policy/usy/viii-cybersecurity-policies-and-standards/privacy-policy",
         "start_date": "2021",
         "type": "wms",
-        "url": "https://nhgeodata.unh.edu/nhgeodata/services/ImageServices/NH_2021_2022_6in_RGB/ImageServer/WMSServer?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=NH_2021_2022_6in_RGB:None&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://nhgeodata.unh.edu/image/services/ImageServices/NH_2021_2022_6in_RGB/ImageServer/WMSServer?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=NH_2021_2022_6in_RGB:None&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -58522,7 +58415,7 @@
         "privacy_policy_url": "https://its.ny.gov/its-internet-security-and-privacy-policy",
         "start_date": "2020",
         "type": "wms",
-        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest_cir/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3,4&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest_cir/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -69282,242 +69175,250 @@
         "best": true,
         "category": "photo",
         "country_code": "US",
-        "description": "3/6-inch pixel resolution orthoimagery captured in 2023 for San Juan County of the state of New Mexico",
-        "end_date": "2023-05",
+        "description": "3/6-inch pixel resolution orthoimagery captured in 2025 for San Juan County of the state of New Mexico",
+        "end_date": "2025-03",
         "icon": "https://webmaps.sjcounty.net/portal/sharing/rest/portals/self/resources/home.logo1687127587650.gif",
-        "id": "San_Juan_NM_2023",
+        "id": "San_Juan_NM_2025",
         "license_url": "https://osmlab.github.io/editor-layer-index/sources/north-america/us/nm/San_Juan.pdf",
         "max_zoom": 21,
-        "name": "San Juan County Orthoimagery (2023)",
+        "name": "San Juan County Orthoimagery (2025)",
         "permission_osm": "explicit",
         "privacy_policy_url": false,
-        "start_date": "2023-02",
+        "start_date": "2024-11",
         "type": "wms",
-        "url": "https://webmaps.sjcounty.net/arcgis/services/Imagery/SJC2023Imagery/ImageServer/WMSServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://webmaps.sjcounty.net/arcgis/services/Imagery/SJC_2025_3in6inCombined/ImageServer/WMSServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=SJC_2025_3in6inCombined&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
         "coordinates": [
           [
             [
-              -108.53944,
-              36.73236
+              -109.05046,
+              35.99581
             ],
             [
-              -108.40432,
-              36.73308
+              -107.92576,
+              36.00192
             ],
             [
-              -108.40421,
-              36.7186
+              -107.92576,
+              35.99465
             ],
             [
-              -108.26908,
-              36.71914
+              -107.62249,
+              35.99448
             ],
             [
-              -108.26905,
-              36.71189
+              -107.62086,
+              36.61822
             ],
             [
-              -108.25104,
-              36.71194
+              -107.6118,
+              36.61822
             ],
             [
-              -108.2509,
-              36.69019
+              -107.6117,
+              36.63267
             ],
             [
-              -108.09786,
-              36.69064
+              -107.62069,
+              36.63275
             ],
             [
-              -108.09756,
-              36.66161
+              -107.62061,
+              36.65449
             ],
             [
-              -107.97179,
-              36.66199
+              -107.60267,
+              36.65449
             ],
             [
-              -107.97174,
-              36.67636
+              -107.60266,
+              36.66899
             ],
             [
-              -107.79173,
-              36.67643
+              -107.57563,
+              36.66886
             ],
             [
-              -107.7917,
-              36.71257
+              -107.57559,
+              36.67612
             ],
             [
-              -107.71961,
-              36.71266
+              -107.53063,
+              36.67605
             ],
             [
-              -107.71957,
-              36.75625
+              -107.53058,
+              36.6833
             ],
             [
-              -107.68372,
-              36.75616
+              -107.51255,
+              36.6833
             ],
             [
-              -107.68349,
-              36.79961
+              -107.51241,
+              36.73406
             ],
             [
-              -107.62035,
-              36.79951
+              -107.53946,
+              36.73409
             ],
             [
-              -107.62031,
-              36.80682
+              -107.53934,
+              36.74129
             ],
             [
-              -107.61121,
-              36.80678
+              -107.54841,
+              36.74126
             ],
             [
-              -107.61132,
-              36.81407
+              -107.54832,
+              36.74856
             ],
             [
-              -107.60221,
-              36.81407
+              -107.57541,
+              36.74862
             ],
             [
-              -107.60221,
-              36.83584
+              -107.57533,
+              36.75589
             ],
             [
-              -107.59311,
-              36.83571
+              -107.56638,
+              36.75596
             ],
             [
-              -107.59311,
-              36.84299
+              -107.56638,
+              36.76323
             ],
             [
-              -107.57507,
-              36.84299
+              -107.52121,
+              36.76304
             ],
             [
-              -107.57511,
-              36.8575
+              -107.52127,
+              36.75581
             ],
             [
-              -107.53894,
-              36.85746
+              -107.51231,
+              36.75586
             ],
             [
-              -107.53892,
-              36.86461
+              -107.51199,
+              36.82105
             ],
             [
-              -107.52992,
-              36.86465
+              -107.52098,
+              36.82105
             ],
             [
-              -107.52981,
-              36.87919
+              -107.52092,
+              36.85007
             ],
             [
-              -107.51181,
-              36.87905
+              -107.51183,
+              36.84999
             ],
             [
-              -107.5117,
-              36.88634
+              -107.51185,
+              36.86454
             ],
             [
-              -107.48468,
-              36.88626
+              -107.52085,
+              36.86454
             ],
             [
-              -107.48462,
-              36.90079
+              -107.52085,
+              36.8719
             ],
             [
-              -107.45756,
-              36.90074
+              -107.48476,
+              36.87163
             ],
             [
-              -107.45717,
-              36.96593
+              -107.48471,
+              36.87893
             ],
             [
-              -107.44809,
-              36.96596
+              -107.47564,
+              36.87898
             ],
             [
-              -107.44813,
-              36.97311
+              -107.47567,
+              36.89345
             ],
             [
-              -107.43,
-              36.97305
+              -107.44857,
+              36.89329
             ],
             [
-              -107.42996,
-              36.99478
+              -107.44852,
+              36.90784
             ],
             [
-              -108.03566,
-              36.99539
+              -107.43947,
+              36.90784
             ],
             [
-              -108.03551,
-              36.9809
+              -107.43931,
+              36.92223
             ],
             [
-              -108.2344,
-              36.98036
+              -107.44842,
+              36.92223
             ],
             [
-              -108.23355,
-              36.81352
+              -107.44817,
+              36.95861
             ],
             [
-              -108.28765,
-              36.81336
+              -107.43917,
+              36.95861
             ],
             [
-              -108.28738,
-              36.76983
+              -107.43917,
+              36.96584
             ],
             [
-              -108.4316,
-              36.76918
+              -107.42104,
+              36.9658
             ],
             [
-              -108.43201,
-              36.81275
+              -107.42085,
+              37.00202
             ],
             [
-              -108.44094,
-              36.81268
+              -108.79503,
+              36.99882
             ],
             [
-              -108.44109,
-              36.81991
+              -108.7951,
+              37.00609
             ],
             [
-              -108.48617,
-              36.8197
+              -109.0482,
+              37.00381
             ],
             [
-              -108.48635,
-              36.84865
+              -109.04534,
+              36.82252
             ],
             [
-              -108.54054,
-              36.84838
+              -109.05437,
+              36.82241
             ],
             [
-              -108.53944,
-              36.73236
+              -109.04582,
+              36.27865
+            ],
+            [
+              -109.05478,
+              36.27856
+            ],
+            [
+              -109.05046,
+              35.99581
             ]
           ]
         ],
