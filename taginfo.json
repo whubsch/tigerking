@@ -1,0 +1,155 @@
+{
+  "data_format": 1,
+  "data_url": "https://raw.githubusercontent.com/whubsch/tigerking/refs/heads/main/taginfo.json",
+  "project": {
+    "name": "TIGER King",
+    "description": "A simple web UI to fix TIGER imported road data in OpenStreetMap",
+    "project_url": "https://github.com/whubsch/tigerking",
+    "doc_url": "https://wiki.openstreetmap.org/wiki/TIGER_King",
+    "icon_url": "https://raw.githubusercontent.com/whubsch/tigerking/refs/heads/main/public/icons/tiger_512.png",
+    "contact_name": "Will Hubsch",
+    "contact_email": "wahubsch@gmail.com"
+  },
+  "tags": [
+    {
+      "key": "highway",
+      "object_types": ["way"]
+    },
+    {
+      "key": "surface",
+      "object_types": ["way"],
+      "description": "Surface type of the road, which TIGER King helps add"
+    },
+    {
+      "key": "fixme:tigerking",
+      "object_types": ["way"],
+      "description": "Added to ways with other problems, and used to filter out previously reviewed ways"
+    },
+    {
+      "key": "name",
+      "object_types": ["way"]
+    },
+    {
+      "key": "alt_name",
+      "object_types": ["way"]
+    },
+    {
+      "key": "lanes",
+      "object_types": ["way"],
+      "description": "Number of lanes on the road, which TIGER King helps add"
+    },
+    {
+      "key": "lanes:forward",
+      "object_types": ["way"]
+    },
+    {
+      "key": "lanes:backward",
+      "object_types": ["way"]
+    },
+    {
+      "key": "oneway",
+      "object_types": ["way"]
+    },
+    {
+      "key": "service",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:cfcc",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:county",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_base",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_type",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:reviewed",
+      "object_types": ["way"],
+      "description": "Removed when successfully reviewed by user in TIGER King"
+    },
+    {
+      "key": "tiger:zip_left",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:zip_right",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:tlid",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:source",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:upload_uuid",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:separated",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_base_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_direction_prefix",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_direction_suffix",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_type_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:zip_left_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_base_2",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_direction_prefix_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:zip_right_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_direction_suffix_1",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:zip_left_2",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_type_2",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:name_base_3",
+      "object_types": ["way"]
+    },
+    {
+      "key": "tiger:zip_right_2",
+      "object_types": ["way"]
+    }
+  ]
+}
