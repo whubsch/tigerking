@@ -81,6 +81,25 @@ const App: React.FC = () => {
     [uploadWays, setOverpassWays], // Add uploadWays as dependency
   );
 
+  const addDetailTags = useCallback(() => {
+    return {
+      surface: surface,
+      ...(lanes ? { lanes: lanes } : {}),
+      ...(!laneMarkings ? { lane_markings: "no" } : {}),
+      ...(lanesForward
+        ? { "lanes:forward": lanesForward.toString() }
+        : {}),
+      ...(lanesBackward
+        ? { "lanes:backward": lanesBackward.toString() }
+        : {}),
+      ...(convertDriveway === "driveway"
+        ? { highway: "service", service: "driveway" }
+        : convertDriveway === "track"
+          ? { highway: "track" }
+          : {}),
+    }
+  }, [convertDriveway, laneMarkings, lanes, lanesBackward, lanesForward, surface]);
+
   // Get search parameters from URL
   useEffect(() => {
     if (isBoundingBox) {
@@ -95,9 +114,9 @@ const App: React.FC = () => {
   useEffect(() => {
     setHost(
       window.location.protocol +
-        "//" +
-        window.location.host +
-        window.location.pathname,
+      "//" +
+      window.location.host +
+      window.location.pathname,
     );
   }, [setHost]);
 
@@ -316,6 +335,7 @@ const App: React.FC = () => {
           tags: {
             ...filterTigerTags(overpassWays[currentWay].tags, true),
             "fixme:tigerking": message,
+            ...addDetailTags(),
           },
         };
         console.info("Fixed way:", updatedWay);
@@ -338,20 +358,7 @@ const App: React.FC = () => {
           ...overpassWays[currentWay],
           tags: {
             ...filterTigerTags(overpassWays[currentWay].tags),
-            surface: surface,
-            ...(lanes ? { lanes: lanes } : {}),
-            ...(!laneMarkings ? { lane_markings: "no" } : {}),
-            ...(lanesForward
-              ? { "lanes:forward": lanesForward.toString() }
-              : {}),
-            ...(lanesBackward
-              ? { "lanes:backward": lanesBackward.toString() }
-              : {}),
-            ...(convertDriveway === "driveway"
-              ? { highway: "service", service: "driveway" }
-              : convertDriveway === "track"
-                ? { highway: "track" }
-                : {}),
+            ...addDetailTags(),
           },
         };
         console.info("Submitted way:", updatedWay);
@@ -359,21 +366,7 @@ const App: React.FC = () => {
         handleEnd();
       },
     }),
-    [
-      setLanes,
-      setSurface,
-      handleEnd,
-      overpassWays,
-      currentWay,
-      filterTigerTags,
-      surface,
-      lanes,
-      lanesForward,
-      lanesBackward,
-      convertDriveway,
-      laneMarkings,
-      addToUpload,
-    ],
+    [setLanes, setSurface, handleEnd, overpassWays, currentWay, filterTigerTags, addToUpload, addDetailTags],
   );
 
   useEffect(() => {
