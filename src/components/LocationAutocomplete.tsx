@@ -127,8 +127,8 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
         isLoading={isLoading}
         value={inputValue}
         onInputChange={handleInputChange}
-        onSelectionChange={(key: number) => {
-          const index = key;
+        onSelectionChange={(key) => {
+          const index = Number(key);
           if (!isNaN(index) && index >= 0 && index < suggestions.length) {
             setSelectedLocation(suggestions[index]);
           } else {
