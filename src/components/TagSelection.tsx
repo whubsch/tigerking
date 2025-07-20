@@ -44,8 +44,6 @@ const TagSelection: React.FC<TagSelectionProps> = ({
     ];
 
     switch (key) {
-      case "wikidata":
-        return `https://www.wikidata.org/wiki/${value}`;
       case "wikipedia":
         return `https://wikipedia.org/wiki/${value}`;
       case "website":
@@ -54,6 +52,8 @@ const TagSelection: React.FC<TagSelectionProps> = ({
         // If it's one of the wiki keys, link to the OSM wiki
         if (wikiKeys.includes(key)) {
           return `https://wiki.openstreetmap.org/wiki/Key:${key}`;
+        } else if (key.endsWith("wikidata")) {
+          return `https://www.wikidata.org/wiki/${value}`;
         }
         return null;
     }
