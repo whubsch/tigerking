@@ -13,7 +13,6 @@ import { useChangesetStore } from "../stores/useChangesetStore";
 
 interface UploadModalProps {
   show: boolean;
-  ways: number;
   onClose: () => void;
   uploads: OsmWay[];
   setUploadWays: (ways: OsmWay[]) => void;
@@ -23,7 +22,6 @@ interface UploadModalProps {
 
 const UploadModal: React.FC<UploadModalProps> = ({
   show,
-  ways,
   onClose,
   uploads,
   setUploadWays,
@@ -83,7 +81,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
       >
         <div className="space-y-6">
           <div className="flex flex-col items-center gap-2">
-            <WayCountBadge count={ways} verb="reviewed" />
+            <WayCountBadge count={uploads.length} verb="reviewed" />
             <p className="text-center text-medium font-medium">
               The changes you upload as
               <Link

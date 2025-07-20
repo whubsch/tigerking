@@ -435,7 +435,6 @@ const App: React.FC = () => {
       />
       <UploadModal
         show={showFinishedModal && !latestChangeset}
-        ways={currentWay}
         onClose={() => setShowFinishedModal(false)}
         uploads={uploadWays}
         setUploadWays={setUploadWays}
