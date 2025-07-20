@@ -33,6 +33,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
     useState<LocationFeature | null>(null);
   const [suggestions, setSuggestions] = useState<LocationFeature[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Only fetch if input is long enough
@@ -44,6 +45,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
     // Create a function to fetch suggestions
     const fetchSuggestions = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(
           `https://photon.komoot.io/api/?q=${encodeURIComponent(inputValue)}`,
         );
@@ -56,9 +58,11 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
         );
 
         setSuggestions(filteredSuggestions);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
         setSuggestions([]);
+        setIsLoading(false);
       }
     };
 
@@ -120,10 +124,11 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
         listboxProps={{
           emptyContent: "No OSM relations found.",
         }}
+        isLoading={isLoading}
         value={inputValue}
         onInputChange={handleInputChange}
-        onSelectionChange={(key) => {
-          const index = Number(key);
+        onSelectionChange={(key: number) => {
+          const index = key;
           if (!isNaN(index) && index >= 0 && index < suggestions.length) {
             setSelectedLocation(suggestions[index]);
           } else {
