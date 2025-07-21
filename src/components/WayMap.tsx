@@ -5,11 +5,14 @@ import ImagerySelect from "./ImagerySelect";
 import {
   processImagerySources,
   getDefaultImagerySourceId,
+  filterImageryLayersAtLocation,
 } from "../services/imagery";
 import imageryJson from "../assets/filtered.json";
 import arrowIcon from "../assets/arrow.svg";
+import { FeatureCollection, Polygon } from "geojson";
 
 const { TILE_SOURCES } = processImagerySources(imageryJson);
+const typedImageryJson = imageryJson as FeatureCollection<Polygon>;
 
 interface WayMapProps {
   coordinates: [number, number][];
@@ -27,7 +30,6 @@ const WayMap: React.FC<WayMapProps> = ({
   const [selectedSourceId, setSelectedSourceId] = useState(() =>
     getDefaultImagerySourceId(TILE_SOURCES),
   );
-  const tileSource = TILE_SOURCES[selectedSourceId]?.url || "";
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -43,12 +45,30 @@ const WayMap: React.FC<WayMapProps> = ({
         [-66.885444, 49.384358],
       );
 
+    // Check if current imagery covers the new location and switch if needed
+    if (coordinates.length > 0) {
+      const center = bounds.getCenter();
+      const visibleFeatures = filterImageryLayersAtLocation(
+        typedImageryJson,
+        center.lng,
+        center.lat,
+      );
+
+      const currentSourceAvailable = visibleFeatures.some(
+        feature => feature.properties?.id === selectedSourceId
+      );
+
+      if (!currentSourceAvailable) {
+        const defaultSourceId = getDefaultImagerySourceId(TILE_SOURCES);
+        setSelectedSourceId(defaultSourceId);
+      }
+    }
+
     setImagery(TILE_SOURCES[selectedSourceId].name);
 
 
-    const sourceMaxZoom = Object.values(TILE_SOURCES).find(
-      (source) => source.url === tileSource,
-    )?.maxZoom || 22;
+    const currentTileSource = TILE_SOURCES[selectedSourceId]?.url || "";
+    const sourceMaxZoom = TILE_SOURCES[selectedSourceId]?.maxZoom || 22;
 
     // Initialize the map
     map.current = new maplibregl.Map({
@@ -58,12 +78,10 @@ const WayMap: React.FC<WayMapProps> = ({
         sources: {
           "raster-tiles": {
             type: "raster",
-            tiles: [tileSource],
+            tiles: [currentTileSource],
             tileSize: 256,
             attribution:
-              Object.values(TILE_SOURCES).find(
-                (source) => source.url === tileSource,
-              )?.attribution?.text || "OpenStreetMap contributors",
+              TILE_SOURCES[selectedSourceId]?.attribution?.text || "OpenStreetMap contributors",
             maxzoom: sourceMaxZoom
           },
         },
@@ -80,7 +98,7 @@ const WayMap: React.FC<WayMapProps> = ({
       bounds: bounds,
       fitBoundsOptions: {
         padding: 50,
-        maxZoom: Math.min(sourceMaxZoom, 20)
+        maxZoom: Math.min(sourceMaxZoom, 19)
       },
     });
 
@@ -192,7 +210,7 @@ const WayMap: React.FC<WayMapProps> = ({
     return () => {
       map.current?.remove();
     };
-  }, [coordinates, zoom, tileSource, selectedSourceId, setImagery]);
+  }, [coordinates, zoom, selectedSourceId, setImagery]);
 
   const handleTileSourceChange = (sourceId: string) => {
     if (map.current && TILE_SOURCES[sourceId]) {
