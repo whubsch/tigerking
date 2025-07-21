@@ -6,7 +6,7 @@ import CardHeading from "./CardHeading";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { fetchElementTags } from "../services/osmApi";
 
-const RelationTags: React.FC = () => {
+const RelationHeading: React.FC = () => {
   const [tags, setTags] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ const RelationTags: React.FC = () => {
 
   useEffect(() => {
     const loadRelationTags = async () => {
-      if (!relation) return;
+      if (!relation?.id) return;
 
       setLoading(true);
       setError(null);
@@ -33,7 +33,7 @@ const RelationTags: React.FC = () => {
     };
 
     loadRelationTags();
-  }, [relation, setDescription]);
+  }, [relation?.id, setDescription]);
 
   if (loading) {
     return (
@@ -74,4 +74,4 @@ const RelationTags: React.FC = () => {
   );
 };
 
-export default RelationTags;
+export default RelationHeading;
