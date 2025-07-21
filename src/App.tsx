@@ -117,9 +117,9 @@ const App: React.FC = () => {
   useEffect(() => {
     setHost(
       window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname,
+        "//" +
+        window.location.host +
+        window.location.pathname,
     );
   }, [setHost]);
 
@@ -409,10 +409,10 @@ const App: React.FC = () => {
           }
           break;
         case "b":
-          handleActions.fix('bad geometry');
+          handleActions.fix("bad geometry");
           break;
         case "s":
-          handleActions.fix('needs splitting');
+          handleActions.fix("needs splitting");
           break;
         case "d":
           handleActions.fix("doesn't exist");
