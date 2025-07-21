@@ -42,6 +42,18 @@ The application supports various URL parameters to configure data loading and en
 
 Issues and pull requests are welcome.
 
+To run TIGER King locally, follow these steps:
+
+1. Clone the repository to your local machine
+2. Install dependencies with `npm i`
+3. Navigate to OSM's [OAuth 2 Applications](https://www.openstreetmap.org/oauth2/applications) page and create a new application
+	- Name can be anything you want
+	- Redirect URL should be `http://127.0.0.1:5173/tigerking/`
+	- Uncheck `Confidential Application`
+	- Check the `Read user preferences` and `Modify the map` permissions
+4. Copy the "Client ID" and place it on line 8 of `auth.ts` 
+5. Start the application with `npm run dev -- --host 127.0.0.1`
+
 ## License
 
 MIT. See [LICENSE.md](LICENSE.md) for details.
