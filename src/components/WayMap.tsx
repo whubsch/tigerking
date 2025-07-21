@@ -37,13 +37,13 @@ const WayMap: React.FC<WayMapProps> = ({
     // Calculate center point from coordinates
     const bounds = coordinates.length
       ? coordinates.reduce(
-        (bounds, coord) => bounds.extend(coord),
-        new maplibregl.LngLatBounds(coordinates[0], coordinates[0]),
-      )
+          (bounds, coord) => bounds.extend(coord),
+          new maplibregl.LngLatBounds(coordinates[0], coordinates[0]),
+        )
       : new maplibregl.LngLatBounds(
-        [-124.848974, 24.396308],
-        [-66.885444, 49.384358],
-      );
+          [-124.848974, 24.396308],
+          [-66.885444, 49.384358],
+        );
 
     // Check if current imagery covers the new location and switch if needed
     if (coordinates.length > 0) {
@@ -55,7 +55,7 @@ const WayMap: React.FC<WayMapProps> = ({
       );
 
       const currentSourceAvailable = visibleFeatures.some(
-        feature => feature.properties?.id === selectedSourceId
+        (feature) => feature.properties?.id === selectedSourceId,
       );
 
       if (!currentSourceAvailable) {
@@ -65,7 +65,6 @@ const WayMap: React.FC<WayMapProps> = ({
     }
 
     setImagery(TILE_SOURCES[selectedSourceId].name);
-
 
     const currentTileSource = TILE_SOURCES[selectedSourceId]?.url || "";
     const sourceMaxZoom = TILE_SOURCES[selectedSourceId]?.maxZoom || 22;
@@ -81,8 +80,9 @@ const WayMap: React.FC<WayMapProps> = ({
             tiles: [currentTileSource],
             tileSize: 256,
             attribution:
-              TILE_SOURCES[selectedSourceId]?.attribution?.text || "OpenStreetMap contributors",
-            maxzoom: sourceMaxZoom
+              TILE_SOURCES[selectedSourceId]?.attribution?.text ||
+              "OpenStreetMap contributors",
+            maxzoom: sourceMaxZoom,
           },
         },
         layers: [
@@ -98,7 +98,7 @@ const WayMap: React.FC<WayMapProps> = ({
       bounds: bounds,
       fitBoundsOptions: {
         padding: 50,
-        maxZoom: Math.min(sourceMaxZoom, 19)
+        maxZoom: Math.min(sourceMaxZoom, 19),
       },
     });
 
