@@ -86,19 +86,22 @@ const App: React.FC = () => {
       surface: surface,
       ...(lanes ? { lanes: lanes } : {}),
       ...(!laneMarkings ? { lane_markings: "no" } : {}),
-      ...(lanesForward
-        ? { "lanes:forward": lanesForward.toString() }
-        : {}),
-      ...(lanesBackward
-        ? { "lanes:backward": lanesBackward.toString() }
-        : {}),
+      ...(lanesForward ? { "lanes:forward": lanesForward.toString() } : {}),
+      ...(lanesBackward ? { "lanes:backward": lanesBackward.toString() } : {}),
       ...(convertDriveway === "driveway"
         ? { highway: "service", service: "driveway" }
         : convertDriveway === "track"
           ? { highway: "track" }
           : {}),
-    }
-  }, [convertDriveway, laneMarkings, lanes, lanesBackward, lanesForward, surface]);
+    };
+  }, [
+    convertDriveway,
+    laneMarkings,
+    lanes,
+    lanesBackward,
+    lanesForward,
+    surface,
+  ]);
 
   // Get search parameters from URL
   useEffect(() => {
@@ -114,9 +117,9 @@ const App: React.FC = () => {
   useEffect(() => {
     setHost(
       window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname,
+        "//" +
+        window.location.host +
+        window.location.pathname,
     );
   }, [setHost]);
 
@@ -366,7 +369,16 @@ const App: React.FC = () => {
         handleEnd();
       },
     }),
-    [setLanes, setSurface, handleEnd, overpassWays, currentWay, filterTigerTags, addToUpload, addDetailTags],
+    [
+      setLanes,
+      setSurface,
+      handleEnd,
+      overpassWays,
+      currentWay,
+      filterTigerTags,
+      addToUpload,
+      addDetailTags,
+    ],
   );
 
   useEffect(() => {
