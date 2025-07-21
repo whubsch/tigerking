@@ -35,15 +35,20 @@ const WayMap: React.FC<WayMapProps> = ({
     // Calculate center point from coordinates
     const bounds = coordinates.length
       ? coordinates.reduce(
-          (bounds, coord) => bounds.extend(coord),
-          new maplibregl.LngLatBounds(coordinates[0], coordinates[0]),
-        )
+        (bounds, coord) => bounds.extend(coord),
+        new maplibregl.LngLatBounds(coordinates[0], coordinates[0]),
+      )
       : new maplibregl.LngLatBounds(
-          [-124.848974, 24.396308],
-          [-66.885444, 49.384358],
-        );
+        [-124.848974, 24.396308],
+        [-66.885444, 49.384358],
+      );
 
     setImagery(TILE_SOURCES[selectedSourceId].name);
+
+
+    const sourceMaxZoom = Object.values(TILE_SOURCES).find(
+      (source) => source.url === tileSource,
+    )?.maxZoom || 22;
 
     // Initialize the map
     map.current = new maplibregl.Map({
@@ -59,10 +64,7 @@ const WayMap: React.FC<WayMapProps> = ({
               Object.values(TILE_SOURCES).find(
                 (source) => source.url === tileSource,
               )?.attribution?.text || "OpenStreetMap contributors",
-            maxzoom:
-              Object.values(TILE_SOURCES).find(
-                (source) => source.url === tileSource,
-              )?.maxZoom || 22,
+            maxzoom: sourceMaxZoom
           },
         },
         layers: [
@@ -71,12 +73,15 @@ const WayMap: React.FC<WayMapProps> = ({
             type: "raster",
             source: "raster-tiles",
             minzoom: 0,
-            maxzoom: 22,
+            maxzoom: 24,
           },
         ],
       },
       bounds: bounds,
-      fitBoundsOptions: { padding: 50 },
+      fitBoundsOptions: {
+        padding: 50,
+        maxZoom: Math.min(sourceMaxZoom, 20)
+      },
     });
 
     map.current.on("load", () => {
