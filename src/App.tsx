@@ -117,9 +117,9 @@ const App: React.FC = () => {
   useEffect(() => {
     setHost(
       window.location.protocol +
-        "//" +
-        window.location.host +
-        window.location.pathname,
+      "//" +
+      window.location.host +
+      window.location.pathname,
     );
   }, [setHost]);
 
@@ -405,8 +405,19 @@ const App: React.FC = () => {
         surface &&
         (lanes || laneMarkings == false)
       ) {
-        console.log("Pressed s");
         handleActions.submit();
+      } else if (
+        event.key === "b"
+      ) {
+        handleActions.fix('bad geometry');
+      } else if (
+        event.key === "s"
+      ) {
+        handleActions.fix('needs splitting');
+      } else if (
+        event.key === "d"
+      ) {
+        handleActions.fix('doesn\'t exist');
       }
     };
 

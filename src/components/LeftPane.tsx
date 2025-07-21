@@ -65,9 +65,9 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   const [isFixModalOpen, setIsFixModalOpen] = useState(false);
   const [customFixMessage, setCustomFixMessage] = useState("");
   const fixOptions = [
-    { key: "bad-geometry", label: "Bad geometry" },
-    { key: "needs-splitting", label: "Needs splitting" },
-    { key: "doesnt-exist", label: "Doesn't exist" },
+    { key: "bad-geometry", label: "Bad geometry", keybind: 'b' },
+    { key: "needs-splitting", label: "Needs splitting", keybind: 's' },
+    { key: "doesnt-exist", label: "Doesn't exist", keybind: 'd' },
     { key: "check-highway", label: "Check highway value" },
   ];
   const { relation } = useChangesetStore();
@@ -246,7 +246,10 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                                 handleFix(option.label.toLowerCase())
                               }
                             >
-                              {option.label}
+                              <div className="flex gap-2 items-center">
+                                <p>{option.label}</p>
+                                <Kbd className="hidden md:block">{option.keybind}</Kbd>
+                              </div>
                             </DropdownItem>
                           ))}
                         </>
