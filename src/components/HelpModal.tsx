@@ -29,6 +29,21 @@ const keyboardShortcuts = [
   },
 ];
 
+const fixShortcuts = [
+  {
+    keys: ["b"],
+    description: "Bad geometry",
+  },
+  {
+    keys: ["s"],
+    description: "Needs splitting",
+  },
+  {
+    keys: ["d"],
+    description: "Doesn't exist",
+  },
+];
+
 const commonActions = [
   {
     title: "Skip",
@@ -109,6 +124,29 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
           </div>
           <div className="grid grid-cols-2 gap-2">
             {keyboardShortcuts.map((shortcut, index) => (
+              <div
+                key={index}
+                className="bg-default-100 p-2 rounded flex flex-row"
+              >
+                <div className="flex gap-2">
+                  {shortcut.keys.map((key, keyIndex) => (
+                    <Kbd
+                      key={keyIndex}
+                      className="bg-default-200 px-2 py-1 rounded"
+                    >
+                      {key}
+                    </Kbd>
+                  ))}
+                </div>
+                <span className="ml-2">{shortcut.description}</span>
+              </div>
+            ))}
+          </div>
+          <div className="gap-4 items-center my-2">
+            <h3 className="text-md font-semibold">Fix Shortcuts</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {fixShortcuts.map((shortcut, index) => (
               <div
                 key={index}
                 className="bg-default-100 p-2 rounded flex flex-row"

@@ -245,12 +245,15 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                               onPress={() =>
                                 handleFix(option.label.toLowerCase())
                               }
+                              textValue={option.label}
                             >
-                              <div className="flex gap-2 items-center">
+                              <div className="flex gap-2 items-center justify-between">
                                 <p>{option.label}</p>
-                                <Kbd className="hidden md:block">
-                                  {option.keybind}
-                                </Kbd>
+                                {option.keybind && (
+                                  <Kbd className="hidden md:block">
+                                    {option.keybind}
+                                  </Kbd>
+                                )}
                               </div>
                             </DropdownItem>
                           ))}
