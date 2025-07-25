@@ -42,6 +42,10 @@ const fixShortcuts = [
     keys: ["d"],
     description: "Doesn't exist",
   },
+  {
+    keys: ["c"],
+    description: "Check highway value",
+  },
 ];
 
 const commonActions = [
