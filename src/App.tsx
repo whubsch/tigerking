@@ -418,7 +418,7 @@ const App: React.FC = () => {
           handleActions.fix("doesn't exist");
           break;
         case "c":
-          handleActions.fix("check highway value")
+          handleActions.fix("check highway value");
           break;
         default:
           break;
