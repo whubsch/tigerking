@@ -65,10 +65,10 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   const [isFixModalOpen, setIsFixModalOpen] = useState(false);
   const [customFixMessage, setCustomFixMessage] = useState("");
   const fixOptions = [
-    { key: "bad-geometry", label: "Bad geometry" },
-    { key: "needs-splitting", label: "Needs splitting" },
-    { key: "doesnt-exist", label: "Doesn't exist" },
-    { key: "check-highway", label: "Check highway value" },
+    { key: "bad-geometry", label: "Bad geometry", keybind: "b" },
+    { key: "needs-splitting", label: "Needs splitting", keybind: "s" },
+    { key: "doesnt-exist", label: "Doesn't exist", keybind: "d" },
+    { key: "check-highway", label: "Check highway value", keybind: "c" },
   ];
   const { relation } = useChangesetStore();
   const { lanes, surface, laneMarkings } = useWayTagsStore();
@@ -245,8 +245,16 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                               onPress={() =>
                                 handleFix(option.label.toLowerCase())
                               }
+                              textValue={option.label}
                             >
-                              {option.label}
+                              <div className="flex gap-2 items-center justify-between">
+                                <p>{option.label}</p>
+                                {option.keybind && (
+                                  <Kbd className="hidden md:block">
+                                    {option.keybind}
+                                  </Kbd>
+                                )}
+                              </div>
                             </DropdownItem>
                           ))}
                         </>

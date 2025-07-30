@@ -396,17 +396,32 @@ const App: React.FC = () => {
       // Only handle keypress if logged in
       if (!loggedIn) return;
 
-      if (event.key === "u") {
-        setShowFinishedModal(true);
-      } else if (event.key === "f") {
-        handleActions.clearTiger();
-      } else if (
-        event.key === "Enter" &&
-        surface &&
-        (lanes || laneMarkings == false)
-      ) {
-        console.log("Pressed s");
-        handleActions.submit();
+      switch (event.key) {
+        case "u":
+          setShowFinishedModal(true);
+          break;
+        case "f":
+          handleActions.clearTiger();
+          break;
+        case "Enter":
+          if (surface && (lanes || laneMarkings == false)) {
+            handleActions.submit();
+          }
+          break;
+        case "b":
+          handleActions.fix("bad geometry");
+          break;
+        case "s":
+          handleActions.fix("needs splitting");
+          break;
+        case "d":
+          handleActions.fix("doesn't exist");
+          break;
+        case "c":
+          handleActions.fix("check highway value");
+          break;
+        default:
+          break;
       }
     };
 
