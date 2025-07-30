@@ -102,7 +102,7 @@ const WayMap: React.FC<WayMapProps> = ({
       },
     });
 
-    map.current.on("load", () => {
+    map.current.on("style.load", () => {
       // Add the line source
       map.current?.addSource("way-line", {
         type: "geojson",
