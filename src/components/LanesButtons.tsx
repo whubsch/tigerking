@@ -94,6 +94,9 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
             ),
             () => setShowLaneDirection(!showLaneDirection),
             true,
+            <p className="px-1.5 py-0.5 mt-0.5 bg-gray-600 rounded-lg text-xs">
+              {lanes}
+            </p>,
           )}
         </ButtonGroup>
       </div>
