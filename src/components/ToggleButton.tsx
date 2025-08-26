@@ -3,8 +3,8 @@ import { ReactNode } from "react";
 import kebab from "../assets/kebab.svg";
 
 const toggleButton = (
-  label: string,
   isActive: boolean,
+  label?: string,
   onPress?: () => void,
   isIconOnly: boolean = false,
   slot?: ReactNode,
@@ -24,7 +24,7 @@ const toggleButton = (
       />
     ) : (
       <div className="flex items-center gap-2">
-        <span>{label}</span>
+        {label && <span>{label}</span>}
         {slot}
       </div>
     )}
