@@ -4,6 +4,7 @@ import { Slider } from "@heroui/slider";
 import TagButtonHeading from "./TagButtonHeading";
 import toggleButton from "./ToggleButton";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import { Chip } from "@heroui/react";
 
 interface LanesButtonsProps {
   showLaneDirection: boolean;
@@ -70,7 +71,7 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
       />
 
       <div className="flex gap-2">
-        {toggleButton("none", !laneMarkings, () =>
+        {toggleButton(!laneMarkings, "none", () =>
           setLaneMarkings(!laneMarkings),
         )}
 
@@ -80,20 +81,21 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           size="md"
         >
           {COMMON_LANES.map((lanesKey) =>
-            toggleButton(lanesKey, lanesKey === lanes, () =>
+            toggleButton(lanesKey === lanes, lanesKey, () =>
               setLanes(lanesKey),
             ),
           )}
 
           {toggleButton(
-            "other",
             Boolean(
               (lanes && !COMMON_LANES.includes(lanes)) ||
                 lanesBackward ||
                 lanesForward,
             ),
+            undefined,
             () => setShowLaneDirection(!showLaneDirection),
             true,
+            <Chip>{lanes}</Chip>,
           )}
         </ButtonGroup>
       </div>

@@ -24,8 +24,8 @@ const SurfaceButtons: React.FC = () => {
       <Dropdown>
         <DropdownTrigger>
           {toggleButton(
-            isCustomSurface ? surface : "other",
             isCustomSurface,
+            isCustomSurface ? surface : "other",
             undefined,
             true,
           )}
@@ -67,7 +67,7 @@ const SurfaceButtons: React.FC = () => {
         size="md"
       >
         {COMMON_SURFACES.map((surfaceKey) =>
-          toggleButton(surfaceKey, surfaceKey === surface, () =>
+          toggleButton(surfaceKey === surface, surfaceKey, () =>
             setSurface(surfaceKey),
           ),
         )}
