@@ -3350,7 +3350,7 @@
         "privacy_policy_url": "https://www.cattco.org/legal/privacy-policy",
         "start_date": "2023",
         "type": "wms",
-        "url": "https://maps2.cattco.org/arcgiswebadaptor/rest/services/AerialPhotos/MapServer/export?f=image&format=jpg&layers=show:44&imageSR={wkid}&bboxSR={wkid}&bbox={bbox-epsg-3857}&size=256,256",
+        "url": "https://maps2.cattco.org/arcgiswebadaptor/rest/services/Aerials/Pictometry_2023_84/ImageServer/exportImage?f=image&format=jpg&imageSR={wkid}&bboxSR={wkid}&bbox={bbox-epsg-3857}&size=256,256",
         "valid-georeference": true
       },
       "geometry": {
@@ -18893,17 +18893,17 @@
         "best": true,
         "category": "photo",
         "country_code": "US",
-        "description": "The 2024 orthoimagery for Fairfax County of the Commonwealth of Virginia",
-        "end_date": "2024",
-        "id": "Fairfax_VA_2024",
+        "description": "The 2025 orthoimagery for Fairfax County of the Commonwealth of Virginia",
+        "end_date": "2025",
+        "id": "Fairfax_VA_2025",
         "license_url": "https://www.fairfaxcounty.gov/maps/disclaimer",
         "max_zoom": 23,
         "min_zoom": 9,
-        "name": "Fairfax County Orthoimagery (2024)",
+        "name": "Fairfax County Orthoimagery (2025)",
         "privacy_policy_url": "https://www.fairfaxcounty.gov/topics/copyright-privacy",
-        "start_date": "2024",
+        "start_date": "2025",
         "type": "tms",
-        "url": "https://www.fairfaxcounty.gov/gisimagery/rest/services/AerialPhotography/2024AerialPhotographyCached/ImageServer/tile/{z}/{y}/{x}"
+        "url": "https://www.fairfaxcounty.gov/gisimagery/rest/services/AerialPhotography/2025AerialPhotographyCached/ImageServer/tile/{z}/{y}/{x}"
       },
       "geometry": {
         "coordinates": [
@@ -24108,13 +24108,13 @@
         "end_date": "2024",
         "id": "Henrico_VA_2024",
         "license_url": "https://henrico.gov/transparency/terms-of-use/",
-        "max_zoom": 20,
+        "max_zoom": 21,
         "min_zoom": 1,
         "name": "Henrico County Aerial Imagery (2024)",
         "privacy_policy_url": "https://henrico.gov/privacy-policy/",
         "start_date": "2024",
         "type": "wms",
-        "url": "https://portal.henrico.us/mapping/rest/services/Imagery/AerialPhotos2024/ImageServer/exportImage?bbox={bbox-epsg-3857}&bboxSR={wkid}&size=256,256&imageSR={wkid}&format=jpg&f=image"
+        "url": "https://portal.henrico.gov/mapping/rest/services/Imagery/AerialPhotosAll/MapServer/export?bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256&dpi=96&format=jpg&transparent=true&layers=show:96,100&f=image"
       },
       "geometry": {
         "coordinates": [
@@ -55513,7 +55513,7 @@
         "privacy_policy_url": "https://www.usnh.edu/policy/usy/viii-cybersecurity-policies-and-standards/privacy-policy",
         "start_date": "2021",
         "type": "wms",
-        "url": "https://nhgeodata.unh.edu/nhgeodata/services/ImageServices/NH_2021_2022_6in_CIR/ImageServer/WMSServer?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=NH_2021_2022_6in_CIR:2122CIR&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://nhgeodata.unh.edu/image/services/ImageServices/NH_2021_2022_6in_CIR/ImageServer/WMSServer?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=NH_2021_2022_6in_CIR&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -61327,12 +61327,12 @@
         },
         "category": "photo",
         "country_code": "US",
-        "description": "Ohio Statewide Imagery Program III most current orthoimagery of every county at resolutions from 1 foot to 3 inches from 2017 through 2020.",
+        "description": "Ohio Statewide Imagery Program III most current orthoimagery of every county at resolutions from 6 inches to 1 inch from 2017 through 2024.",
         "end_date": "2024",
         "i18n": true,
         "id": "OSIP",
         "license_url": "https://gis1.oit.ohio.gov/OGRIPWeb/WebContent/OSIP/OSIP%20III%20RFP%200A1177.pdf#page=26",
-        "max_zoom": 20,
+        "max_zoom": 22,
         "min_zoom": 8,
         "name": "Ohio Statewide Imagery Program",
         "permission_osm": "implicit",
@@ -62551,18 +62551,23 @@
           "text": "State of Oregon",
           "url": "https://geohub.oregon.gov/"
         },
+        "available_projections": [
+          "CRS:84",
+          "EPSG:3857",
+          "EPSG:4326"
+        ],
         "category": "photo",
         "country_code": "US",
-        "end_date": "2022-09",
+        "end_date": "2024-08",
         "icon": "https://www.oregon.gov/assets/branding/logo.png",
-        "id": "Oregon-OSIP-2022",
+        "id": "Oregon-OSIP-2024",
         "license_url": "https://www.usda.gov/policies-and-links/",
         "max_zoom": 19,
-        "name": "Oregon Statewide Imagery Program (2022)",
+        "name": "Oregon Statewide Imagery Program (2024)",
         "privacy_policy_url": "https://www.oregon.gov/pages/terms-and-conditions.aspx",
-        "start_date": "2022-05",
-        "type": "tms",
-        "url": "https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2022/OSIP_2022_WM/ImageServer/tile/{z}/{y}/{x}",
+        "start_date": "2024-06",
+        "type": "wms",
+        "url": "https://imagery.oregonexplorer.info/arcgis/services/OSIP_2024/OSIP_2024_WM/ImageServer/WMSServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=OSIP_2024_WM&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -64578,16 +64583,16 @@
         "best": true,
         "category": "photo",
         "country_code": "US",
-        "description": "Digital orthophotography georeferenced to the Pennsylvania State Plane Coordinate System, and delivered as mosaicked raster images for the city of Philadelphia",
-        "end_date": "2023",
-        "id": "Philadelphia_Ortho_2023",
+        "description": "Digital orthophotography with a ground resolution of 1-inch per pixel, georeferenced to the Pennsylvania State Plane Coordinate System, and delivered as mosaicked raster images for the city of Philadelphia",
+        "end_date": "2024",
+        "id": "Philadelphia_Ortho_2024_1in",
         "license_url": "https://opendataphilly.org/organizations/city-of-philadelphia/",
         "max_zoom": 22,
-        "name": "Philadelphia Orthoimagery 2023",
+        "name": "Philadelphia Orthoimagery 2024 (1in)",
         "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
-        "start_date": "2023",
+        "start_date": "2024",
         "type": "tms",
-        "url": "https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_2023/MapServer/tile/{z}/{y}/{x}",
+        "url": "https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_2024_1in/MapServer/tile/{z}/{y}/{x}",
         "valid-georeference": true
       },
       "geometry": {
