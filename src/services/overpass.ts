@@ -1,6 +1,15 @@
 import { OsmWay } from "../objects";
+import { useSettingsStore } from "../stores/useSettingsStore";
 
-const BASE_OVERPASS_QUERY = `
+// Function to generate the overpass query based on settings
+const generateOverpassQuery = (includeTracksParam?: boolean): string => {
+  // If a parameter is provided, use it; otherwise get from store
+  // We need this parameter option for server-side or initial renders
+  const includeTracks =
+    includeTracksParam ?? useSettingsStore.getState().includeTracks;
+
+  // Base query that includes all highway ways with tiger:reviewed=no
+  const baseQuery = `
 (
   way(area.hood)[highway]["tiger:reviewed"=no][!"fixme:tigerking"];
 )->.tigers;
@@ -10,7 +19,7 @@ const BASE_OVERPASS_QUERY = `
   way(area.hood)[highway=cycleway];
   way(area.hood)[highway=footway];
   way(area.hood)[highway=proposed];
-  way(area.hood)[highway=track];
+  ${!includeTracks ? "way(area.hood)[highway=track];" : ""}
   way(area.hood)[highway=path];
 )->.ignore;
 
@@ -19,6 +28,9 @@ way.all->._;
 
 out meta geom;
 `;
+
+  return baseQuery;
+};
 
 interface OverpassResponse {
   elements: any[];
@@ -52,10 +64,12 @@ export const overpassService = {
     }
   },
   async fetchWaysInBbox(bbox: number[]): Promise<OsmWay[]> {
+    // Get current includeTracks setting
+    const includeTracks = useSettingsStore.getState().includeTracks;
     const query =
       `
 [out:json][bbox:${bbox.join(",")}];
-      ` + BASE_OVERPASS_QUERY;
+      ` + generateOverpassQuery(includeTracks);
     return overpassService.fetchQuery(query.replaceAll("(area.hood)", ""));
   },
   /**
@@ -64,12 +78,14 @@ export const overpassService = {
    * @returns Promise<OsmWay[]> - Array of ways
    */
   async fetchWaysInRelation(relationId: string): Promise<OsmWay[]> {
+    // Get current includeTracks setting
+    const includeTracks = useSettingsStore.getState().includeTracks;
     const query =
       `
 [out:json];
 rel(${relationId});
 map_to_area->.hood;
-      ` + BASE_OVERPASS_QUERY;
+      ` + generateOverpassQuery(includeTracks);
     return overpassService.fetchQuery(query);
   },
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import WayMap from "./components/WayMap";
-import MainNavbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import LeftPane from "./components/LeftPane";
@@ -19,6 +19,7 @@ import { useBBoxStore } from "./stores/useBboxStore";
 import { useWayStore } from "./stores/useWayStore";
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { getMapParams } from "./services/params";
+import SettingsModal from "./components/SettingsModal";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
@@ -29,6 +30,7 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
   const { relation, setRelation, setHost, setSource, resetDescription } =
     useChangesetStore();
@@ -440,6 +442,10 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:h-screen">
+      <SettingsModal
+        isOpen={showSettingsModal}
+        onClose={() => setShowSettingsModal(false)}
+      />
       <HelpModal
         isOpen={showHelpModal}
         onClose={() => setShowHelpModal(false)}
@@ -467,16 +473,18 @@ const App: React.FC = () => {
         onClose={() => setShowAreaCompletedModal(false)}
         areaName={relation.name || ""}
       />
-      <MainNavbar
+      <Navbar
         uploads={uploadWays}
         setShowFinishedModal={setShowFinishedModal}
         setShowHelpModal={setShowHelpModal}
+        setShowSettingsModal={setShowSettingsModal}
       />
       <div className="flex flex-col md:flex-row flex-1 bg-background overflow-auto">
         <LeftPane
           showRelationHeading={showRelationHeading}
           bbox={bboxState}
           overpassWays={overpassWays}
+          setOverpassWays={setOverpassWays}
           currentWay={currentWay}
           isLoading={isRelationLoading}
           showLaneDirection={showLaneDirection}

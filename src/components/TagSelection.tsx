@@ -2,7 +2,9 @@ import React from "react";
 import { Chip } from "@heroui/chip";
 import { Link } from "@heroui/link";
 import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Button } from "@heroui/button";
 import tag from "../assets/tag.svg";
+import { useSettingsStore } from "../stores/useSettingsStore";
 
 import cancel from "../assets/cancel.svg";
 
@@ -10,6 +12,7 @@ interface TagSelectionProps {
   tags: Record<string, string | undefined>;
   commonTags?: string[]; // Make common tags configurable
   onTagClick?: (key: string, value: string) => void; // Optional click handler
+  onEditClick?: () => void; // Add handler for Edit button
   scroll: boolean;
   style: "splitted" | "bordered";
 }
@@ -18,6 +21,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
   tags,
   commonTags = ["type", "boundary", "admin_level", "wikidata"],
   onTagClick,
+  onEditClick,
   scroll,
   style = "splitted",
 }) => {
@@ -102,6 +106,8 @@ const TagSelection: React.FC<TagSelectionProps> = ({
     ([key, value]) => value !== undefined && renderChip(key, value),
   );
 
+  const { advancedMode } = useSettingsStore();
+
   return scroll ? (
     <Accordion
       variant={style}
@@ -128,6 +134,18 @@ const TagSelection: React.FC<TagSelectionProps> = ({
         <div className="flex flex-wrap gap-2 py-1 overflow-clip">
           {tagsContainer}
         </div>
+        {advancedMode && (
+          <Button
+            fullWidth
+            size="sm"
+            variant="ghost"
+            color="warning"
+            className="my-2"
+            onPress={onEditClick}
+          >
+            Edit
+          </Button>
+        )}
       </AccordionItem>
     </Accordion>
   ) : (

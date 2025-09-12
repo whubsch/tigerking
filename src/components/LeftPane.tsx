@@ -34,6 +34,7 @@ interface LeftPaneProps {
   showRelationHeading: boolean;
   bbox: BBox;
   overpassWays: OsmWay[];
+  setOverpassWays: (ways: OsmWay[]) => void; // Add this line
   currentWay: number;
   isLoading: boolean;
   showLaneDirection: boolean;
@@ -50,6 +51,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   showRelationHeading,
   bbox,
   overpassWays,
+  setOverpassWays,
   currentWay,
   isLoading,
   showLaneDirection,
@@ -123,6 +125,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
         setCustomMessage={setCustomFixMessage}
         onSubmit={onCustomFix}
       />
+
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
@@ -159,6 +162,19 @@ const LeftPane: React.FC<LeftPaneProps> = ({
               <WayHeading
                 tags={overpassWays[currentWay].tags}
                 wayId={overpassWays[currentWay].id?.toString() ?? ""}
+                onTagsUpdate={(updatedTags) => {
+                  // Create a new array with the updated way
+                  const updatedWays = [...overpassWays];
+
+                  // Update the tags for the current way
+                  updatedWays[currentWay] = {
+                    ...updatedWays[currentWay],
+                    tags: updatedTags,
+                  };
+
+                  // Update the state with the new array
+                  setOverpassWays(updatedWays);
+                }}
               />
               <div className="flex flex-col gap-2 md:grow">
                 <div className="py-2 flex flex-col gap-4">

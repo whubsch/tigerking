@@ -14,6 +14,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { Link } from "@heroui/link";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { OsmWay } from "../objects";
+import gear from "../assets/gear.svg";
 import logo from "../assets/tiger_outline.svg";
 import menu from "../assets/menu.svg";
 import link from "../assets/link.svg";
@@ -28,6 +29,7 @@ interface NavbarProps {
   uploads: OsmWay[];
   setShowFinishedModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowHelpModal: (show: boolean) => void;
+  setShowSettingsModal: (show: boolean) => void;
 }
 
 const IconImage = ({
@@ -63,6 +65,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
   uploads,
   setShowFinishedModal,
   setShowHelpModal,
+  setShowSettingsModal,
 }) => {
   const {
     loggedIn,
@@ -152,6 +155,14 @@ const MainNavbar: React.FC<NavbarProps> = ({
           ))}
         </DropdownSection>
 
+        <DropdownItem
+          key="settings"
+          onPress={() => setShowSettingsModal(true)}
+          endContent={<IconImage src={gear} alt="settings" />}
+          textValue="Settings"
+        >
+          Settings
+        </DropdownItem>
         <DropdownItem
           key="help"
           onPress={() => setShowHelpModal(true)}
