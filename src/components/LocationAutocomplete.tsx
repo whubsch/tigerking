@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "./modals/ConfirmationModal";
 import search from "../assets/search.svg";
 
 interface LocationFeature {

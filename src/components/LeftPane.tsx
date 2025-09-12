@@ -15,7 +15,7 @@ import SurfaceButtons from "./SurfaceButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import NoRelationPlaceholder from "./NoRelationPlaceholder";
-import CustomMessageModal from "./CustomMessageModal";
+import CustomMessageModal from "./modals/CustomMessageModal";
 import LocationAutocomplete from "./LocationAutocomplete";
 import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
@@ -26,7 +26,7 @@ import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { BBox } from "../stores/useBboxStore";
 import BboxCard from "./BboxCard";
-import LoginModal from "./LoginModal";
+import LoginModal from "./modals/LoginModal";
 import { Kbd } from "@heroui/kbd";
 import { Tooltip } from "@heroui/tooltip";
 

@@ -2,7 +2,7 @@ import React from "react";
 import BaseModal from "./BaseModal";
 import { Switch } from "@heroui/switch";
 import { Divider } from "@heroui/divider";
-import { useSettingsStore } from "../stores/useSettingsStore";
+import { useSettingsStore } from "../../stores/useSettingsStore";
 
 interface SettingsModalProps {
   isOpen: boolean;

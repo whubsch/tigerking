@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import BaseModal from "./BaseModal";
 import { Link } from "@heroui/link";
 import { Card } from "@heroui/card";
-import UploadButton from "./UploadButton";
-import WayAccordion from "./WayAccordion";
-import WayCountBadge from "./WayCountBadge";
-import { OsmWay } from "../objects";
-import ChangesetTagTable from "./ChangesetTags";
+import UploadButton from "../UploadButton";
+import WayAccordion from "../WayAccordion";
+import WayCountBadge from "../WayCountBadge";
+import { OsmWay } from "../../objects";
+import ChangesetTagTable from "../ChangesetTags";
 import ConfirmationModal from "./ConfirmationModal";
-import { useOsmAuthContext } from "../contexts/useOsmAuth";
-import { useChangesetStore } from "../stores/useChangesetStore";
+import { useOsmAuthContext } from "../../contexts/useOsmAuth";
+import { useChangesetStore } from "../../stores/useChangesetStore";
 
 interface UploadModalProps {
   show: boolean;

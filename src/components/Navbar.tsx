@@ -21,7 +21,7 @@ import link from "../assets/link.svg";
 import upload from "../assets/upload.svg";
 import question from "../assets/question.svg";
 import UserCard from "./UserCard";
-import LoginModal from "./LoginModal";
+import LoginModal from "./modals/LoginModal";
 import packageJson from "../../package.json";
 import LocationAutocomplete from "./LocationAutocomplete";
 

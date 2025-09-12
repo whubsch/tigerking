@@ -4,14 +4,14 @@ import Navbar from "./components/Navbar";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import LeftPane from "./components/LeftPane";
-import ChangesetModal from "./components/ChangesetModal";
-import UploadModal from "././components/UploadModal";
-import HelpModal from "./components/HelpModal";
-import AreaCompletedModal from "./components/AreaCompletedModal";
+import ChangesetModal from "./components/modals/ChangesetModal";
+import UploadModal from "./components/modals/UploadModal";
+import HelpModal from "./components/modals/HelpModal";
+import AreaCompletedModal from "./components/modals/AreaCompletedModal";
 import { overpassService } from "./services/overpass";
 import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
 import useWayManagement from "./hooks/useWayManagement";
-import ErrorModal from "./components/ErrorModal";
+import ErrorModal from "./components/modals/ErrorModal";
 import { OsmWay, Tags } from "./objects";
 import { useChangesetStore } from "./stores/useChangesetStore";
 import { useWayTagsStore } from "./stores/useWayTagsStore";
@@ -19,7 +19,7 @@ import { useBBoxStore } from "./stores/useBboxStore";
 import { useWayStore } from "./stores/useWayStore";
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { getMapParams } from "./services/params";
-import SettingsModal from "./components/SettingsModal";
+import SettingsModal from "./components/modals/SettingsModal";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);

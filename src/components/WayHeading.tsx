@@ -2,7 +2,7 @@ import React from "react";
 import CardHeading from "./CardHeading";
 import TagSelection from "./TagSelection";
 import { Tags } from "../objects";
-import TagsModal from "./TagsModal";
+import TagsModal from "./modals/TagsModal";
 
 interface WayHeadingProps {
   tags: Tags;
