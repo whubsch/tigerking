@@ -47,6 +47,11 @@
       "object_types": ["way"]
     },
     {
+      "key": "lane_markings",
+      "object_types": ["way"],
+      "description": "Whether a highway has visible markings dividing the travel lanes."
+    },
+    {
       "key": "oneway",
       "object_types": ["way"]
     },
@@ -73,7 +78,7 @@
     {
       "key": "tiger:reviewed",
       "object_types": ["way"],
-      "description": "Removed when successfully reviewed by user in TIGER King"
+      "description": "Used to determine which ways have yet to be reviewed. Removed when successfully reviewed by user in TIGER King"
     },
     {
       "key": "tiger:zip_left",
