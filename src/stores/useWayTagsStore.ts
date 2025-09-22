@@ -5,6 +5,10 @@ interface WayTagsState {
   surface: string;
   setSurface: (surface: string) => void;
 
+  // Smoothness state
+  smoothness: string;
+  setSmoothness: (smoothness: string) => void;
+
   // Lanes state
   lanes: string;
   setLanes: (lanes: string) => void;
@@ -31,6 +35,8 @@ export const useWayTagsStore = create<WayTagsState>((set) => ({
   // Surface
   surface: "",
   setSurface: (surface) => set({ surface }),
+  smoothness: "",
+  setSmoothness: (smoothness) => set({ smoothness }),
   laneMarkings: true,
   setLaneMarkings: (hasMarkings) => set({ laneMarkings: hasMarkings }),
 
@@ -54,6 +60,7 @@ export const useWayTagsStore = create<WayTagsState>((set) => ({
   resetTags: () =>
     set({
       surface: "",
+      smoothness: "",
       lanes: "",
       laneMarkings: true,
       showLaneDirection: false,

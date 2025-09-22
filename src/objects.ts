@@ -18,6 +18,7 @@ export interface Tags {
   ref?: string;
   lanes?: string;
   surface?: string;
+  smoothness?: string;
   oneway?: string;
   "lanes:forward"?: string;
   "lanes:backward"?: string;
