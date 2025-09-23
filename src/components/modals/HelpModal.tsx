@@ -43,6 +43,10 @@ const fixShortcuts = [
     description: "Doesn't exist",
   },
   {
+    keys: ["n"],
+    description: "Check name value",
+  },
+  {
     keys: ["c"],
     description: "Check highway value",
   },

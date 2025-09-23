@@ -70,6 +70,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     { key: "bad-geometry", label: "Bad geometry", keybind: "b" },
     { key: "needs-splitting", label: "Needs splitting", keybind: "s" },
     { key: "doesnt-exist", label: "Doesn't exist", keybind: "d" },
+    { key: "check-name", label: "Check name value", keybind: "n" },
     { key: "check-highway", label: "Check highway value", keybind: "c" },
   ];
   const { relation } = useChangesetStore();

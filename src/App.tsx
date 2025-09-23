@@ -419,6 +419,9 @@ const App: React.FC = () => {
         case "d":
           handleActions.fix("doesn't exist");
           break;
+        case "n":
+          handleActions.fix("check name value");
+          break;
         case "c":
           handleActions.fix("check highway value");
           break;
