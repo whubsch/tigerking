@@ -79,9 +79,13 @@ const WayMap: React.FC<WayMapProps> = ({
             type: "raster",
             tiles: [currentTileSource],
             tileSize: 256,
-            attribution:
-              TILE_SOURCES[selectedSourceId]?.attribution?.text ||
-              "OpenStreetMap contributors",
+            attribution: (() => {
+              const attr = TILE_SOURCES[selectedSourceId]?.attribution;
+              if (attr?.url && attr?.text) {
+                return `<a href="${attr.url}" target="_blank" rel="noopener noreferrer">${attr.text}</a>`;
+              }
+              return attr?.text || "OpenStreetMap contributors";
+            })(),
             maxzoom: sourceMaxZoom,
           },
         },
