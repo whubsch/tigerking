@@ -39,6 +39,8 @@ const App: React.FC = () => {
     setLanes,
     surface,
     setSurface,
+    smoothness,
+    setSmoothness,
     laneMarkings,
     setLaneMarkings,
     lanesForward,
@@ -86,6 +88,7 @@ const App: React.FC = () => {
   const addDetailTags = useCallback(() => {
     return {
       surface: surface,
+      ...(smoothness ? { smoothness } : {}),
       ...(lanes ? { lanes: lanes } : {}),
       ...(!laneMarkings ? { lane_markings: "no" } : {}),
       ...(lanesForward ? { "lanes:forward": lanesForward.toString() } : {}),
@@ -103,6 +106,7 @@ const App: React.FC = () => {
     lanesBackward,
     lanesForward,
     surface,
+    smoothness,
   ]);
 
   // Get search parameters from URL
@@ -261,6 +265,12 @@ const App: React.FC = () => {
         setSurface("");
       }
 
+      if (currentWayTags.smoothness) {
+        setSmoothness(currentWayTags.smoothness);
+      } else {
+        setSmoothness("");
+      }
+
       // Set lanes if it exists
       if (currentWayTags.lanes) {
         setLanes(currentWayTags.lanes);
@@ -296,6 +306,7 @@ const App: React.FC = () => {
     setLanesBackward,
     setLanesForward,
     setLaneMarkings,
+    setSmoothness,
   ]);
 
   const handleEnd = useCallback(() => {
@@ -332,6 +343,7 @@ const App: React.FC = () => {
         console.log("Skipped way", overpassWays[currentWay].id);
         setLanes("");
         setSurface("");
+        setSmoothness("");
         handleEnd();
       },
       fix: (message: string) => {
@@ -374,6 +386,7 @@ const App: React.FC = () => {
     [
       setLanes,
       setSurface,
+      setSmoothness,
       handleEnd,
       overpassWays,
       currentWay,

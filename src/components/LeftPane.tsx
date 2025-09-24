@@ -12,6 +12,7 @@ import { Spinner } from "@heroui/spinner";
 import RelationHeading from "./RelationHeading";
 import WayHeading from "./WayHeading";
 import SurfaceButtons from "./SurfaceButtons";
+import SmoothnessButtons from "./SmoothnessButtons";
 import LanesButtons from "./LanesButtons";
 import QuickTags from "./QuickTags";
 import NoRelationPlaceholder from "./NoRelationPlaceholder";
@@ -180,6 +181,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
               <div className="flex flex-col gap-2 md:grow">
                 <div className="py-2 flex flex-col gap-4">
                   <SurfaceButtons />
+                  <SmoothnessButtons />
                   <LanesButtons
                     showLaneDirection={showLaneDirection}
                     setShowLaneDirection={setShowLaneDirection}
