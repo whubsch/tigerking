@@ -221,18 +221,14 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                             selectionMode="single"
                             selectedKeys={[convertDriveway]}
                           >
-                            <DropdownItem
-                              key="driveway"
-                              onPress={() => setConvertDriveway("driveway")}
-                            >
-                              driveway
-                            </DropdownItem>
-                            <DropdownItem
-                              key="track"
-                              onPress={() => setConvertDriveway("track")}
-                            >
-                              track
-                            </DropdownItem>
+                            {["driveway", "service", "track"].map((option) => (
+                              <DropdownItem
+                                key={option}
+                                onPress={() => setConvertDriveway(option)}
+                              >
+                                {option}
+                              </DropdownItem>
+                            ))}
                           </DropdownMenu>
                         </Dropdown>
                       </div>

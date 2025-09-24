@@ -92,8 +92,8 @@ const App: React.FC = () => {
       ...(lanesBackward ? { "lanes:backward": lanesBackward.toString() } : {}),
       ...(convertDriveway === "driveway"
         ? { highway: "service", service: "driveway" }
-        : convertDriveway === "track"
-          ? { highway: "track" }
+        : convertDriveway
+          ? { highway: convertDriveway }
           : {}),
     };
   }, [
