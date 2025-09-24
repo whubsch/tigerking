@@ -21,6 +21,8 @@ import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
 import edit from "../assets/edit.svg";
+import ban from "../assets/ban.svg";
+import trash from "../assets/trash.svg";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
@@ -231,6 +233,45 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                             ))}
                           </DropdownMenu>
                         </Dropdown>
+                      </div>
+                    )}
+                  {!overpassWays[currentWay].tags.alt_name &&
+                    overpassWays[currentWay].tags.name_1 && (
+                      <div
+                        className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${convertDriveway ? "bg-warning-200 outline outline-2 outline-warning" : "bg-warning-100"}`}
+                      >
+                        <div className="flex flex-col flex-grow gap-1">
+                          <span className="text-sm font-medium">
+                            Fix name tagging
+                          </span>
+                          <span className="text-xs">
+                            Move the <code>name_1</code> tag to{" "}
+                            <code>alt_name</code>
+                          </span>
+                        </div>
+                        <div className="flex gap-1">
+                          {[
+                            { src: check, alt: "check", tooltip: "Accept fix" },
+                            { src: ban, alt: "ban", tooltip: "Reject fix" },
+                            { src: trash, alt: "trash", tooltip: "Delete tag" },
+                          ].map(({ src, alt, tooltip }) => (
+                            <Tooltip content={tooltip} key={alt}>
+                              <Button
+                                key={alt}
+                                isIconOnly
+                                size="sm"
+                                color="warning"
+                                variant="ghost"
+                              >
+                                <img
+                                  src={src}
+                                  alt={alt}
+                                  className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
+                                />
+                              </Button>
+                            </Tooltip>
+                          ))}
+                        </div>
                       </div>
                     )}
                   <QuickTags />
