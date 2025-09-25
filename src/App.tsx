@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
+  const [nameFixAction, setNameFixAction] = useState<string>("check");
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
@@ -68,22 +69,62 @@ const App: React.FC = () => {
     resetDescription();
   }, [resetDescription]);
 
-  const deduplicateNewWays = useCallback(
-    (ways: OsmWay[], shuffle = true) => {
-      const unprocessedWays = ways.filter(
-        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
+  // Individual tag processing functions
+  const filterTigerTags = useCallback(
+    (tags: Tags, keepReviewed: boolean = false): Tags => {
+      return Object.fromEntries(
+        Object.entries(tags).filter(([key]) =>
+          keepReviewed
+            ? !key.startsWith("tiger") || key === "tiger:reviewed"
+            : !key.startsWith("tiger"),
+        ),
       );
-      if (shuffle) {
-        const shuffledWays = shuffleArray(unprocessedWays);
-        setOverpassWays(shuffledWays);
-      } else {
-        setOverpassWays(unprocessedWays);
-      }
     },
-    [uploadWays, setOverpassWays], // Add uploadWays as dependency
+    [],
   );
 
-  const addDetailTags = useCallback(() => {
+  const findNumberedNameTags = useCallback((tags: Tags) => {
+    return Object.keys(tags)
+      .filter((key) => /^name_\d+$/.test(key))
+      .sort();
+  }, []);
+
+  const getNumberedNameTagToFix = useCallback(
+    (tags: Tags) => {
+      const numberedNameTags = findNumberedNameTags(tags);
+      if (numberedNameTags.length === 1 && !tags.alt_name) {
+        return numberedNameTags[0];
+      }
+      return null;
+    },
+    [findNumberedNameTags],
+  );
+
+  const applyNameFixes = useCallback(
+    (tags: Tags): Tags => {
+      const currentWayTags = overpassWays[currentWay]?.tags;
+      if (!currentWayTags) return tags;
+
+      const tagToFix = getNumberedNameTagToFix(currentWayTags);
+      if (tagToFix && nameFixAction !== "ban") {
+        const updatedTags = { ...tags };
+
+        if (nameFixAction === "check") {
+          updatedTags.alt_name = currentWayTags[tagToFix];
+          delete updatedTags[tagToFix];
+        } else if (nameFixAction === "trash") {
+          delete updatedTags[tagToFix];
+        }
+
+        return updatedTags;
+      }
+
+      return tags;
+    },
+    [overpassWays, currentWay, nameFixAction, getNumberedNameTagToFix],
+  );
+
+  const addDetailTags = useCallback((): Tags => {
     return {
       surface: surface,
       ...(lanes ? { lanes: lanes } : {}),
@@ -104,6 +145,65 @@ const App: React.FC = () => {
     lanesForward,
     surface,
   ]);
+
+  // Master tag management function
+  const processWayTags = useCallback(
+    (
+      originalTags: Tags,
+      options: {
+        keepTigerReviewed?: boolean;
+        includeDetailTags?: boolean;
+        includeFixmeMessage?: string;
+      } = {},
+    ): Tags => {
+      const {
+        keepTigerReviewed = false,
+        includeDetailTags = false,
+        includeFixmeMessage,
+      } = options;
+
+      // Start with original tags
+      let processedTags = { ...originalTags };
+
+      // Step 1: Filter TIGER tags
+      processedTags = filterTigerTags(processedTags, keepTigerReviewed);
+
+      // Step 2: Apply name fixes
+      processedTags = applyNameFixes(processedTags);
+
+      // Step 3: Add fixme message if provided
+      if (includeFixmeMessage) {
+        processedTags["fixme:tigerking"] = includeFixmeMessage;
+      }
+
+      // Step 4: Add detail tags if requested
+      if (includeDetailTags) {
+        const detailTags = addDetailTags();
+        processedTags = { ...processedTags, ...detailTags };
+      }
+
+      // Future tag processing functions can be added here
+      // Step N: processedTags = applyNewTagFunction(processedTags);
+
+      return processedTags;
+    },
+    [filterTigerTags, applyNameFixes, addDetailTags],
+  );
+
+  const deduplicateNewWays = useCallback(
+    (ways: OsmWay[], shuffle = true) => {
+      const unprocessedWays = ways.filter(
+        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
+      );
+      if (shuffle) {
+        const shuffledWays = shuffleArray(unprocessedWays);
+        setOverpassWays(shuffledWays);
+      } else {
+        setOverpassWays(unprocessedWays);
+      }
+    },
+    [uploadWays, setOverpassWays], // Add uploadWays as dependency
+  );
 
   // Get search parameters from URL
   useEffect(() => {
@@ -250,8 +350,9 @@ const App: React.FC = () => {
   // Handle current way and tags
   useEffect(() => {
     if (overpassWays.length > 0 && overpassWays[currentWay]) {
-      // Check and skipping if way is already in uploadWays
+      setNameFixAction("check");
 
+      // Check and skipping if way is already in uploadWays
       const currentWayTags = overpassWays[currentWay].tags;
 
       // Set surface if it exists
@@ -313,19 +414,6 @@ const App: React.FC = () => {
     resetTags,
   ]);
 
-  const filterTigerTags = useCallback(
-    (tags: Tags, keepReviewed: boolean = false): Tags => {
-      return Object.fromEntries(
-        Object.entries(tags).filter(([key]) =>
-          keepReviewed
-            ? !key.startsWith("tiger") || key === "tiger:reviewed"
-            : !key.startsWith("tiger"),
-        ),
-      );
-    },
-    [],
-  );
-
   const handleActions = useMemo(
     () => ({
       skip: () => {
@@ -337,11 +425,11 @@ const App: React.FC = () => {
       fix: (message: string) => {
         const updatedWay = {
           ...overpassWays[currentWay],
-          tags: {
-            ...filterTigerTags(overpassWays[currentWay].tags, true),
-            "fixme:tigerking": message,
-            ...addDetailTags(),
-          },
+          tags: processWayTags(overpassWays[currentWay].tags, {
+            keepTigerReviewed: true,
+            includeDetailTags: true,
+            includeFixmeMessage: message,
+          }),
         };
         console.info("Fixed way:", updatedWay);
         addToUpload(updatedWay);
@@ -350,9 +438,10 @@ const App: React.FC = () => {
       clearTiger: () => {
         const updatedWay = {
           ...overpassWays[currentWay],
-          tags: {
-            ...filterTigerTags(overpassWays[currentWay].tags),
-          },
+          tags: processWayTags(overpassWays[currentWay].tags, {
+            keepTigerReviewed: false,
+            includeDetailTags: false,
+          }),
         };
         console.info("Updated way:", updatedWay);
         addToUpload(updatedWay);
@@ -361,10 +450,10 @@ const App: React.FC = () => {
       submit: () => {
         const updatedWay: OsmWay = {
           ...overpassWays[currentWay],
-          tags: {
-            ...filterTigerTags(overpassWays[currentWay].tags),
-            ...addDetailTags(),
-          },
+          tags: processWayTags(overpassWays[currentWay].tags, {
+            keepTigerReviewed: false,
+            includeDetailTags: true,
+          }),
         };
         console.info("Submitted way:", updatedWay);
         addToUpload(updatedWay);
@@ -377,9 +466,8 @@ const App: React.FC = () => {
       handleEnd,
       overpassWays,
       currentWay,
-      filterTigerTags,
+      processWayTags,
       addToUpload,
-      addDetailTags,
     ],
   );
 
@@ -494,11 +582,14 @@ const App: React.FC = () => {
           setShowLaneDirection={setShowLaneDirection}
           convertDriveway={convertDriveway}
           setConvertDriveway={setConvertDriveway}
+          nameFixAction={nameFixAction}
+          setNameFixAction={setNameFixAction}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
           onClearTiger={handleActions.clearTiger}
           onSubmit={handleActions.submit}
         />
+
         <div className="w-full flex md:flex-1 h-[600px] md:h-auto p-4">
           <WayMap
             coordinates={currentWayCoordinates}
