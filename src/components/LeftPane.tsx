@@ -21,6 +21,8 @@ import { OsmWay } from "../objects";
 import check from "../assets/check.svg";
 import lightning from "../assets/lightning.svg";
 import edit from "../assets/edit.svg";
+import ban from "../assets/ban.svg";
+import trash from "../assets/trash.svg";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { useChangesetStore } from "../stores/useChangesetStore";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
@@ -41,6 +43,8 @@ interface LeftPaneProps {
   setShowLaneDirection: (value: boolean) => void;
   convertDriveway: string;
   setConvertDriveway: (value: string) => void;
+  nameFixAction: string;
+  setNameFixAction: (action: string) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onClearTiger: () => void;
@@ -58,6 +62,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   setShowLaneDirection,
   convertDriveway,
   setConvertDriveway,
+  nameFixAction,
+  setNameFixAction,
   onSkip,
   onFix,
   onClearTiger,
@@ -116,6 +122,32 @@ const LeftPane: React.FC<LeftPaneProps> = ({
     }
     setIsFixModalOpen(true);
   };
+
+  const handleNameFixSelection = (action: string) => {
+    setNameFixAction(action);
+  };
+
+  const getNumberedNameTagInfo = () => {
+    if (!overpassWays[currentWay]?.tags) return null;
+
+    const tags = overpassWays[currentWay].tags;
+
+    // Find all name_ tags that end with a digit
+    const numberedNameTags = Object.keys(tags)
+      .filter((key) => /^name_\d+$/.test(key))
+      .sort();
+
+    // Only show alert if there's exactly one numbered name tag and no alt_name
+    if (numberedNameTags.length === 1 && !tags.alt_name) {
+      const tagKey = numberedNameTags[0];
+      const tagValue = tags[tagKey];
+      return { tagKey, tagValue };
+    }
+
+    return null;
+  };
+
+  const numberedNameInfo = getNumberedNameTagInfo();
 
   return (
     <>
@@ -233,6 +265,72 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                         </Dropdown>
                       </div>
                     )}
+                  {numberedNameInfo && (
+                    <div
+                      className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${
+                        nameFixAction === "check"
+                          ? "bg-warning-200 outline outline-2 outline-warning"
+                          : "bg-warning-100"
+                      }`}
+                    >
+                      <div className="flex flex-col flex-grow gap-1">
+                        <span className="text-sm font-medium">
+                          Fix name tagging
+                        </span>
+                        <span className="text-xs">
+                          Move the <code>{numberedNameInfo.tagKey}</code> tag to{" "}
+                          <code>alt_name</code>
+                        </span>
+                      </div>
+                      <div className="flex gap-1">
+                        {[
+                          {
+                            action: "check",
+                            src: check,
+                            alt: "check",
+                            tooltip: "Accept fix",
+                            color:
+                              nameFixAction === "check" ? "warning" : "default",
+                          },
+                          {
+                            action: "ban",
+                            src: ban,
+                            alt: "ban",
+                            tooltip: "Reject fix",
+                            color:
+                              nameFixAction === "ban" ? "primary" : "default",
+                          },
+                          {
+                            action: "trash",
+                            src: trash,
+                            alt: "trash",
+                            tooltip: "Delete tag",
+                            color:
+                              nameFixAction === "trash" ? "danger" : "default",
+                          },
+                        ].map(({ action, src, alt, tooltip, color }) => (
+                          <Tooltip content={tooltip} key={alt}>
+                            <Button
+                              key={alt}
+                              isIconOnly
+                              size="sm"
+                              color={color as any}
+                              variant={
+                                nameFixAction === action ? "solid" : "flat"
+                              }
+                              onPress={() => handleNameFixSelection(action)}
+                            >
+                              <img
+                                src={src}
+                                alt={alt}
+                                className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
+                              />
+                            </Button>
+                          </Tooltip>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <QuickTags />
 
                   <div className="flex gap-2 w-full mt-4">
