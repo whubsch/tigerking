@@ -82,7 +82,7 @@ const MainNavbar: React.FC<NavbarProps> = ({
     <Tooltip
       content={
         <div className="flex gap-2 items-center">
-          <p>Upload</p>
+          <p>Review & upload</p>
           <Kbd>u</Kbd>
         </div>
       }
