@@ -3,6 +3,7 @@ import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import search from "../assets/search.svg";
+import Icon from "./Icon";
 
 interface LocationFeature {
   properties: {
@@ -146,7 +147,13 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
               className="rounded-full m-1"
               aria-label="Load"
             >
-              <img src={search} alt="search" className="w-4 h-4 stroke-white" />
+              <Icon
+                src={search}
+                alt="search"
+                size="w-4 h-4"
+                invert={false}
+                className="stroke-white"
+              />
             </Button>
           ) : null
         }
@@ -169,7 +176,13 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
         className={`${compact ? "hidden" : "w-full"}`}
         aria-label="Load"
       >
-        <img src={search} alt="search" className="w-4 h-4 stroke-white" />
+        <Icon
+          src={search}
+          alt="search"
+          size="w-4 h-4"
+          invert={false}
+          className="stroke-white"
+        />
         Load
       </Button>
     </div>

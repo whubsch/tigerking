@@ -5,6 +5,7 @@ import upload from "../assets/upload.svg";
 import { uploadChanges } from "../services/upload";
 import { OsmWay } from "../objects";
 import { useChangesetStore } from "../stores/useChangesetStore";
+import Icon from "./Icon";
 
 interface UploadButtonProps {
   uploads: OsmWay[];
@@ -43,15 +44,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       className="w-full hover:border-2 hover:border-primary"
       isDisabled={uploads.length === 0 || isLoading}
       isLoading={isLoading}
-      startContent={
-        !isLoading && (
-          <img
-            src={upload}
-            alt="upload"
-            className="w-6 h-6 brightness-0 dark:brightness-100 dark:invert"
-          />
-        )
-      }
+      startContent={!isLoading && <Icon src={upload} alt="upload" />}
       onPress={() => handleUpload(uploads)}
     >
       Upload

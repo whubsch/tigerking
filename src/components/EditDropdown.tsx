@@ -7,6 +7,7 @@ import {
 } from "@heroui/dropdown";
 import { Link } from "@heroui/link";
 import edit from "../assets/edit.svg";
+import Icon from "./Icon";
 
 const EDITORS = [
   {
@@ -50,11 +51,7 @@ export const EditorLinks = ({
       <Dropdown>
         <DropdownTrigger>
           <Button isIconOnly>
-            <img
-              src={edit}
-              alt="Edit"
-              className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
-            />
+            <Icon src={edit} alt="Edit" size="w-4 h-4" />
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="OSM Editor Links">

@@ -24,6 +24,7 @@ import UserCard from "./UserCard";
 import LoginModal from "./modals/LoginModal";
 import packageJson from "../../package.json";
 import LocationAutocomplete from "./LocationAutocomplete";
+import Icon from "./Icon";
 
 interface NavbarProps {
   uploads: OsmWay[];
@@ -40,13 +41,7 @@ const IconImage = ({
   src: string;
   alt: string;
   className?: string;
-}) => (
-  <img
-    src={src}
-    alt={alt}
-    className={`w-6 h-6 brightness-0 dark:brightness-100 dark:invert ${className}`}
-  />
-);
+}) => <Icon src={src} alt={alt} className={className} />;
 
 const EXTERNAL_LINKS = [
   {

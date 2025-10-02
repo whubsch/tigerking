@@ -5,6 +5,7 @@ import { OsmWay } from "../objects";
 import WayAccordionItemContent from "./WayAccordionItemContent";
 import { Chip } from "@heroui/chip";
 import cancel from "../assets/cancel.svg";
+import Icon from "./Icon";
 
 interface WayAccordionProps {
   ways: OsmWay[];
@@ -68,10 +69,7 @@ const WayAccordion: React.FC<WayAccordionProps> = ({
                       className="ml-4 hover:bg-danger p-2 rounded-full"
                       aria-label="Remove way"
                     >
-                      <img
-                        src={cancel}
-                        className="h-5 w-5 brightness-0 dark:brightness-100 dark:invert"
-                      />
+                      <Icon src={cancel} alt="cancel" size="w-5 h-5" />
                     </Button>
                   )}
                 </div>

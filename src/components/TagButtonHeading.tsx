@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@heroui/link";
 import { Tooltip } from "@heroui/tooltip";
 import info from "../assets/info.svg";
+import Icon from "./Icon";
 
 interface TagButtonHeadingProps {
   header: string;
@@ -23,11 +24,7 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
           href={`https://wiki.openstreetmap.org/wiki/Key:${header}`}
           target="_blank"
         >
-          <img
-            src={info}
-            alt="surface"
-            className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
-          />
+          <Icon src={info} alt="surface" />
         </Link>
       </Tooltip>
     </div>

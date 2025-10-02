@@ -31,6 +31,7 @@ import BboxCard from "./BboxCard";
 import LoginModal from "./modals/LoginModal";
 import { Kbd } from "@heroui/kbd";
 import { Tooltip } from "@heroui/tooltip";
+import Icon from "./Icon";
 
 interface LeftPaneProps {
   showRelationHeading: boolean;
@@ -238,11 +239,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           <DropdownTrigger>
                             <Button size="sm" color="warning" variant="flat">
                               {convertDriveway ? (
-                                <img
-                                  src={check}
-                                  alt="check"
-                                  className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
-                                />
+                                <Icon src={check} alt="check" />
                               ) : (
                                 "Convert"
                               )}
@@ -320,11 +317,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                               }
                               onPress={() => handleNameFixSelection(action)}
                             >
-                              <img
-                                src={src}
-                                alt={alt}
-                                className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
-                              />
+                              <Icon src={src} alt={alt} />
                             </Button>
                           </Tooltip>
                         ))}
@@ -374,11 +367,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           color="primary"
                           onPress={handleCustomFix}
                           endContent={
-                            <img
-                              src={edit}
-                              alt="edit"
-                              className="w-4 h-4 brightness-0 dark:brightness-100 dark:invert"
-                            />
+                            <Icon src={edit} alt="edit" size="w-4 h-4" />
                           }
                           textValue="Custom fix message"
                         >
@@ -391,10 +380,10 @@ const LeftPane: React.FC<LeftPaneProps> = ({
                           color="primary"
                           onPress={handleClearTiger}
                           endContent={
-                            <img
+                            <Icon
                               src={lightning}
                               alt="lightning"
-                              className="w-5 h-5 brightness-0 dark:brightness-100 dark:invert"
+                              size="w-5 h-5"
                             />
                           }
                           textValue="Clear TIGER tags"

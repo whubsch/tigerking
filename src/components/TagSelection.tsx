@@ -7,6 +7,7 @@ import tag from "../assets/tag.svg";
 import { useSettingsStore } from "../stores/useSettingsStore";
 
 import cancel from "../assets/cancel.svg";
+import Icon from "./Icon";
 
 interface TagSelectionProps {
   tags: Record<string, string | undefined>;
@@ -70,10 +71,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
         variant={key.startsWith("tiger") ? "bordered" : "solid"}
         endContent={
           key.startsWith("tiger") ? (
-            <img
-              src={cancel}
-              className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
-            />
+            <Icon src={cancel} alt="cancel" size="w-4 h-4" />
           ) : null
         }
         className="max-w-full cursor-pointer"
@@ -124,12 +122,7 @@ const TagSelection: React.FC<TagSelectionProps> = ({
             <span className="text-gray-500">{sortedTags.length}</span>
           </div>
         }
-        indicator={
-          <img
-            src={tag}
-            className="h-4 w-4 brightness-0 dark:brightness-100 dark:invert"
-          />
-        }
+        indicator={<Icon src={tag} alt="tag" size="w-4 h-4" />}
       >
         <div className="flex flex-wrap gap-2 py-1 overflow-clip">
           {tagsContainer}

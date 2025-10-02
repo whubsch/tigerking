@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { ReactNode } from "react";
 import kebab from "../assets/kebab.svg";
+import Icon from "./Icon";
 
 const toggleButton = (
   isActive: boolean,
@@ -17,11 +18,7 @@ const toggleButton = (
     isIconOnly={isIconOnly}
   >
     {isIconOnly && !isActive ? (
-      <img
-        src={kebab}
-        alt="kebab"
-        className="h-6 w-6 brightness-0 dark:brightness-100 dark:invert"
-      />
+      <Icon src={kebab} alt="kebab" />
     ) : (
       <div className="flex items-center gap-2">
         {label && <span>{label}</span>}
