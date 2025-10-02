@@ -37,17 +37,16 @@ const TagSelection: React.FC<TagSelectionProps> = ({
       return aIndex - bIndex;
     });
 
-  const getTagLink = (key: string, value: string) => {
-    // Keys that should link to their OSM wiki pages
-    const wikiKeys = [
-      "highway",
-      "type",
-      "boundary",
-      "admin_level",
-      "border_type",
-      "ref",
-    ];
+  const wikiKeys = [
+    "highway",
+    "type",
+    "boundary",
+    "admin_level",
+    "border_type",
+    "ref",
+  ];
 
+  const getTagLink = (key: string, value: string) => {
     switch (key) {
       case "wikipedia":
         return `https://wikipedia.org/wiki/${value}`;
@@ -65,6 +64,10 @@ const TagSelection: React.FC<TagSelectionProps> = ({
   };
 
   const renderChip = (key: string, value: string) => {
+    const isWikiKey =
+      key === "wikidata" || key === "wikipedia" || key.endsWith("wikidata");
+    const isOsmWikiKey = wikiKeys.includes(key);
+
     const chip = (
       <Chip
         key={key}
@@ -72,9 +75,13 @@ const TagSelection: React.FC<TagSelectionProps> = ({
         endContent={
           key.startsWith("tiger") ? (
             <Icon src={cancel} alt="cancel" size="w-4 h-4" />
+          ) : isWikiKey ? (
+            <div className="w-2 h-2 bg-blue-500 rounded-full mr-1" />
+          ) : isOsmWikiKey ? (
+            <div className="w-2 h-2 bg-green-500 rounded-full mr-1" />
           ) : null
         }
-        className="max-w-full cursor-pointer"
+        className="max-w-full"
         onKeyDown={() => onTagClick?.(key, value)}
       >
         <span className="font-semibold">{key}</span>
@@ -91,7 +98,12 @@ const TagSelection: React.FC<TagSelectionProps> = ({
     const link = getTagLink(key, value);
     if (link) {
       return (
-        <Link key={key} href={link} target="_blank" className="no-underline">
+        <Link
+          key={key}
+          href={link}
+          target="_blank"
+          className="no-underline cursor-pointer"
+        >
           {chip}
         </Link>
       );
