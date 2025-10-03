@@ -4,7 +4,7 @@ import { Link } from "@heroui/link";
 import { Card } from "@heroui/card";
 import UploadButton from "../UploadButton";
 import WayAccordion from "../WayAccordion";
-import WayCountBadge from "../WayCountBadge";
+import WayCountBadge from "../ReviewCountBadge";
 import { OsmWay } from "../../objects";
 import ChangesetTagTable from "../ChangesetTags";
 import ConfirmationModal from "./ConfirmationModal";

@@ -8,6 +8,7 @@ import ChangesetModal from "./components/modals/ChangesetModal";
 import UploadModal from "./components/modals/UploadModal";
 import HelpModal from "./components/modals/HelpModal";
 import AreaCompletedModal from "./components/modals/AreaCompletedModal";
+import { detectAbbreviatedStreetName } from "./components/TagFixAlert.utils";
 import { overpassService } from "./services/overpass";
 import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
 import useWayManagement from "./hooks/useWayManagement";
@@ -30,6 +31,8 @@ const App: React.FC = () => {
   const [showLaneDirection, setShowLaneDirection] = useState(false);
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [nameFixAction, setNameFixAction] = useState<string>("check");
+  const [streetAbbreviationAction, setStreetAbbreviationAction] =
+    useState<string>("check");
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
@@ -105,23 +108,38 @@ const App: React.FC = () => {
       const currentWayTags = overpassWays[currentWay]?.tags;
       if (!currentWayTags) return tags;
 
+      const updatedTags = { ...tags };
+
+      // Fix 1: Expand abbreviated street names
+      if (streetAbbreviationAction === "expand") {
+        const streetAbbreviation = detectAbbreviatedStreetName(
+          currentWayTags.name,
+        );
+        if (streetAbbreviation) {
+          updatedTags.name = streetAbbreviation.fullExpanded;
+        }
+      }
+
+      // Fix 2: Remove or replace numbered name tags
       const tagToFix = getNumberedNameTagToFix(currentWayTags);
       if (tagToFix && nameFixAction !== "ban") {
-        const updatedTags = { ...tags };
-
         if (nameFixAction === "check") {
           updatedTags.alt_name = currentWayTags[tagToFix];
           delete updatedTags[tagToFix];
         } else if (nameFixAction === "trash") {
           delete updatedTags[tagToFix];
         }
-
-        return updatedTags;
       }
 
-      return tags;
+      return updatedTags;
     },
-    [overpassWays, currentWay, nameFixAction, getNumberedNameTagToFix],
+    [
+      overpassWays,
+      currentWay,
+      nameFixAction,
+      getNumberedNameTagToFix,
+      streetAbbreviationAction,
+    ],
   );
 
   const addDetailTags = useCallback((): Tags => {
@@ -584,6 +602,8 @@ const App: React.FC = () => {
           setConvertDriveway={setConvertDriveway}
           nameFixAction={nameFixAction}
           setNameFixAction={setNameFixAction}
+          streetAbbreviationAction={streetAbbreviationAction}
+          setStreetAbbreviationAction={setStreetAbbreviationAction}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
           onClearTiger={handleActions.clearTiger}
