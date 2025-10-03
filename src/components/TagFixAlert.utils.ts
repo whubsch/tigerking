@@ -168,19 +168,208 @@ export const createStreetAbbreviationActions = (
  * Common street type abbreviations and their expanded forms
  */
 const STREET_ABBREVIATIONS: Record<string, string> = {
-  St: "Street",
+  Acc: "Access",
+  Aly: "Alley",
+  Anx: "Anex",
+  Arc: "Arcade",
+  Av: "Avenue",
   Ave: "Avenue",
-  Rd: "Road",
-  Dr: "Drive",
+  Byu: "Bayou",
+  Bch: "Beach",
+  Bnd: "Bend",
+  Blf: "Bluff",
+  Blfs: "Bluffs",
+  Btm: "Bottom",
   Blvd: "Boulevard",
-  Ln: "Lane",
-  Ct: "Court",
-  Pl: "Place",
+  Br: "Branch",
+  Brg: "Bridge",
+  Brk: "Brook",
+  Brks: "Brooks",
+  Bg: "Burg",
+  Bgs: "Burgs",
+  Byp: "Bypass",
+  Cp: "Camp",
+  Cy: "Key",
+  Cyn: "Canyon",
+  Cpe: "Cape",
+  Ctr: "Center",
+  Ctrs: "Centers",
   Cir: "Circle",
-  Pkwy: "Parkway",
+  Cirs: "Circles",
+  Clf: "Cliff",
+  Clfs: "Cliffs",
+  Clb: "Club",
+  Cmn: "Common",
+  Cmns: "Commons",
+  Co: "County",
+  Cor: "Corner",
+  Cors: "Corners",
+  Crse: "Course",
+  Ct: "Court",
+  Cts: "Courts",
+  Cv: "Cove",
+  Cvs: "Coves",
+  Crk: "Creek",
+  Cres: "Crescent",
+  Crst: "Crest",
+  Cswy: "Causeway",
+  Curv: "Curve",
+  Dl: "Dale",
+  Dm: "Dam",
+  Dv: "Divide",
+  Dr: "Drive",
+  Drs: "Drives",
+  Est: "Estate",
+  Expy: "Expressway",
+  Expwy: "Expressway",
+  Ext: "Extension",
+  Exts: "Extensions",
+  Fgr: "Forge",
+  Fgrs: "Forges",
+  Fls: "Falls",
+  Fld: "Field",
+  Flds: "Fields",
+  Flt: "Flat",
+  Flts: "Flats",
+  Frd: "Ford",
+  Frds: "Fords",
+  Frst: "Forest",
+  Frg: "Forge",
+  Frgs: "Forges",
+  Frk: "Fork",
+  Frks: "Forks",
+  Fry: "Ferry",
+  Frys: "Ferrys",
+  For: "Ford",
+  Fors: "Fords",
+  Ft: "Fort",
+  Fwy: "Freeway",
+  Gd: "Grade",
+  Gdn: "Garden",
+  Gdns: "Gardens",
+  Gtwy: "Gateway",
+  Gln: "Glen",
+  Glns: "Glens",
+  Gn: "Green",
+  Gns: "Greens",
+  Grn: "Green",
+  Grns: "Greens",
+  Grv: "Grove",
+  Grvs: "Groves",
+  Hbr: "Harbor",
+  Hbrs: "Harbors",
+  Hgwy: "Highway",
+  Hvn: "Haven",
+  Hts: "Heights",
   Hwy: "Highway",
-  Trl: "Trail",
+  Hl: "Hill",
+  Hls: "Hills",
+  Holw: "Hollow",
+  Inlt: "Inlet",
+  Is: "Island",
+  Iss: "Islands",
+  Jct: "Junction",
+  Jcts: "Junctions",
+  Ky: "Key",
+  Kys: "Keys",
+  Knl: "Knoll",
+  Knls: "Knolls",
+  Lk: "Lake",
+  Lks: "Lakes",
+  Lndg: "Landing",
+  Ln: "Lane",
+  Lgt: "Light",
+  Lgts: "Lights",
+  Lf: "Loaf",
+  Lck: "Lock",
+  Lcks: "Locks",
+  Ldg: "Lodge",
+  Lp: "Loop",
+  Mnr: "Manor",
+  Mnrs: "Manors",
+  Mdw: "Meadow",
+  Mdws: "Meadows",
+  Ml: "Mill",
+  Mls: "Mills",
+  Msn: "Mission",
+  Mtwy: "Motorway",
+  Mt: "Mount",
+  Mtn: "Mountain",
+  Mtns: "Mountains",
+  Nck: "Neck",
+  Orch: "Orchard",
+  Opas: "Overpass",
+  Pky: "Parkway",
+  Pkwy: "Parkway",
+  Psge: "Passage",
+  Pne: "Pine",
+  Pnes: "Pines",
+  Pl: "Place",
+  Pln: "Plain",
+  Plns: "Plains",
+  Plz: "Plaza",
+  Pt: "Point",
+  Pts: "Points",
+  Prt: "Port",
+  Prts: "Ports",
+  Pr: "Private",
+  Pvt: "Private",
+  Radl: "Radial",
+  Rnch: "Ranch",
+  Rpd: "Rapid",
+  Rpds: "Rapids",
+  Rst: "Rest",
+  Rdg: "Ridge",
+  Rdgs: "Ridges",
+  Riv: "River",
+  Rd: "Road",
+  Rds: "Roads",
+  Rt: "Route",
+  Rte: "Route",
+  Shl: "Shoal",
+  Shls: "Shoals",
+  Shr: "Shore",
+  Shrs: "Shores",
+  Skwy: "Skyway",
+  Spg: "Spring",
+  Spgs: "Springs",
+  Sq: "Square",
+  Sqs: "Squares",
+  Sta: "Station",
+  Strm: "Stream",
+  Sts: "Streets",
+  Smt: "Summit",
+  Srvc: "Service",
   Ter: "Terrace",
+  Trwy: "Throughway",
+  Thfr: "Thoroughfare",
+  Trce: "Trace",
+  Trak: "Track",
+  Trfy: "Trafficway",
+  Trl: "Trail",
+  Trlr: "Trailer",
+  Tunl: "Tunnel",
+  Tpke: "Turnpike",
+  Upas: "Underpass",
+  Unp: "Underpass",
+  Uns: "Unions",
+  Vias: "Viaducts",
+  Vly: "Valley",
+  Vlys: "Valleys",
+  Vw: "View",
+  Vws: "Views",
+  Vlg: "Village",
+  Vl: "Ville",
+  Wk: "Walk",
+  Wkwy: "Walkway",
+  Wy: "Way",
+  Wl: "Well",
+  Wls: "Wells",
+  Xing: "Crossing",
+  Xings: "Crossings",
+  Xrd: "Crossroad",
+  Xrds: "Crossroads",
+  Yu: "Bayou",
 };
 
 // Abbreviations that should only be expanded if they appear at the end of the name
@@ -192,39 +381,54 @@ const END_ONLY_ABBREVIATIONS = new Set(["St", "Dr"]);
  */
 export const detectAbbreviatedStreetName = (
   name: string | undefined,
-): { abbreviated: string; expanded: string; fullExpanded: string } | null => {
+): {
+  abbreviated: string;
+  expanded: string;
+  fullOriginal: string;
+  fullExpanded: string;
+} | null => {
   if (!name) return null;
 
-  const words = name.split(/\s+/);
+  // Build regex pattern from abbreviations, matching with optional period
+  const abbreviations = Object.keys(STREET_ABBREVIATIONS);
+  const pattern = abbreviations.join("|");
+
   let abbreviationFound: string | null = null;
-  const expandedName = [...words];
+  let expandedForm: string | null = null;
+  let fullExpanded = name;
 
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
+  // Match abbreviations with optional periods at word boundaries
+  const regex = new RegExp(`\\b(${pattern})\\.?\\b`, "g");
 
-    const isEnd = i === words.length - 1;
-    const expanded = STREET_ABBREVIATIONS[word];
-    if (!expanded) continue;
+  fullExpanded = name.replace(regex, (match, abbr, offset) => {
+    // Check if this abbreviation is end-only
+    const isEndOnly = END_ONLY_ABBREVIATIONS.has(abbr);
 
-    const isEndOnly = END_ONLY_ABBREVIATIONS.has(word);
-    if (isEndOnly && !isEnd) {
-      continue; // skip this occurrence
+    if (isEndOnly) {
+      // Check if this match is at the end of the string (ignoring trailing whitespace/period)
+      const afterMatch = name.slice(offset + match.length).trim();
+      if (afterMatch.length > 0) {
+        // Not at the end, don't expand
+        return match;
+      }
     }
 
     // Expand the abbreviation
-    expandedName[i] = expanded;
-    abbreviationFound = word;
-
-    // If it's an end-only abbreviation, we stop after processing it
-    if (isEndOnly) break;
-  }
+    const expanded = STREET_ABBREVIATIONS[abbr];
+    if (expanded && !abbreviationFound) {
+      abbreviationFound = abbr;
+      expandedForm = expanded;
+    }
+    return expanded || match;
+  });
 
   // If nothing was changed
-  if (!abbreviationFound) return null;
+  if (!abbreviationFound || fullExpanded === name) return null;
 
   return {
     abbreviated: abbreviationFound,
-    expanded: STREET_ABBREVIATIONS[abbreviationFound],
-    fullExpanded: expandedName.join(" "),
+    expanded: expandedForm!,
+    fullOriginal: name,
+    fullExpanded: fullExpanded,
   };
 };

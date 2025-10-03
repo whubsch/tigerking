@@ -40,8 +40,12 @@ const getNumberedNameTagInfo = (way: OsmWay) => {
     .filter((key) => /^name_\d+$/.test(key))
     .sort();
 
-  // Only show alert if there's exactly one numbered name tag and no alt_name
-  if (numberedNameTags.length === 1 && !tags.alt_name) {
+  // Only show alert if there's exactly one numbered name tag, no alt_name, and the numbered name is not the same as the name
+  if (
+    numberedNameTags.length === 1 &&
+    !tags.alt_name &&
+    numberedNameTags[0] !== "name"
+  ) {
     const tagKey = numberedNameTags[0];
     const tagValue = tags[tagKey];
     return { tagKey, tagValue };
@@ -114,8 +118,8 @@ const WayEditor: React.FC<WayEditorProps> = ({
             title="Expand street abbreviation"
             description={
               <>
-                Expand <code>{abbreviatedStreetName.abbreviated}</code> to{" "}
-                <code>{abbreviatedStreetName.expanded}</code>
+                Expand <code>name</code> to{" "}
+                <code>{abbreviatedStreetName.fullExpanded}</code>
               </>
             }
             actions={createStreetAbbreviationActions(streetAbbreviationAction)}

@@ -32,7 +32,7 @@ const App: React.FC = () => {
   const [convertDriveway, setConvertDriveway] = useState<string>("");
   const [nameFixAction, setNameFixAction] = useState<string>("check");
   const [streetAbbreviationAction, setStreetAbbreviationAction] =
-    useState<string>("check");
+    useState<string>("expand");
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
