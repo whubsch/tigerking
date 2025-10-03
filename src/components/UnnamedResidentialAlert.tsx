@@ -46,7 +46,10 @@ const UnnamedResidentialAlert: React.FC<UnnamedResidentialAlertProps> = ({
           selectedKeys={[convertDriveway]}
         >
           {["driveway", "service", "track"].map((option) => (
-            <DropdownItem key={option} onPress={() => onConvertDriveway(option)}>
+            <DropdownItem
+              key={option}
+              onPress={() => onConvertDriveway(option)}
+            >
               {option}
             </DropdownItem>
           ))}

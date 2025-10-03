@@ -142,7 +142,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
               key="clear-tiger"
               color="primary"
               onPress={handleClearTiger}
-              endContent={<Icon src={lightning} alt="lightning" size="w-5 h-5" />}
+              endContent={
+                <Icon src={lightning} alt="lightning" size="w-5 h-5" />
+              }
               textValue="Clear TIGER tags"
             >
               <div className="flex gap-2 items-center">
