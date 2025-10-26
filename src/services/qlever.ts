@@ -39,7 +39,7 @@ ORDER BY RAND()
 LIMIT ${count}
 `;
 
-    const endpoint = "https://qlever.cs.uni-freiburg.de/api/wikidata/";
+    const endpoint = "https://qlever.dev/api/wikidata/";
     const params = new URLSearchParams({
       query: sparqlQuery,
       format: "json",
