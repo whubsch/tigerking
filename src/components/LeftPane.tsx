@@ -26,6 +26,8 @@ interface LeftPaneProps {
   setNameFixAction: (action: string) => void;
   streetAbbreviationAction: string;
   setStreetAbbreviationAction: (action: string) => void;
+  laneTagFixAction: string;
+  setLaneTagFixAction: (action: string) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onClearTiger: () => void;
@@ -47,6 +49,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
   setNameFixAction,
   streetAbbreviationAction,
   setStreetAbbreviationAction,
+  laneTagFixAction,
+  setLaneTagFixAction,
   onSkip,
   onFix,
   onClearTiger,
@@ -106,6 +110,8 @@ const LeftPane: React.FC<LeftPaneProps> = ({
             setNameFixAction={setNameFixAction}
             streetAbbreviationAction={streetAbbreviationAction}
             setStreetAbbreviationAction={setStreetAbbreviationAction}
+            laneTagFixAction={laneTagFixAction}
+            setLaneTagFixAction={setLaneTagFixAction}
             onSkip={onSkip}
             onFix={onFix}
             onClearTiger={onClearTiger}

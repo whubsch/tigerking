@@ -15,6 +15,7 @@ import CustomMessageModal from "./modals/CustomMessageModal";
 import LoginModal from "./modals/LoginModal";
 import { useOsmAuthContext } from "../contexts/useOsmAuth";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
+import { UNPAVED_SURFACES } from "../objects";
 
 interface ActionButtonsProps {
   onSkip: () => void;
@@ -33,6 +34,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   const [isFixModalOpen, setIsFixModalOpen] = useState(false);
   const [customFixMessage, setCustomFixMessage] = useState("");
   const { lanes, surface, laneMarkings } = useWayTagsStore();
+
+  const isUnpavedSurface = UNPAVED_SURFACES.includes(surface);
   const { loggedIn, handleLogin } = useOsmAuthContext();
 
   const fixOptions = [
@@ -167,7 +170,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
             size="md"
             className="flex-1"
             onPress={handleSubmit}
-            isDisabled={!surface || (!lanes && laneMarkings)}
+            isDisabled={
+              !surface || (!isUnpavedSurface && !lanes && laneMarkings)
+            }
           >
             Submit
           </Button>

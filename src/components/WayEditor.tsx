@@ -6,10 +6,12 @@ import QuickTags from "./QuickTags";
 import UnnamedResidentialAlert from "./UnnamedResidentialAlert";
 import TagFixAlert from "./TagFixAlert";
 import ActionButtons from "./ActionButtons";
-import { OsmWay } from "../objects";
+import { OsmWay, UNPAVED_SURFACES } from "../objects";
+import { useWayTagsStore } from "../stores/useWayTagsStore";
 import {
   createNameFixActions,
   createStreetAbbreviationActions,
+  createLaneTagFixActions,
   detectAbbreviatedStreetName,
 } from "./TagFixAlert.utils";
 
@@ -24,6 +26,8 @@ interface WayEditorProps {
   setNameFixAction: (action: string) => void;
   streetAbbreviationAction: string;
   setStreetAbbreviationAction: (action: string) => void;
+  laneTagFixAction: string;
+  setLaneTagFixAction: (action: string) => void;
   onSkip: () => void;
   onFix: (message: string) => void;
   onClearTiger: () => void;
@@ -54,6 +58,38 @@ const getNumberedNameTagInfo = (way: OsmWay) => {
   return null;
 };
 
+const getUnpavedLaneTagInfo = (way: OsmWay, surface: string) => {
+  if (!way?.tags || !surface) return null;
+
+  // Check if current surface is unpaved
+  const isUnpavedSurface = UNPAVED_SURFACES.includes(surface);
+  if (!isUnpavedSurface) return null;
+
+  const tags = way.tags;
+
+  // Check if way has lane tags
+  const hasLaneTags = Boolean(
+    tags.lanes ||
+      tags["lanes:forward"] ||
+      tags["lanes:backward"] ||
+      tags.lane_markings,
+  );
+
+  if (hasLaneTags) {
+    const laneTags = [
+      tags.lanes && "lanes",
+      tags["lanes:forward"] && "lanes:forward",
+      tags["lanes:backward"] && "lanes:backward",
+      tags.lane_markings && "lane_markings",
+    ].filter(Boolean);
+    console.log(laneTags);
+
+    return { laneTags };
+  }
+
+  return null;
+};
+
 const WayEditor: React.FC<WayEditorProps> = ({
   way,
   onTagsUpdate,
@@ -65,15 +101,22 @@ const WayEditor: React.FC<WayEditorProps> = ({
   setNameFixAction,
   streetAbbreviationAction,
   setStreetAbbreviationAction,
+  laneTagFixAction,
+  setLaneTagFixAction,
   onSkip,
   onFix,
   onClearTiger,
   onSubmit,
 }) => {
+  const { surface } = useWayTagsStore();
   const numberedNameInfo = getNumberedNameTagInfo(way);
   const abbreviatedStreetName = detectAbbreviatedStreetName(way.tags.name);
   const showUnnamedResidentialAlert =
     !way.tags.name && way.tags.highway === "residential";
+  const unpavedLaneTagInfo = getUnpavedLaneTagInfo(
+    way,
+    surface || way.tags.surface || "",
+  );
 
   return (
     <>
@@ -88,6 +131,7 @@ const WayEditor: React.FC<WayEditorProps> = ({
           <LanesButtons
             showLaneDirection={showLaneDirection}
             setShowLaneDirection={setShowLaneDirection}
+            currentTags={way.tags}
           />
         </div>
       </div>
@@ -125,6 +169,27 @@ const WayEditor: React.FC<WayEditorProps> = ({
             actions={createStreetAbbreviationActions(streetAbbreviationAction)}
             selectedAction={streetAbbreviationAction}
             onActionSelect={setStreetAbbreviationAction}
+            highlightColor="warning"
+          />
+        )}
+        {unpavedLaneTagInfo && (
+          <TagFixAlert
+            title="Lane tags on unpaved surface"
+            description={
+              <>
+                Unpaved surfaces typically don't have lane markings. Remove{" "}
+                {unpavedLaneTagInfo.laneTags.map((tag, index) => (
+                  <span key={tag}>
+                    <code>{tag}</code>
+                    {index < unpavedLaneTagInfo.laneTags.length - 1 && ", "}
+                  </span>
+                ))}
+                ?
+              </>
+            }
+            actions={createLaneTagFixActions(laneTagFixAction)}
+            selectedAction={laneTagFixAction}
+            onActionSelect={setLaneTagFixAction}
             highlightColor="warning"
           />
         )}
