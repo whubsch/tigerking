@@ -3,7 +3,8 @@ name: Update Imagery Data
 on:
   push:
     branches:
-      - main # or whatever your default branch is named
+      - main
+  workflow_dispatch:
 
 jobs:
   update-imagery:
@@ -16,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12" # or whatever version you need
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
