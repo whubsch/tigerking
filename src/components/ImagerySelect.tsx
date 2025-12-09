@@ -80,7 +80,7 @@ const ImagerySelect: React.FC<ImagerySelectProps> = ({
         {zoom > 8 && Object.keys(standardSources).length > 0 ? (
           <SelectSection title={"Regional"}>
             {Object.entries(standardSources).map(([id, source]) => (
-              <SelectItem key={id} value={id}>
+              <SelectItem key={id}>
                 {source.name}
               </SelectItem>
             ))}
@@ -90,7 +90,7 @@ const ImagerySelect: React.FC<ImagerySelectProps> = ({
         {/* Base sources (Esri and USGS) */}
         <SelectSection title={"National"}>
           {Object.entries(baseSources).map(([id, source]) => (
-            <SelectItem key={id} value={id}>
+            <SelectItem key={id}>
               {source.name}
             </SelectItem>
           ))}

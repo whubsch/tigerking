@@ -163,7 +163,6 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
             key={index}
             title={feature.properties.name}
             description={generateLocationDescription(feature)}
-            value={feature.properties.name}
           >
             {feature.properties.name}
           </AutocompleteItem>
