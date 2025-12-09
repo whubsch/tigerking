@@ -70,9 +70,9 @@ const getUnpavedLaneTagInfo = (way: OsmWay, surface: string) => {
   // Check if way has lane tags
   const hasLaneTags = Boolean(
     tags.lanes ||
-      tags["lanes:forward"] ||
-      tags["lanes:backward"] ||
-      tags.lane_markings,
+    tags["lanes:forward"] ||
+    tags["lanes:backward"] ||
+    tags.lane_markings,
   );
 
   if (hasLaneTags) {
