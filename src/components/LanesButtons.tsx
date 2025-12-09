@@ -1,21 +1,25 @@
 import React from "react";
-import { ButtonGroup } from "@heroui/button";
+import { Button, ButtonGroup } from "@heroui/button";
 import { Slider } from "@heroui/slider";
 import TagButtonHeading from "./TagButtonHeading";
 import toggleButton from "./ToggleButton";
 import { useWayTagsStore } from "../stores/useWayTagsStore";
 import { Chip } from "@heroui/react";
+import { UNPAVED_SURFACES } from "../objects";
 
 interface LanesButtonsProps {
   showLaneDirection: boolean;
   setShowLaneDirection: (value: boolean) => void;
+  currentTags: Record<string, string | undefined>;
 }
 
 const LanesButtons: React.FC<LanesButtonsProps> = ({
   showLaneDirection,
   setShowLaneDirection,
+  currentTags,
 }) => {
   const COMMON_LANES = ["2", "4"];
+
   const {
     lanes,
     setLanes,
@@ -25,7 +29,43 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
     setLanesForward,
     lanesBackward,
     setLanesBackward,
+    surface,
   } = useWayTagsStore();
+
+  // Check if current surface is unpaved
+  const isUnpavedSurface = UNPAVED_SURFACES.includes(surface);
+
+  // Check if way already has lane tags in original OSM data
+  const hasExistingLaneTags = Boolean(
+    currentTags.lanes ||
+    currentTags["lanes:forward"] ||
+    currentTags["lanes:backward"] ||
+    currentTags.lane_markings,
+  );
+
+  // Disable lane buttons if unpaved surface and no existing lane tags
+  // This allows modification/removal of existing tags but prevents adding new ones
+  const lanesDisabled = isUnpavedSurface && !hasExistingLaneTags;
+
+  // Check if there's any lane data currently set (in store or original tags)
+  const hasAnyLaneData = Boolean(
+    lanes ||
+    lanesForward ||
+    lanesBackward ||
+    !laneMarkings ||
+    hasExistingLaneTags,
+  );
+
+  // Show remove button if unpaved surface with lane data present
+  const showRemoveButton = isUnpavedSurface && hasAnyLaneData;
+
+  const handleRemoveLaneData = () => {
+    setLanes("");
+    setLanesForward(0);
+    setLanesBackward(0);
+    setLaneMarkings(true);
+    setShowLaneDirection(false);
+  };
 
   const renderSlider = (
     label: string,
@@ -67,13 +107,27 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
     <div className="w-full">
       <TagButtonHeading
         header="lanes"
-        tooltip="The number of lanes on the road as indicated by painted stripes."
+        tooltip={
+          lanesDisabled
+            ? "Lane tags are not applicable for unpaved surfaces. Existing tags can be removed."
+            : "The number of lanes on the road as indicated by painted stripes."
+        }
+        warning={lanesDisabled}
       />
 
       <div className="flex gap-2">
-        {toggleButton(!laneMarkings, "none", () =>
-          setLaneMarkings(!laneMarkings),
-        )}
+        <Button
+          variant="bordered"
+          className={`flex-1 border-1 transition-all duration-200 ${
+            !laneMarkings
+              ? "bg-primary-100 shadow-lg border-primary"
+              : "hover:bg-primary/10"
+          }`}
+          onPress={() => setLaneMarkings(!laneMarkings)}
+          isDisabled={lanesDisabled}
+        >
+          none
+        </Button>
 
         <ButtonGroup
           variant="bordered"
@@ -81,26 +135,34 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           size="md"
         >
           {COMMON_LANES.map((lanesKey) =>
-            toggleButton(lanesKey === lanes, lanesKey, () =>
-              setLanes(lanesKey),
+            toggleButton(
+              lanesKey === lanes,
+              lanesKey,
+              lanesDisabled ? undefined : () => setLanes(lanesKey),
+              false,
+              undefined,
+              lanesDisabled,
             ),
           )}
 
           {toggleButton(
             Boolean(
               (lanes && !COMMON_LANES.includes(lanes)) ||
-                lanesBackward ||
-                lanesForward,
+              lanesBackward ||
+              lanesForward,
             ),
             undefined,
-            () => setShowLaneDirection(!showLaneDirection),
+            lanesDisabled
+              ? undefined
+              : () => setShowLaneDirection(!showLaneDirection),
             true,
             <Chip>{lanes}</Chip>,
+            lanesDisabled,
           )}
         </ButtonGroup>
       </div>
 
-      {showLaneDirection && (
+      {showLaneDirection && !lanesDisabled && (
         <div className="space-y-4 mt-2">
           {renderSlider(
             "Lanes",
@@ -116,6 +178,20 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           {renderSlider("Lanes Backward", lanesBackward, (value) =>
             handleLaneChange(lanesForward, value),
           )}
+        </div>
+      )}
+
+      {showRemoveButton && (
+        <div className="mt-2">
+          <Button
+            color="warning"
+            variant="flat"
+            size="sm"
+            className="w-full"
+            onPress={handleRemoveLaneData}
+          >
+            Remove lane data
+          </Button>
         </div>
       )}
     </div>

@@ -7,11 +7,13 @@ import Icon from "./Icon";
 interface TagButtonHeadingProps {
   header: string;
   tooltip: string | React.ReactNode;
+  warning?: boolean;
 }
 
 const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
   header,
   tooltip,
+  warning,
 }) => {
   return (
     <div className="flex justify-between">
@@ -23,8 +25,13 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
         <Link
           href={`https://wiki.openstreetmap.org/wiki/Key:${header}`}
           target="_blank"
+          color={warning ? "warning" : "primary"}
         >
-          <Icon src={info} alt="surface" />
+          <Icon
+            src={info}
+            alt={header}
+            className={warning ? "fill-warning" : ""}
+          />
         </Link>
       </Tooltip>
     </div>

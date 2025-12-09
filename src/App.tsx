@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const [nameFixAction, setNameFixAction] = useState<string>("check");
   const [streetAbbreviationAction, setStreetAbbreviationAction] =
     useState<string>("expand");
+  const [laneTagFixAction, setLaneTagFixAction] = useState<string>("remove");
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAreaCompletedModal, setShowAreaCompletedModal] = useState(false);
@@ -101,6 +102,26 @@ const App: React.FC = () => {
       return null;
     },
     [findNumberedNameTags],
+  );
+
+  const applyLaneTagFixes = useCallback(
+    (tags: Tags): Tags => {
+      const currentWayTags = overpassWays[currentWay]?.tags;
+      if (!currentWayTags) return tags;
+
+      const updatedTags = { ...tags };
+
+      // Remove lane tags on unpaved surfaces if action is "remove"
+      if (laneTagFixAction === "remove") {
+        delete updatedTags.lanes;
+        delete updatedTags["lanes:forward"];
+        delete updatedTags["lanes:backward"];
+        delete updatedTags.lane_markings;
+      }
+
+      return updatedTags;
+    },
+    [overpassWays, currentWay, laneTagFixAction],
   );
 
   const applyNameFixes = useCallback(
@@ -189,12 +210,15 @@ const App: React.FC = () => {
       // Step 2: Apply name fixes
       processedTags = applyNameFixes(processedTags);
 
-      // Step 3: Add fixme message if provided
+      // Step 3: Apply lane tag fixes
+      processedTags = applyLaneTagFixes(processedTags);
+
+      // Step 4: Add fixme message if provided
       if (includeFixmeMessage) {
         processedTags["fixme:tigerking"] = includeFixmeMessage;
       }
 
-      // Step 4: Add detail tags if requested
+      // Step 5: Add detail tags if requested
       if (includeDetailTags) {
         const detailTags = addDetailTags();
         processedTags = { ...processedTags, ...detailTags };
@@ -205,7 +229,7 @@ const App: React.FC = () => {
 
       return processedTags;
     },
-    [filterTigerTags, applyNameFixes, addDetailTags],
+    [filterTigerTags, applyNameFixes, applyLaneTagFixes, addDetailTags],
   );
 
   const deduplicateNewWays = useCallback(
@@ -604,6 +628,8 @@ const App: React.FC = () => {
           setNameFixAction={setNameFixAction}
           streetAbbreviationAction={streetAbbreviationAction}
           setStreetAbbreviationAction={setStreetAbbreviationAction}
+          laneTagFixAction={laneTagFixAction}
+          setLaneTagFixAction={setLaneTagFixAction}
           onSkip={handleActions.skip}
           onFix={handleActions.fix}
           onClearTiger={handleActions.clearTiger}

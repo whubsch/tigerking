@@ -9,6 +9,7 @@ const toggleButton = (
   onPress?: () => void,
   isIconOnly: boolean = false,
   slot?: ReactNode,
+  isDisabled: boolean = false,
 ) => (
   <Button
     key={label}
@@ -16,6 +17,7 @@ const toggleButton = (
     className={`flex-1 border-1 transition-all duration-200 ${isActive ? "bg-primary-100 shadow-lg border-primary" : "hover:bg-primary/10"}`}
     onPress={onPress}
     isIconOnly={isIconOnly}
+    isDisabled={isDisabled}
   >
     {isIconOnly && !isActive ? (
       <Icon src={kebab} alt="kebab" />

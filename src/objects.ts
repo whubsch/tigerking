@@ -61,3 +61,14 @@ export interface ZxyTileType {
   y: number;
   hasParams: boolean;
 }
+
+export const UNPAVED_SURFACES = [
+  "unpaved",
+  "gravel",
+  "ground",
+  "dirt",
+  "sand",
+  "fine_gravel",
+  "earth",
+  "compacted",
+];

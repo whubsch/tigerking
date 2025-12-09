@@ -120,7 +120,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
       <Autocomplete
         label={!compact ? "Location" : undefined}
         aria-label={compact ? "Location Search" : undefined}
-        className={compact ? "flex-grow" : ""}
+        className={compact ? "grow" : ""}
         placeholder="Enter a location"
         listboxProps={{
           emptyContent: "No OSM relations found.",
@@ -163,7 +163,6 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
             key={index}
             title={feature.properties.name}
             description={generateLocationDescription(feature)}
-            value={feature.properties.name}
           >
             {feature.properties.name}
           </AutocompleteItem>

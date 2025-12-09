@@ -45,19 +45,19 @@ const TagFixAlert: React.FC<TagFixAlertProps> = ({
     switch (highlightColor) {
       case "warning":
         return selectedAction === actions[0]?.action
-          ? "bg-warning-200 outline outline-2 outline-warning"
+          ? "bg-warning-200 outline-solid outline-2 outline-warning"
           : "bg-warning-100";
       case "danger":
         return selectedAction === actions[0]?.action
-          ? "bg-danger-200 outline outline-2 outline-danger"
+          ? "bg-danger-200 outline-solid outline-2 outline-danger"
           : "bg-danger-100";
       case "primary":
         return selectedAction === actions[0]?.action
-          ? "bg-primary-200 outline outline-2 outline-primary"
+          ? "bg-primary-200 outline-solid outline-2 outline-primary"
           : "bg-primary-100";
       default:
         return selectedAction === actions[0]?.action
-          ? "bg-warning-200 outline outline-2 outline-warning"
+          ? "bg-warning-200 outline-solid outline-2 outline-warning"
           : "bg-warning-100";
     }
   };
@@ -66,7 +66,7 @@ const TagFixAlert: React.FC<TagFixAlertProps> = ({
     <div
       className={`flex p-4 my-4 gap-2 ${getTextColorClass()} rounded-medium items-center ${getBackgroundClass()}`}
     >
-      <div className="flex flex-col flex-grow gap-1">
+      <div className="flex flex-col grow gap-1">
         <span className="text-sm font-medium">{title}</span>
         <span className="text-xs">{description}</span>
       </div>

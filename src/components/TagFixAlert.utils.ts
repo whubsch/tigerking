@@ -165,6 +165,28 @@ export const createStreetAbbreviationActions = (
 ];
 
 /**
+ * Creates actions for lane tag fixes on unpaved surfaces: Remove, Ignore
+ */
+export const createLaneTagFixActions = (
+  selectedAction: string,
+): TagFixAction[] => [
+  {
+    action: "remove",
+    src: trash,
+    alt: "remove",
+    tooltip: "Remove lane tags",
+    color: selectedAction === "remove" ? "warning" : "default",
+  },
+  {
+    action: "keep",
+    src: ban,
+    alt: "keep",
+    tooltip: "Keep as is",
+    color: selectedAction === "keep" ? "primary" : "default",
+  },
+];
+
+/**
  * Common street type abbreviations and their expanded forms
  */
 const STREET_ABBREVIATIONS: Record<string, string> = {

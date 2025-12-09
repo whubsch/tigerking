@@ -134,13 +134,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
             {keyboardShortcuts.map((shortcut, index) => (
               <div
                 key={index}
-                className="bg-default-100 p-2 rounded flex flex-row"
+                className="bg-default-100 p-2 rounded-sm flex flex-row"
               >
                 <div className="flex gap-2">
                   {shortcut.keys.map((key, keyIndex) => (
                     <Kbd
                       key={keyIndex}
-                      className="bg-default-200 px-2 py-1 rounded"
+                      className="bg-default-200 px-2 py-1 rounded-sm"
                     >
                       {key}
                     </Kbd>
@@ -157,13 +157,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
             {fixShortcuts.map((shortcut, index) => (
               <div
                 key={index}
-                className="bg-default-100 p-2 rounded flex flex-row"
+                className="bg-default-100 p-2 rounded-sm flex flex-row"
               >
                 <div className="flex gap-2">
                   {shortcut.keys.map((key, keyIndex) => (
                     <Kbd
                       key={keyIndex}
-                      className="bg-default-200 px-2 py-1 rounded"
+                      className="bg-default-200 px-2 py-1 rounded-sm"
                     >
                       {key}
                     </Kbd>
