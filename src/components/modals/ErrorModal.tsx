@@ -60,7 +60,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
 
         {details && (
           <div className="bg-gray-50 p-4 rounded-lg text-sm text-gray-600 font-mono overflow-x-auto">
-            <pre className="whitespace-pre-wrap break-words">{details}</pre>
+            <pre className="whitespace-pre-wrap wrap-break-word">{details}</pre>
           </div>
         )}
       </div>

@@ -120,7 +120,7 @@ export const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
       <Autocomplete
         label={!compact ? "Location" : undefined}
         aria-label={compact ? "Location Search" : undefined}
-        className={compact ? "flex-grow" : ""}
+        className={compact ? "grow" : ""}
         placeholder="Enter a location"
         listboxProps={{
           emptyContent: "No OSM relations found.",

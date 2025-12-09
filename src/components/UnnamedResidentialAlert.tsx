@@ -22,11 +22,11 @@ const UnnamedResidentialAlert: React.FC<UnnamedResidentialAlertProps> = ({
     <div
       className={`flex p-4 my-4 gap-2 text-warning-700 rounded-medium items-center ${
         convertDriveway
-          ? "bg-warning-200 outline outline-2 outline-warning"
+          ? "bg-warning-200 outline-solid outline-2 outline-warning"
           : "bg-warning-100"
       }`}
     >
-      <div className="flex flex-col flex-grow gap-1">
+      <div className="flex flex-col grow gap-1">
         <span className="text-sm font-medium">
           This residential way has no name
         </span>

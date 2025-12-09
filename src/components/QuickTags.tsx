@@ -78,7 +78,7 @@ const QuickTags: React.FC = () => {
           transition-all duration-200
           ${
             isTagActive(tag)
-              ? "outline outline-2 outline-primary bg-primary/10 shadow-lg"
+              ? "outline-solid outline-2 outline-primary bg-primary/10 shadow-lg"
               : "hover:bg-gray-100 dark:hover:bg-gray-800 shadow-md"
           }
         `}
