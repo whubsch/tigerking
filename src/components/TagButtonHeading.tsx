@@ -25,7 +25,6 @@ const TagButtonHeading: React.FC<TagButtonHeadingProps> = ({
         <Link
           href={`https://wiki.openstreetmap.org/wiki/Key:${header}`}
           target="_blank"
-          isBlock={warning}
           color={warning ? "warning" : "primary"}
         >
           <Icon

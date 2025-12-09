@@ -35,16 +35,37 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
   // Check if current surface is unpaved
   const isUnpavedSurface = UNPAVED_SURFACES.includes(surface);
 
-  // Check if way already has lane tags
+  // Check if way already has lane tags in original OSM data
   const hasExistingLaneTags = Boolean(
     currentTags.lanes ||
-      currentTags["lanes:forward"] ||
-      currentTags["lanes:backward"] ||
-      currentTags.lane_markings,
+    currentTags["lanes:forward"] ||
+    currentTags["lanes:backward"] ||
+    currentTags.lane_markings,
   );
 
-  // Disable lane buttons if unpaved surface and no existing tags
+  // Disable lane buttons if unpaved surface and no existing lane tags
+  // This allows modification/removal of existing tags but prevents adding new ones
   const lanesDisabled = isUnpavedSurface && !hasExistingLaneTags;
+
+  // Check if there's any lane data currently set (in store or original tags)
+  const hasAnyLaneData = Boolean(
+    lanes ||
+    lanesForward ||
+    lanesBackward ||
+    !laneMarkings ||
+    hasExistingLaneTags,
+  );
+
+  // Show remove button if unpaved surface with lane data present
+  const showRemoveButton = isUnpavedSurface && hasAnyLaneData;
+
+  const handleRemoveLaneData = () => {
+    setLanes("");
+    setLanesForward(0);
+    setLanesBackward(0);
+    setLaneMarkings(true);
+    setShowLaneDirection(false);
+  };
 
   const renderSlider = (
     label: string,
@@ -127,8 +148,8 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           {toggleButton(
             Boolean(
               (lanes && !COMMON_LANES.includes(lanes)) ||
-                lanesBackward ||
-                lanesForward,
+              lanesBackward ||
+              lanesForward,
             ),
             undefined,
             lanesDisabled
@@ -157,6 +178,20 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           {renderSlider("Lanes Backward", lanesBackward, (value) =>
             handleLaneChange(lanesForward, value),
           )}
+        </div>
+      )}
+
+      {showRemoveButton && (
+        <div className="mt-2">
+          <Button
+            color="warning"
+            variant="flat"
+            size="sm"
+            className="w-full"
+            onPress={handleRemoveLaneData}
+          >
+            Remove lane data
+          </Button>
         </div>
       )}
     </div>

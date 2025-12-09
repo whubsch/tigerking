@@ -24,7 +24,7 @@ const QuickTags: React.FC = () => {
   const QUICK_TAGS: QuickTag[] = useMemo(
     () => [
       { id: 1, surface: "asphalt", lanes: "none", keyboardShortcut: "1" },
-      { id: 2, surface: "compacted", lanes: "none", keyboardShortcut: "2" },
+      { id: 2, surface: "compacted", lanes: "∅", keyboardShortcut: "2" },
       { id: 3, surface: "asphalt", lanes: "2", keyboardShortcut: "3" },
     ],
     [],
@@ -35,8 +35,11 @@ const QuickTags: React.FC = () => {
       setSurface(tag.surface);
       if (tag.lanes === "none") {
         setLaneMarkings(false);
-      } else {
+      } else if (tag.lanes === "2") {
         setLanes(tag.lanes);
+      } else {
+        setLanes("");
+        setLaneMarkings(true);
       }
     },
     [setSurface, setLanes, setLaneMarkings],
@@ -56,7 +59,9 @@ const QuickTags: React.FC = () => {
 
   const isTagActive = (tag: QuickTag) =>
     tag.surface === surface &&
-    (tag.lanes === lanes || (tag.lanes === "none" && !laneMarkings));
+    (tag.lanes === lanes ||
+      (tag.lanes === "none" && !laneMarkings) ||
+      (tag.lanes === "∅" && lanes === "" && laneMarkings));
 
   const renderTagTooltip = (tag: QuickTag) => (
     <Tooltip
@@ -82,7 +87,9 @@ const QuickTags: React.FC = () => {
       >
         <div className="p-3 gap-1 text-sm flex flex-col">
           <span className="flex">{tag.surface}</span>
-          <span className="flex">{tag.lanes}</span>
+          <span className={`flex ${tag.lanes === "∅" ? "opacity-50" : ""}`}>
+            {tag.lanes}
+          </span>
         </div>
       </Card>
     </Tooltip>
