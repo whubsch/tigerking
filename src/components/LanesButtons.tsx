@@ -38,9 +38,9 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
   // Check if way already has lane tags in original OSM data
   const hasExistingLaneTags = Boolean(
     currentTags.lanes ||
-    currentTags["lanes:forward"] ||
-    currentTags["lanes:backward"] ||
-    currentTags.lane_markings,
+      currentTags["lanes:forward"] ||
+      currentTags["lanes:backward"] ||
+      currentTags.lane_markings,
   );
 
   // Disable lane buttons if unpaved surface and no existing lane tags
@@ -50,10 +50,10 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
   // Check if there's any lane data currently set (in store or original tags)
   const hasAnyLaneData = Boolean(
     lanes ||
-    lanesForward ||
-    lanesBackward ||
-    !laneMarkings ||
-    hasExistingLaneTags,
+      lanesForward ||
+      lanesBackward ||
+      !laneMarkings ||
+      hasExistingLaneTags,
   );
 
   // Show remove button if unpaved surface with lane data present
@@ -148,8 +148,8 @@ const LanesButtons: React.FC<LanesButtonsProps> = ({
           {toggleButton(
             Boolean(
               (lanes && !COMMON_LANES.includes(lanes)) ||
-              lanesBackward ||
-              lanesForward,
+                lanesBackward ||
+                lanesForward,
             ),
             undefined,
             lanesDisabled
