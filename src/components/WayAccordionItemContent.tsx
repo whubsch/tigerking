@@ -102,6 +102,51 @@ const WayAccordionItemContent: React.FC<WayAccordionItemContentProps> = ({
       "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900 dark:hover:bg-yellow-800",
   };
 
+  const renderTagKey = (tag: string, status: string) => {
+    if (status === "unchanged") return tag;
+
+    const colorMap = {
+      removed: "text-red-600 dark:text-red-400 line-through",
+      added: "text-green-600 dark:text-green-400 font-bold",
+      changed: "text-yellow-600 dark:text-yellow-400 font-bold",
+    };
+
+    return (
+      <span className={colorMap[status as keyof typeof colorMap]}>{tag}</span>
+    );
+  };
+
+  const renderValue = (oldValue: string, newValue: string, status: string) => {
+    switch (status) {
+      case "removed":
+        return (
+          <span className="text-red-600 dark:text-red-400 line-through">
+            {oldValue}
+          </span>
+        );
+      case "added":
+        return (
+          <span className="text-green-600 dark:text-green-400 font-bold">
+            {newValue}
+          </span>
+        );
+      case "changed":
+        return (
+          <>
+            <span className="text-red-600 dark:text-red-400 line-through">
+              {oldValue}
+            </span>
+            {" → "}
+            <span className="text-green-600 dark:text-green-400 font-bold">
+              {newValue}
+            </span>
+          </>
+        );
+      default:
+        return newValue;
+    }
+  };
+
   return (
     <div className="space-y-4">
       {isFlagged && way.tags?.["fixme:tigerking"] && (
@@ -115,8 +160,7 @@ const WayAccordionItemContent: React.FC<WayAccordionItemContentProps> = ({
       <Table aria-label="Tag changes" isCompact hideHeader>
         <TableHeader>
           <TableColumn>Tag</TableColumn>
-          <TableColumn>Old Value</TableColumn>
-          <TableColumn>New Value</TableColumn>
+          <TableColumn>Value</TableColumn>
         </TableHeader>
         <TableBody>
           {tagChanges.map((change) => (
@@ -124,20 +168,11 @@ const WayAccordionItemContent: React.FC<WayAccordionItemContentProps> = ({
               key={change.tag}
               className={statusClassMap[change.status]}
             >
-              <TableCell className="font-medium">{change.tag}</TableCell>
-              <TableCell
-                className={
-                  change.status === "removed"
-                    ? "text-gray-500 dark:text-gray-300"
-                    : ""
-                }
-              >
-                {change.oldValue}
+              <TableCell className="font-medium">
+                {renderTagKey(change.tag, change.status)}
               </TableCell>
-              <TableCell
-                className={change.status === "added" ? "font-bold" : ""}
-              >
-                {change.newValue}
+              <TableCell textValue={change.newValue}>
+                {renderValue(change.oldValue, change.newValue, change.status)}
               </TableCell>
             </TableRow>
           ))}
