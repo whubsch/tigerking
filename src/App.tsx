@@ -285,7 +285,10 @@ const App: React.FC = () => {
               deduplicateNewWays(ways);
             }
           } catch (error) {
-            setError("Error fetching OSM data: " + error);
+            setError(
+              "Error fetching OSM data! This usually means the Overpass server has rejected the request. Try again on smaller area. Details: " +
+                error,
+            );
           } finally {
             setIsRelationLoading(false);
           }
@@ -306,7 +309,10 @@ const App: React.FC = () => {
 
           deduplicateNewWays(ways, false);
         } catch (error) {
-          setError("Error fetching OSM data: " + error);
+          setError(
+            "Error fetching OSM data! This usually means the Overpass server has rejected the request. Try again on smaller area. Details: " +
+              error,
+          );
         } finally {
           setIsRelationLoading(false);
         }
@@ -331,7 +337,10 @@ const App: React.FC = () => {
               deduplicateNewWays(ways);
             }
           } catch (error) {
-            setError("Error fetching OSM data: " + error);
+            setError(
+              "Error fetching OSM data! This usually means the Overpass server has rejected the request. Try again on smaller area. Details: " +
+                error,
+            );
           } finally {
             setIsRelationLoading(false);
           }
@@ -367,7 +376,10 @@ const App: React.FC = () => {
               });
             }
           } catch (error) {
-            setError("Error fetching OSM data: " + error);
+            setError(
+              "Error fetching OSM data! This usually means the Overpass server has rejected the request. Try again on smaller area. Details: " +
+                error,
+            );
           } finally {
             setIsRelationLoading(false);
           }
