@@ -17787,8 +17787,8 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:3857",
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -18730,8 +18730,8 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:3857",
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -19141,9 +19141,7 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -19845,8 +19843,8 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:3857",
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -21336,8 +21334,7 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -22007,9 +22004,7 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:3857",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -22652,8 +22647,7 @@
         "available_projections": [
           "CRS:84",
           "EPSG:3857",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -23639,8 +23633,7 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -24514,8 +24507,7 @@
         },
         "available_projections": [
           "CRS:84",
-          "EPSG:4326",
-          "EPSG:6347"
+          "EPSG:4326"
         ],
         "category": "photo",
         "country_code": "US",
@@ -39995,6 +39987,7 @@
         "id": "MassGIS_2021_Aerial",
         "license_url": "https://www.mass.gov/service-details/massgis-frequently-asked-questions",
         "max_zoom": 20,
+        "min_zoom": 7,
         "name": "MassGIS 2021 Aerial Imagery",
         "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
         "start_date": "2021-03-17",
@@ -40342,7 +40335,6 @@
           "text": "MassGIS",
           "url": "https://www.mass.gov/info-details/massgis-data-2023-aerial-imagery"
         },
-        "best": true,
         "category": "photo",
         "country_code": "US",
         "description": "15cm Spring 2023 true color aerial imagery for the state of Massachusetts",
@@ -40351,11 +40343,369 @@
         "id": "MassGIS_2023_Aerial",
         "license_url": "https://www.mass.gov/service-details/massgis-frequently-asked-questions",
         "max_zoom": 20,
+        "min_zoom": 7,
         "name": "MassGIS 2023 Aerial Imagery",
         "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
         "start_date": "2023-03-20",
         "type": "tms",
         "url": "https://tiles.arcgis.com/tiles/hGdibHYSPO59RG1h/arcgis/rest/services/orthos2023/MapServer/tile/{z}/{y}/{x}",
+        "valid-georeference": true
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -72.13569,
+              42.03025
+            ],
+            [
+              -72.0635,
+              42.02735
+            ],
+            [
+              -71.80067,
+              42.02351
+            ],
+            [
+              -71.79925,
+              42.00807
+            ],
+            [
+              -71.52888,
+              42.01499
+            ],
+            [
+              -71.49744,
+              42.01725
+            ],
+            [
+              -71.38127,
+              42.01885
+            ],
+            [
+              -71.38174,
+              41.8932
+            ],
+            [
+              -71.33865,
+              41.89865
+            ],
+            [
+              -71.34086,
+              41.87872
+            ],
+            [
+              -71.33392,
+              41.86229
+            ],
+            [
+              -71.3422,
+              41.8448
+            ],
+            [
+              -71.3352,
+              41.8355
+            ],
+            [
+              -71.3449,
+              41.828
+            ],
+            [
+              -71.3472,
+              41.8231
+            ],
+            [
+              -71.33914,
+              41.80842
+            ],
+            [
+              -71.34156,
+              41.79817
+            ],
+            [
+              -71.33407,
+              41.79455
+            ],
+            [
+              -71.32885,
+              41.7811
+            ],
+            [
+              -71.26139,
+              41.7523
+            ],
+            [
+              -71.1954,
+              41.67514
+            ],
+            [
+              -71.17588,
+              41.67154
+            ],
+            [
+              -71.17605,
+              41.6681
+            ],
+            [
+              -71.13291,
+              41.6601
+            ],
+            [
+              -71.13569,
+              41.6284
+            ],
+            [
+              -71.14047,
+              41.62389
+            ],
+            [
+              -71.14059,
+              41.6051
+            ],
+            [
+              -71.13131,
+              41.59231
+            ],
+            [
+              -71.12047,
+              41.49717
+            ],
+            [
+              -71.09996,
+              41.43386
+            ],
+            [
+              -70.81959,
+              41.23192
+            ],
+            [
+              -69.89537,
+              41.21643
+            ],
+            [
+              -69.88713,
+              42.0519
+            ],
+            [
+              -70.8759,
+              42.35302
+            ],
+            [
+              -70.45842,
+              42.67694
+            ],
+            [
+              -70.81567,
+              42.87204
+            ],
+            [
+              -70.82963,
+              42.86875
+            ],
+            [
+              -70.84776,
+              42.86088
+            ],
+            [
+              -70.88566,
+              42.88288
+            ],
+            [
+              -70.90348,
+              42.88671
+            ],
+            [
+              -70.91465,
+              42.88661
+            ],
+            [
+              -70.92973,
+              42.88504
+            ],
+            [
+              -70.94967,
+              42.87588
+            ],
+            [
+              -70.96702,
+              42.86887
+            ],
+            [
+              -71.03128,
+              42.85924
+            ],
+            [
+              -71.04483,
+              42.84869
+            ],
+            [
+              -71.05395,
+              42.83337
+            ],
+            [
+              -71.06442,
+              42.80626
+            ],
+            [
+              -71.13277,
+              42.82145
+            ],
+            [
+              -71.16667,
+              42.80891
+            ],
+            [
+              -71.18617,
+              42.79088
+            ],
+            [
+              -71.18181,
+              42.73732
+            ],
+            [
+              -71.22391,
+              42.74643
+            ],
+            [
+              -71.23732,
+              42.74491
+            ],
+            [
+              -71.24598,
+              42.74231
+            ],
+            [
+              -71.25526,
+              42.73659
+            ],
+            [
+              -71.26787,
+              42.72603
+            ],
+            [
+              -71.27894,
+              42.71136
+            ],
+            [
+              -71.29464,
+              42.69704
+            ],
+            [
+              -71.69663,
+              42.70572
+            ],
+            [
+              -71.97286,
+              42.71307
+            ],
+            [
+              -72.6872,
+              42.73348
+            ],
+            [
+              -73.26496,
+              42.74594
+            ],
+            [
+              -73.50814,
+              42.08626
+            ],
+            [
+              -73.49688,
+              42.04968
+            ],
+            [
+              -73.43281,
+              42.05059
+            ],
+            [
+              -73.03678,
+              42.03929
+            ],
+            [
+              -72.81378,
+              42.03674
+            ],
+            [
+              -72.81705,
+              41.99769
+            ],
+            [
+              -72.76673,
+              42.00327
+            ],
+            [
+              -72.76572,
+              42.02276
+            ],
+            [
+              -72.75868,
+              42.02439
+            ],
+            [
+              -72.75714,
+              42.03635
+            ],
+            [
+              -72.69933,
+              42.03696
+            ],
+            [
+              -72.64019,
+              42.03205
+            ],
+            [
+              -72.60797,
+              42.03108
+            ],
+            [
+              -72.60717,
+              42.02515
+            ],
+            [
+              -72.58216,
+              42.02474
+            ],
+            [
+              -72.57278,
+              42.03022
+            ],
+            [
+              -72.53156,
+              42.03458
+            ],
+            [
+              -72.13569,
+              42.03025
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "attribution": {
+          "required": false,
+          "text": "MassGIS",
+          "url": "https://www.mass.gov/info-details/massgis-data-2025-aerial-imagery"
+        },
+        "best": true,
+        "category": "photo",
+        "country_code": "US",
+        "description": "15cm Spring 2025 true color aerial imagery for the state of Massachusetts (7.5cm resolution on Cape Cod)",
+        "end_date": "2025-04-23",
+        "icon": "https://www.mass.gov/files/styles/organization_logo/public/2017-05/massgis_logo_401x300.png",
+        "id": "MassGIS_2025_Aerial",
+        "license_url": "https://www.mass.gov/info-details/massgis-frequently-asked-questions",
+        "max_zoom": 20,
+        "min_zoom": 7,
+        "name": "MassGIS 2025 Aerial Imagery",
+        "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
+        "start_date": "2025-03-18",
+        "type": "tms",
+        "url": "https://tiles.arcgis.com/tiles/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Aerial_Imagery_2025/MapServer/tile/{z}/{y}/{x}",
         "valid-georeference": true
       },
       "geometry": {
@@ -40887,8 +41237,8 @@
         "country_code": "US",
         "description": "The most recent 6-inch resolution orthoimagery for the State of Maryland",
         "end_date": "2024",
-        "icon": "https://mdgeodata.md.gov/Deprecation/images/imap_mini.png",
-        "id": "geodata.md.gov-MD_SixInchImagery",
+        "icon": "https://commons.wikimedia.org/wiki/File:MD_Flag_Round_Icon.png",
+        "id": "mdgeodata.md.gov-MD_SixInchImagery",
         "license_url": "https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/SB0094/?ys=2015rs",
         "max_zoom": 20,
         "name": "MD Latest 6 Inch Aerial Imagery",
@@ -42340,7 +42690,7 @@
         "attribution": {
           "required": false,
           "text": "MD iMAP, DoIT",
-          "url": "http://imap.maryland.gov"
+          "url": "https://imap.maryland.gov"
         },
         "available_projections": [
           "CRS:84",
@@ -42356,8 +42706,8 @@
         "country_code": "US",
         "description": "Three Inch resolution aerial imagery for the State of Maryland. The imagery for this service is composed of imagery flown in 2017 (Westminster), 2020 (Gaithersburg, Rockville), 2023 (Anne Arundel, Baltimore County, Baltimore City), and 2024 (Eastern Shore).",
         "end_date": "2024",
-        "icon": "https://mdgeodata.md.gov/Deprecation/images/imap_mini.png",
-        "id": "geodata.md.gov-MD_ThreeInchImagery",
+        "icon": "https://commons.wikimedia.org/wiki/File:MD_Flag_Round_Icon.png",
+        "id": "mdgeodata.md.gov-MD_ThreeInchImagery",
         "license_url": "https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/SB0094/?ys=2015rs",
         "max_zoom": 20,
         "min_zoom": 8,
@@ -76958,9 +77308,9 @@
         "max_zoom": 19,
         "name": "NYSDOP Latest Orthoimagery (Infrared)",
         "privacy_policy_url": "https://its.ny.gov/its-internet-security-and-privacy-policy",
-        "start_date": "2021",
+        "start_date": "2022",
         "type": "wms",
-        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest_cir/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3,4&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest_cir/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -78346,9 +78696,9 @@
         "max_zoom": 19,
         "name": "NYSDOP Latest Orthoimagery (Natural Color)",
         "privacy_policy_url": "https://its.ny.gov/its-internet-security-and-privacy-policy",
-        "start_date": "2021",
+        "start_date": "2022",
         "type": "wms",
-        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3,4&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
+        "url": "https://orthos.its.ny.gov/arcgis/services/wms/Latest/MapServer/WmsServer?FORMAT=image/jpeg&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=0,1,2,3&STYLES=&CRS=EPSG:3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}",
         "valid-georeference": true
       },
       "geometry": {
@@ -83125,7 +83475,6 @@
           "text": "City of Philadelphia",
           "url": "https://www.opendataphilly.org/dataset/aerial-photography"
         },
-        "best": true,
         "category": "photo",
         "country_code": "US",
         "description": "Digital orthophotography with a ground resolution of 1-inch per pixel, georeferenced to the Pennsylvania State Plane Coordinate System, and delivered as mosaicked raster images for the city of Philadelphia",
@@ -83138,6 +83487,585 @@
         "start_date": "2024",
         "type": "tms",
         "url": "https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_2024_1in/MapServer/tile/{z}/{y}/{x}",
+        "valid-georeference": true
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -75.28,
+              39.975
+            ],
+            [
+              -75.278,
+              39.971
+            ],
+            [
+              -75.276,
+              39.971
+            ],
+            [
+              -75.275,
+              39.969
+            ],
+            [
+              -75.27,
+              39.969
+            ],
+            [
+              -75.27,
+              39.967
+            ],
+            [
+              -75.266,
+              39.965
+            ],
+            [
+              -75.259,
+              39.966
+            ],
+            [
+              -75.258,
+              39.964
+            ],
+            [
+              -75.249,
+              39.965
+            ],
+            [
+              -75.247,
+              39.964
+            ],
+            [
+              -75.248,
+              39.96
+            ],
+            [
+              -75.251,
+              39.959
+            ],
+            [
+              -75.249,
+              39.955
+            ],
+            [
+              -75.251,
+              39.954
+            ],
+            [
+              -75.252,
+              39.949
+            ],
+            [
+              -75.248,
+              39.946
+            ],
+            [
+              -75.247,
+              39.943
+            ],
+            [
+              -75.24,
+              39.942
+            ],
+            [
+              -75.239,
+              39.941
+            ],
+            [
+              -75.241,
+              39.939
+            ],
+            [
+              -75.24,
+              39.938
+            ],
+            [
+              -75.235,
+              39.938
+            ],
+            [
+              -75.237,
+              39.933
+            ],
+            [
+              -75.243,
+              39.933
+            ],
+            [
+              -75.244,
+              39.926
+            ],
+            [
+              -75.246,
+              39.925
+            ],
+            [
+              -75.248,
+              39.92
+            ],
+            [
+              -75.247,
+              39.914
+            ],
+            [
+              -75.251,
+              39.911
+            ],
+            [
+              -75.25,
+              39.908
+            ],
+            [
+              -75.253,
+              39.907
+            ],
+            [
+              -75.253,
+              39.905
+            ],
+            [
+              -75.251,
+              39.904
+            ],
+            [
+              -75.256,
+              39.9
+            ],
+            [
+              -75.255,
+              39.898
+            ],
+            [
+              -75.257,
+              39.897
+            ],
+            [
+              -75.257,
+              39.894
+            ],
+            [
+              -75.259,
+              39.892
+            ],
+            [
+              -75.262,
+              39.892
+            ],
+            [
+              -75.262,
+              39.888
+            ],
+            [
+              -75.264,
+              39.889
+            ],
+            [
+              -75.265,
+              39.888
+            ],
+            [
+              -75.265,
+              39.886
+            ],
+            [
+              -75.263,
+              39.886
+            ],
+            [
+              -75.264,
+              39.884
+            ],
+            [
+              -75.262,
+              39.883
+            ],
+            [
+              -75.265,
+              39.881
+            ],
+            [
+              -75.262,
+              39.876
+            ],
+            [
+              -75.248,
+              39.876
+            ],
+            [
+              -75.24,
+              39.872
+            ],
+            [
+              -75.236,
+              39.877
+            ],
+            [
+              -75.22,
+              39.875
+            ],
+            [
+              -75.216,
+              39.876
+            ],
+            [
+              -75.216,
+              39.871
+            ],
+            [
+              -75.211,
+              39.867
+            ],
+            [
+              -75.2,
+              39.873
+            ],
+            [
+              -75.195,
+              39.878
+            ],
+            [
+              -75.186,
+              39.882
+            ],
+            [
+              -75.145,
+              39.884
+            ],
+            [
+              -75.141,
+              39.886
+            ],
+            [
+              -75.134,
+              39.894
+            ],
+            [
+              -75.128,
+              39.91
+            ],
+            [
+              -75.13,
+              39.918
+            ],
+            [
+              -75.136,
+              39.929
+            ],
+            [
+              -75.136,
+              39.949
+            ],
+            [
+              -75.133,
+              39.957
+            ],
+            [
+              -75.13,
+              39.96
+            ],
+            [
+              -75.112,
+              39.969
+            ],
+            [
+              -75.071,
+              39.98
+            ],
+            [
+              -75.06,
+              39.991
+            ],
+            [
+              -75.054,
+              40.004
+            ],
+            [
+              -75.047,
+              40.01
+            ],
+            [
+              -75.032,
+              40.016
+            ],
+            [
+              -75.02,
+              40.018
+            ],
+            [
+              -75.01,
+              40.022
+            ],
+            [
+              -74.974,
+              40.05
+            ],
+            [
+              -74.98,
+              40.054
+            ],
+            [
+              -74.984,
+              40.054
+            ],
+            [
+              -74.985,
+              40.058
+            ],
+            [
+              -74.981,
+              40.06
+            ],
+            [
+              -74.981,
+              40.066
+            ],
+            [
+              -74.971,
+              40.074
+            ],
+            [
+              -74.972,
+              40.074
+            ],
+            [
+              -74.971,
+              40.076
+            ],
+            [
+              -74.963,
+              40.077
+            ],
+            [
+              -74.958,
+              40.084
+            ],
+            [
+              -74.958,
+              40.091
+            ],
+            [
+              -74.956,
+              40.093
+            ],
+            [
+              -74.956,
+              40.096
+            ],
+            [
+              -74.962,
+              40.099
+            ],
+            [
+              -74.961,
+              40.104
+            ],
+            [
+              -74.965,
+              40.107
+            ],
+            [
+              -74.963,
+              40.11
+            ],
+            [
+              -74.963,
+              40.117
+            ],
+            [
+              -74.965,
+              40.119
+            ],
+            [
+              -74.97,
+              40.117
+            ],
+            [
+              -74.973,
+              40.12
+            ],
+            [
+              -74.982,
+              40.12
+            ],
+            [
+              -74.984,
+              40.124
+            ],
+            [
+              -74.987,
+              40.123
+            ],
+            [
+              -74.989,
+              40.124
+            ],
+            [
+              -74.989,
+              40.126
+            ],
+            [
+              -74.994,
+              40.127
+            ],
+            [
+              -74.992,
+              40.13
+            ],
+            [
+              -74.993,
+              40.132
+            ],
+            [
+              -74.998,
+              40.128
+            ],
+            [
+              -75.015,
+              40.138
+            ],
+            [
+              -75.026,
+              40.128
+            ],
+            [
+              -75.06,
+              40.105
+            ],
+            [
+              -75.076,
+              40.087
+            ],
+            [
+              -75.087,
+              40.079
+            ],
+            [
+              -75.096,
+              40.069
+            ],
+            [
+              -75.087,
+              40.063
+            ],
+            [
+              -75.095,
+              40.055
+            ],
+            [
+              -75.106,
+              40.05
+            ],
+            [
+              -75.109,
+              40.046
+            ],
+            [
+              -75.176,
+              40.085
+            ],
+            [
+              -75.188,
+              40.073
+            ],
+            [
+              -75.19,
+              40.073
+            ],
+            [
+              -75.224,
+              40.093
+            ],
+            [
+              -75.242,
+              40.074
+            ],
+            [
+              -75.264,
+              40.054
+            ],
+            [
+              -75.26,
+              40.049
+            ],
+            [
+              -75.251,
+              40.044
+            ],
+            [
+              -75.24,
+              40.033
+            ],
+            [
+              -75.233,
+              40.028
+            ],
+            [
+              -75.219,
+              40.022
+            ],
+            [
+              -75.213,
+              40.016
+            ],
+            [
+              -75.206,
+              40.012
+            ],
+            [
+              -75.213,
+              40.007
+            ],
+            [
+              -75.222,
+              40.004
+            ],
+            [
+              -75.251,
+              39.989
+            ],
+            [
+              -75.256,
+              39.988
+            ],
+            [
+              -75.264,
+              39.982
+            ],
+            [
+              -75.269,
+              39.981
+            ],
+            [
+              -75.28,
+              39.975
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "attribution": {
+          "required": false,
+          "text": "City of Philadelphia",
+          "url": "https://www.opendataphilly.org/dataset/aerial-photography"
+        },
+        "best": true,
+        "category": "photo",
+        "country_code": "US",
+        "description": "Digital orthophotography with a ground resolution of 3-inch per pixel, georeferenced to the Pennsylvania State Plane Coordinate System, and delivered as mosaicked raster images for the city of Philadelphia",
+        "end_date": "2025",
+        "id": "Philadelphia_Ortho_2025_3in",
+        "license_url": "https://opendataphilly.org/organizations/city-of-philadelphia/",
+        "max_zoom": 22,
+        "name": "Philadelphia Orthoimagery 2025 (3in)",
+        "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
+        "start_date": "2025",
+        "type": "tms",
+        "url": "https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_2025_3in/MapServer/tile/{z}/{y}/{x}",
         "valid-georeference": true
       },
       "geometry": {
@@ -88372,7 +89300,7 @@
         "attribution": {
           "required": false,
           "text": "County of Santa Clara",
-          "url": "https://gis.sccgov.org/home"
+          "url": "https://gis.santaclaracounty.gov/home"
         },
         "available_projections": [
           "CRS:84",
@@ -88390,7 +89318,7 @@
         "privacy_policy_url": "https://www.santaclaracounty.gov/privacy-policy",
         "start_date": "2024-11-21",
         "type": "wms",
-        "url": "https://mapimages.sccgov.org/arcgis/rest/services/imagery/OrthoImagery2025/ImageServer/exportImage?f=image&format=jpg&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256"
+        "url": "https://maps.santaclaracounty.gov/image/rest/services/Imagery/OrthoImagery2025/ImageServer/exportImage?f=image&format=jpg&bbox={bbox-epsg-3857}&bboxSR={wkid}&imageSR={wkid}&size=256,256"
       },
       "geometry": {
         "coordinates": [
