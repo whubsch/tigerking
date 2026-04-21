@@ -47,6 +47,8 @@ export const overpassService = {
       const response = await fetch("https://overpass-api.de/api/interpreter", {
         method: "POST",
         headers: {
+          "User-Agent": "TIGER King",
+          Referer: "https://whubsch.github.io/tigerking/",
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: `data=${encodeURIComponent(query)}`,
