@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/spinner";
@@ -14,9 +14,9 @@ import { BBox } from "../stores/useBboxStore";
 interface LeftPaneProps {
   showRelationHeading: boolean;
   bbox: BBox;
-  overpassWays: OsmWay[];
-  setOverpassWays: (ways: OsmWay[]) => void;
   currentWay: number;
+  wayIds: number[];
+  getCurrentWayDetails: () => Promise<OsmWay | null>;
   isLoading: boolean;
   showLaneDirection: boolean;
   setShowLaneDirection: (value: boolean) => void;
@@ -37,9 +37,9 @@ interface LeftPaneProps {
 const LeftPane: React.FC<LeftPaneProps> = ({
   showRelationHeading,
   bbox,
-  overpassWays,
-  setOverpassWays,
   currentWay,
+  wayIds,
+  getCurrentWayDetails,
   isLoading,
   showLaneDirection,
   setShowLaneDirection,
@@ -58,19 +58,39 @@ const LeftPane: React.FC<LeftPaneProps> = ({
 }) => {
   const { relation } = useChangesetStore();
 
+  const [currentWayDetails, setCurrentWayDetails] = useState<OsmWay | null>(
+    null,
+  );
+
+  useEffect(() => {
+    const loadWayDetails = async () => {
+      const way = await getCurrentWayDetails();
+      setCurrentWayDetails(way);
+    };
+
+    if (
+      wayIds &&
+      wayIds.length > 0 &&
+      currentWay >= 0 &&
+      currentWay < wayIds.length
+    ) {
+      loadWayDetails();
+    }
+  }, [currentWay, wayIds, getCurrentWayDetails]);
+
   const handleTagsUpdate = (
     updatedTags: Record<string, string | undefined>,
   ) => {
-    const updatedWays = [...overpassWays];
-    updatedWays[currentWay] = {
-      ...updatedWays[currentWay],
-      tags: updatedTags,
-    };
-    setOverpassWays(updatedWays);
+    if (currentWayDetails) {
+      setCurrentWayDetails({
+        ...currentWayDetails,
+        tags: updatedTags,
+      });
+    }
   };
 
   const hasBbox = bbox.north && bbox.south && bbox.east && bbox.west;
-  const hasWays = overpassWays && overpassWays.length > 0;
+  const hasWays = wayIds && wayIds.length > 0;
 
   return (
     <div className="w-full md:w-1/3 p-4 border-b md:border-r border-gray-200 gap-4 flex flex-col md:h-full">
@@ -92,15 +112,15 @@ const LeftPane: React.FC<LeftPaneProps> = ({
         <div className="relative">
           <Divider className="my-4" />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background px-2">
-            {currentWay + 1} of {overpassWays.length}
+            {currentWay + 1} of {wayIds.length}
           </div>
         </div>
       )}
 
       <div className="px-4 gap-2 flex flex-col md:grow">
-        {hasWays ? (
+        {hasWays && currentWayDetails ? (
           <WayEditor
-            way={overpassWays[currentWay]}
+            way={currentWayDetails}
             onTagsUpdate={handleTagsUpdate}
             showLaneDirection={showLaneDirection}
             setShowLaneDirection={setShowLaneDirection}
@@ -117,6 +137,10 @@ const LeftPane: React.FC<LeftPaneProps> = ({
             onClearTiger={onClearTiger}
             onSubmit={onSubmit}
           />
+        ) : hasWays && !currentWayDetails ? (
+          <div className="flex justify-center items-center mt-4">
+            <Spinner label="Loading way details..." color="primary" />
+          </div>
         ) : isLoading ? (
           <div className="flex justify-center items-center mt-4">
             <Spinner label="Loading ways..." color="primary" />

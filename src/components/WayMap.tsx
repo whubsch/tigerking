@@ -64,8 +64,6 @@ const WayMap: React.FC<WayMapProps> = ({
       }
     }
 
-    setImagery(TILE_SOURCES[selectedSourceId].name);
-
     const currentTileSource = TILE_SOURCES[selectedSourceId]?.url || "";
     const sourceMaxZoom = TILE_SOURCES[selectedSourceId]?.maxZoom || 22;
 
@@ -214,7 +212,13 @@ const WayMap: React.FC<WayMapProps> = ({
     return () => {
       map.current?.remove();
     };
-  }, [coordinates, zoom, selectedSourceId, setImagery]);
+  }, [coordinates, zoom, selectedSourceId]);
+
+  // Separate effect to update imagery when selectedSourceId changes
+  // This avoids the infinite loop caused by setImagery in the main effect
+  useEffect(() => {
+    setImagery(TILE_SOURCES[selectedSourceId].name);
+  }, [selectedSourceId, setImagery]);
 
   const handleTileSourceChange = (sourceId: string) => {
     if (map.current && TILE_SOURCES[sourceId]) {

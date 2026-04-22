@@ -10,7 +10,7 @@ import HelpModal from "./components/modals/HelpModal";
 import AreaCompletedModal from "./components/modals/AreaCompletedModal";
 import { detectAbbreviatedStreetName } from "./components/TagFixAlert.utils";
 import { overpassService } from "./services/overpass";
-import { shuffleArray, sortWaysByDistance } from "./services/orderWays";
+import { shuffleArray } from "./services/orderWays";
 import useWayManagement from "./hooks/useWayManagement";
 import ErrorModal from "./components/modals/ErrorModal";
 import { OsmWay, Tags } from "./objects";
@@ -21,6 +21,7 @@ import { useWayStore } from "./stores/useWayStore";
 import { useOsmAuthContext } from "./contexts/useOsmAuth";
 import { getMapParams } from "./services/params";
 import SettingsModal from "./components/modals/SettingsModal";
+import { LazyWayFetcher } from "./services/lazyWayFetcher";
 
 const App: React.FC = () => {
   const [showRelationHeading, setShowRelationHeading] = useState(false);
@@ -57,16 +58,21 @@ const App: React.FC = () => {
     () => getMapParams(window.location.search),
     [],
   );
-  const { currentWayCoordinates } = useWayManagement();
+
   const {
     overpassWays,
     currentWay,
     uploadWays,
-    setOverpassWays,
+    wayIds,
     setCurrentWay,
     setUploadWays,
     addToUpload,
+    setCachedWay,
+    getCachedWay,
+    setWayIds,
+    setIsFetchingNext,
   } = useWayStore();
+  const [lazyFetcher, setLazyFetcher] = useState<LazyWayFetcher | null>(null);
   const { loggedIn } = useOsmAuthContext();
 
   useEffect(() => {
@@ -233,18 +239,40 @@ const App: React.FC = () => {
   );
 
   const deduplicateNewWays = useCallback(
-    (ways: OsmWay[], shuffle = true) => {
-      const unprocessedWays = ways.filter(
-        (way) => !uploadWays.some((uploadedWay) => uploadedWay.id === way.id),
+    (wayIds: number[], shuffle = true) => {
+      // Filter way IDs by upload status
+      const unprocessedWayIds = wayIds.filter(
+        (wayId) => !uploadWays.some((uploadedWay) => uploadedWay.id === wayId),
       );
-      if (shuffle) {
-        const shuffledWays = shuffleArray(unprocessedWays);
-        setOverpassWays(shuffledWays);
-      } else {
-        setOverpassWays(unprocessedWays);
+
+      // Shuffle if requested
+      const processedWayIds = shuffle
+        ? shuffleArray(unprocessedWayIds)
+        : unprocessedWayIds;
+
+      // Store the way IDs in the store
+      setWayIds(processedWayIds);
+
+      // Initialize the LazyWayFetcher with the way IDs
+      const fetcher = new LazyWayFetcher({
+        wayIds: processedWayIds,
+        onWayLoaded: (way, wayId) => {
+          setCachedWay(wayId, way);
+        },
+        onError: (error, wayId) => {
+          console.error(`Error loading way ${wayId}:`, error);
+        },
+      });
+      setLazyFetcher(fetcher);
+
+      // Pre-fetch the first way for immediate data
+      if (processedWayIds.length > 0) {
+        fetcher.fetch(processedWayIds[0]).catch((error) => {
+          console.error("Error pre-fetching first way:", error);
+        });
       }
     },
-    [uploadWays, setOverpassWays], // Add uploadWays as dependency
+    [uploadWays, setWayIds, setCachedWay],
   );
 
   // Get search parameters from URL
@@ -270,19 +298,17 @@ const App: React.FC = () => {
   useEffect(() => {
     if (params.relation) {
       const fetchWays = async (relationId: string) => {
-        // Only fetch if overpassWays is empty
-        if (relationId && overpassWays.length === 0) {
+        // Only fetch if wayIds is empty
+        if (relationId && wayIds.length === 0) {
           setIsRelationLoading(true);
           setShowRelationHeading(true);
           try {
-            const ways = await overpassService.fetchWaysInRelation(relationId);
-            if (ways.length === 0) {
+            const ids = await overpassService.fetchWayIdsInRelation(relationId);
+            if (ids.length === 0) {
               setShowAreaCompletedModal(true);
             } else {
-              setOverpassWays([]);
               setCurrentWay(0);
-
-              deduplicateNewWays(ways);
+              deduplicateNewWays(ids);
             }
           } catch (error) {
             setError(
@@ -301,13 +327,13 @@ const App: React.FC = () => {
       const fetchWay = async (wayId: string) => {
         setIsRelationLoading(true);
         setShowRelationHeading(false);
-        const wayIds = wayId.split(",");
+        const wayIdStrings = wayId.split(",");
         try {
-          const ways = await overpassService.fetchWays(wayIds);
-          setOverpassWays([]);
+          const ways = await overpassService.fetchWays(wayIdStrings);
           setCurrentWay(0);
-
-          deduplicateNewWays(ways, false);
+          // Convert OsmWay objects to just IDs for lazy loading
+          const ids = ways.map((way) => way.id);
+          deduplicateNewWays(ids, false);
         } catch (error) {
           setError(
             "Error fetching OSM data! This usually means the Overpass server has rejected the request. Try again on smaller area. Details: " +
@@ -318,23 +344,23 @@ const App: React.FC = () => {
         }
       };
       fetchWay(params.way);
-    } else if (isBoundingBox && overpassWays.length === 0) {
-      // Only fetch bounding box ways if overpassWays is empty
+    } else if (isBoundingBox && wayIds.length === 0) {
+      // Only fetch bounding box ways if wayIds is empty
       const fetchWaysInBoundingBox = async () => {
         if (bboxState.north) {
           setIsRelationLoading(true);
           try {
-            const ways = await overpassService.fetchWaysInBbox([
+            const ids = await overpassService.fetchWayIdsInBbox([
               bboxState.south,
               bboxState.west,
               bboxState.north,
               bboxState.east,
             ]);
 
-            if (ways.length === 0) {
+            if (ids.length === 0) {
               setShowAreaCompletedModal(true);
             } else {
-              deduplicateNewWays(ways);
+              deduplicateNewWays(ids);
             }
           } catch (error) {
             setError(
@@ -347,7 +373,7 @@ const App: React.FC = () => {
         }
       };
       fetchWaysInBoundingBox();
-    } else if (isCenterPoint && overpassWays.length === 0) {
+    } else if (isCenterPoint && wayIds.length === 0) {
       if (!bboxState.north) {
         updateFromZXY({
           zoom: 15,
@@ -359,21 +385,17 @@ const App: React.FC = () => {
         if (bboxState.north) {
           setIsRelationLoading(true);
           try {
-            const waysCenter = await overpassService.fetchWaysInBbox([
+            const ids = await overpassService.fetchWayIdsInBbox([
               bboxState.south,
               bboxState.west,
               bboxState.north,
               bboxState.east,
             ]);
 
-            if (waysCenter.length === 0) {
+            if (ids.length === 0) {
               setShowAreaCompletedModal(true);
             } else {
-              deduplicateNewWays(waysCenter);
-              sortWaysByDistance(waysCenter, {
-                lat: Number(params.x) || 0,
-                lon: Number(params.y) || 0,
-              });
+              deduplicateNewWays(ids);
             }
           } catch (error) {
             setError(
@@ -390,71 +412,118 @@ const App: React.FC = () => {
   }, [
     params,
     bboxState,
-    overpassWays.length,
+    wayIds.length,
     deduplicateNewWays,
     relation.id,
     setCurrentWay,
-    setOverpassWays,
     setRelation,
     isBoundingBox,
     isCenterPoint,
     updateFromZXY,
   ]);
 
+  // Helper function to get current way details
+  const getCurrentWayDetails = useCallback(async (): Promise<OsmWay | null> => {
+    if (!lazyFetcher || currentWay < 0 || currentWay >= wayIds.length) {
+      return null;
+    }
+
+    const wayId = wayIds[currentWay];
+
+    // Try to get from cache first
+    const cached = getCachedWay(wayId);
+    if (cached) {
+      return cached;
+    }
+
+    // Fetch from lazy fetcher
+    if (lazyFetcher) {
+      return await lazyFetcher.getWayAtIndex(currentWay);
+    }
+
+    return null;
+  }, [lazyFetcher, currentWay, wayIds, getCachedWay]);
+
+  const { currentWayCoordinates } = useWayManagement({
+    getCurrentWayDetails,
+  });
+
   // Handle current way and tags
   useEffect(() => {
-    if (overpassWays.length > 0 && overpassWays[currentWay]) {
-      setNameFixAction("check");
+    const updateWayTags = async () => {
+      const currentWayDetails = await getCurrentWayDetails();
 
-      // Check and skipping if way is already in uploadWays
-      const currentWayTags = overpassWays[currentWay].tags;
+      if (currentWayDetails) {
+        setNameFixAction("check");
+        const currentWayTags = currentWayDetails.tags;
 
-      // Set surface if it exists
-      if (currentWayTags.surface) {
-        setSurface(currentWayTags.surface);
-      } else {
-        setSurface("");
+        // Set surface if it exists
+        if (currentWayTags.surface) {
+          setSurface(currentWayTags.surface);
+        } else {
+          setSurface("");
+        }
+
+        // Set lanes if it exists
+        if (currentWayTags.lanes) {
+          setLanes(currentWayTags.lanes);
+        } else if (currentWayTags.lane_markings === "no") {
+          setLaneMarkings(false);
+        } else {
+          setLanes("");
+        }
+
+        // Set lane forward and backward if it exists
+        if (currentWayTags["lanes:forward"]) {
+          setLanesForward(Number(currentWayTags["lanes:forward"]));
+        } else {
+          setLanesForward(0);
+        }
+
+        // Set lane forward and backward if it exists
+        if (currentWayTags["lanes:backward"]) {
+          setLanesBackward(Number(currentWayTags["lanes:backward"]));
+        } else {
+          setLanesBackward(0);
+        }
+
+        setShowLaneDirection(false);
+        setConvertDriveway("");
       }
+    };
 
-      // Set lanes if it exists
-      if (currentWayTags.lanes) {
-        setLanes(currentWayTags.lanes);
-      } else if (currentWayTags.lane_markings === "no") {
-        setLaneMarkings(false);
-      } else {
-        setLanes("");
-      }
-
-      // Set lane forward and backward if it exists
-      if (currentWayTags["lanes:forward"]) {
-        setLanesForward(Number(currentWayTags["lanes:forward"]));
-      } else {
-        setLanesForward(0);
-      }
-
-      // Set lane forward and backward if it exists
-      if (currentWayTags["lanes:backward"]) {
-        setLanesBackward(Number(currentWayTags["lanes:backward"]));
-      } else {
-        setLanesBackward(0);
-      }
-
-      setShowLaneDirection(false);
-      setConvertDriveway("");
-    }
+    updateWayTags();
   }, [
     currentWay,
-    overpassWays,
+    wayIds,
+    getCurrentWayDetails,
     setLanes,
     setSurface,
-    setCurrentWay,
     setLanesBackward,
     setLanesForward,
     setLaneMarkings,
   ]);
 
+  // Prefetch the next way when current way changes
+  useEffect(() => {
+    if (lazyFetcher) {
+      setIsFetchingNext(true);
+      lazyFetcher.prefetchNext(currentWay);
+      setIsFetchingNext(false);
+    }
+  }, [currentWay, lazyFetcher, setIsFetchingNext]);
+
+  // Cleanup lazy fetcher on unmount
+  useEffect(() => {
+    return () => {
+      if (lazyFetcher) {
+        lazyFetcher.destroy();
+      }
+    };
+  }, [lazyFetcher]);
+
   const handleEnd = useCallback(() => {
-    if (currentWay < overpassWays.length - 1) {
+    if (currentWay < wayIds.length - 1) {
       resetTags();
       setCurrentWay(currentWay + 1);
     } else {
@@ -462,7 +531,7 @@ const App: React.FC = () => {
     }
   }, [
     currentWay,
-    overpassWays.length,
+    wayIds.length,
     setCurrentWay,
     setShowFinishedModal,
     resetTags,
@@ -471,57 +540,81 @@ const App: React.FC = () => {
   const handleActions = useMemo(
     () => ({
       skip: () => {
-        console.log("Skipped way", overpassWays[currentWay].id);
+        const wayId = wayIds[currentWay];
+        console.log("Skipped way", wayId);
         setLanes("");
         setSurface("");
         handleEnd();
       },
       fix: (message: string) => {
-        const updatedWay = {
-          ...overpassWays[currentWay],
-          tags: processWayTags(overpassWays[currentWay].tags, {
-            keepTigerReviewed: true,
-            includeDetailTags: true,
-            includeFixmeMessage: message,
-          }),
+        const handleFix = async () => {
+          const currentWayDetails = await getCurrentWayDetails();
+          if (currentWayDetails) {
+            const updatedWay = {
+              ...currentWayDetails,
+              tags: processWayTags(currentWayDetails.tags, {
+                keepTigerReviewed: true,
+                includeDetailTags: true,
+                includeFixmeMessage: message,
+              }),
+            };
+            console.info("Fixed way:", updatedWay);
+            addToUpload(updatedWay);
+            handleEnd();
+          }
         };
-        console.info("Fixed way:", updatedWay);
-        addToUpload(updatedWay);
-        handleEnd();
+        handleFix().catch((error) => console.error("Error fixing way:", error));
       },
       clearTiger: () => {
-        const updatedWay = {
-          ...overpassWays[currentWay],
-          tags: processWayTags(overpassWays[currentWay].tags, {
-            keepTigerReviewed: false,
-            includeDetailTags: false,
-          }),
+        const handleClearTiger = async () => {
+          const currentWayDetails = await getCurrentWayDetails();
+          if (currentWayDetails) {
+            const updatedWay = {
+              ...currentWayDetails,
+              tags: processWayTags(currentWayDetails.tags, {
+                keepTigerReviewed: false,
+                includeDetailTags: false,
+              }),
+            };
+            console.info("Updated way:", updatedWay);
+            addToUpload(updatedWay);
+            handleEnd();
+          }
         };
-        console.info("Updated way:", updatedWay);
-        addToUpload(updatedWay);
-        handleEnd();
+        handleClearTiger().catch((error) =>
+          console.error("Error clearing tiger:", error),
+        );
       },
       submit: () => {
-        const updatedWay: OsmWay = {
-          ...overpassWays[currentWay],
-          tags: processWayTags(overpassWays[currentWay].tags, {
-            keepTigerReviewed: false,
-            includeDetailTags: true,
-          }),
+        const handleSubmit = async () => {
+          const currentWayDetails = await getCurrentWayDetails();
+          if (currentWayDetails) {
+            const updatedWay: OsmWay = {
+              ...currentWayDetails,
+              tags: processWayTags(currentWayDetails.tags, {
+                keepTigerReviewed: false,
+                includeDetailTags: true,
+              }),
+            };
+            console.info("Submitted way:", updatedWay);
+            addToUpload(updatedWay);
+            handleEnd();
+          }
         };
-        console.info("Submitted way:", updatedWay);
-        addToUpload(updatedWay);
-        handleEnd();
+        handleSubmit().catch((error) =>
+          console.error("Error submitting way:", error),
+        );
       },
     }),
     [
       setLanes,
       setSurface,
       handleEnd,
-      overpassWays,
+      wayIds,
       currentWay,
       processWayTags,
       addToUpload,
+      getCurrentWayDetails,
     ],
   );
 
@@ -628,9 +721,9 @@ const App: React.FC = () => {
         <LeftPane
           showRelationHeading={showRelationHeading}
           bbox={bboxState}
-          overpassWays={overpassWays}
-          setOverpassWays={setOverpassWays}
           currentWay={currentWay}
+          wayIds={wayIds}
+          getCurrentWayDetails={getCurrentWayDetails}
           isLoading={isRelationLoading}
           showLaneDirection={showLaneDirection}
           setShowLaneDirection={setShowLaneDirection}
