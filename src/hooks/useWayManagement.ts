@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useWayStore } from "../stores/useWayStore";
 import { OsmWay } from "../objects";
 
@@ -62,7 +62,7 @@ const useWayManagement = ({
     loadCurrentWay();
   }, [currentWay, wayIds, getCachedWay, getCurrentWayDetails, overpassWays]);
 
-  const currentWayCoordinates = useCallback(() => {
+  const currentWayCoordinates = useMemo<[number, number][]>(() => {
     return (
       currentWayDetails?.geometry.map(
         (coord) => [coord.lon, coord.lat] as [number, number],
@@ -71,7 +71,7 @@ const useWayManagement = ({
   }, [currentWayDetails]);
 
   return {
-    currentWayCoordinates: currentWayCoordinates(),
+    currentWayCoordinates,
     currentWayDetails,
     isLoadingWay,
   };
