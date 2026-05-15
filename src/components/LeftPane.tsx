@@ -112,7 +112,7 @@ const LeftPane: React.FC<LeftPaneProps> = ({
         <div className="relative">
           <Divider className="my-4" />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background px-2">
-            {currentWay + 1} of {wayIds.length}
+            {currentWay + 1} of {wayIds.length.toLocaleString()}
           </div>
         </div>
       )}
