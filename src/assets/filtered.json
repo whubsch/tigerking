@@ -34509,17 +34509,17 @@
         },
         "category": "photo",
         "country_code": "US",
-        "description": "2023 orthoimagery for King County in the State of Washington",
-        "end_date": "2023",
+        "description": "2025 orthoimagery for King County in the State of Washington",
+        "end_date": "2025",
         "icon": "https://cds.kingcounty.gov/KClogo-black.gif",
-        "id": "King_WA_2023",
+        "id": "King_WA_2025",
         "license_url": "https://kingcounty.gov/services/gis/Maps/terms-of-use.aspx",
         "max_zoom": 20,
-        "name": "King County Orthoimagery (2023)",
+        "name": "King County Orthoimagery (2025)",
         "privacy_policy_url": "https://kingcounty.gov/about/website/privacy.aspx",
-        "start_date": "2023",
+        "start_date": "2025",
         "type": "tms",
-        "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/BaseMaps/KingCo_Aerial_2023/MapServer/WMTS/tile/1.0.0/BaseMaps_KingCo_Aerial_2023/default/default028mm/{z}/{y}/{x}",
+        "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/BaseMaps/KingCo_Aerial_2025/MapServer/WMTS/tile/1.0.0/BaseMaps_KingCo_Aerial_2025/default/default028mm/{z}/{y}/{x}",
         "valid-georeference": true
       },
       "geometry": {
@@ -40349,6 +40349,362 @@
         "start_date": "2023-03-20",
         "type": "tms",
         "url": "https://tiles.arcgis.com/tiles/hGdibHYSPO59RG1h/arcgis/rest/services/orthos2023/MapServer/tile/{z}/{y}/{x}",
+        "valid-georeference": true
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -72.13569,
+              42.03025
+            ],
+            [
+              -72.0635,
+              42.02735
+            ],
+            [
+              -71.80067,
+              42.02351
+            ],
+            [
+              -71.79925,
+              42.00807
+            ],
+            [
+              -71.52888,
+              42.01499
+            ],
+            [
+              -71.49744,
+              42.01725
+            ],
+            [
+              -71.38127,
+              42.01885
+            ],
+            [
+              -71.38174,
+              41.8932
+            ],
+            [
+              -71.33865,
+              41.89865
+            ],
+            [
+              -71.34086,
+              41.87872
+            ],
+            [
+              -71.33392,
+              41.86229
+            ],
+            [
+              -71.3422,
+              41.8448
+            ],
+            [
+              -71.3352,
+              41.8355
+            ],
+            [
+              -71.3449,
+              41.828
+            ],
+            [
+              -71.3472,
+              41.8231
+            ],
+            [
+              -71.33914,
+              41.80842
+            ],
+            [
+              -71.34156,
+              41.79817
+            ],
+            [
+              -71.33407,
+              41.79455
+            ],
+            [
+              -71.32885,
+              41.7811
+            ],
+            [
+              -71.26139,
+              41.7523
+            ],
+            [
+              -71.1954,
+              41.67514
+            ],
+            [
+              -71.17588,
+              41.67154
+            ],
+            [
+              -71.17605,
+              41.6681
+            ],
+            [
+              -71.13291,
+              41.6601
+            ],
+            [
+              -71.13569,
+              41.6284
+            ],
+            [
+              -71.14047,
+              41.62389
+            ],
+            [
+              -71.14059,
+              41.6051
+            ],
+            [
+              -71.13131,
+              41.59231
+            ],
+            [
+              -71.12047,
+              41.49717
+            ],
+            [
+              -71.09996,
+              41.43386
+            ],
+            [
+              -70.81959,
+              41.23192
+            ],
+            [
+              -69.89537,
+              41.21643
+            ],
+            [
+              -69.88713,
+              42.0519
+            ],
+            [
+              -70.8759,
+              42.35302
+            ],
+            [
+              -70.45842,
+              42.67694
+            ],
+            [
+              -70.81567,
+              42.87204
+            ],
+            [
+              -70.82963,
+              42.86875
+            ],
+            [
+              -70.84776,
+              42.86088
+            ],
+            [
+              -70.88566,
+              42.88288
+            ],
+            [
+              -70.90348,
+              42.88671
+            ],
+            [
+              -70.91465,
+              42.88661
+            ],
+            [
+              -70.92973,
+              42.88504
+            ],
+            [
+              -70.94967,
+              42.87588
+            ],
+            [
+              -70.96702,
+              42.86887
+            ],
+            [
+              -71.03128,
+              42.85924
+            ],
+            [
+              -71.04483,
+              42.84869
+            ],
+            [
+              -71.05395,
+              42.83337
+            ],
+            [
+              -71.06442,
+              42.80626
+            ],
+            [
+              -71.13277,
+              42.82145
+            ],
+            [
+              -71.16667,
+              42.80891
+            ],
+            [
+              -71.18617,
+              42.79088
+            ],
+            [
+              -71.18181,
+              42.73732
+            ],
+            [
+              -71.22391,
+              42.74643
+            ],
+            [
+              -71.23732,
+              42.74491
+            ],
+            [
+              -71.24598,
+              42.74231
+            ],
+            [
+              -71.25526,
+              42.73659
+            ],
+            [
+              -71.26787,
+              42.72603
+            ],
+            [
+              -71.27894,
+              42.71136
+            ],
+            [
+              -71.29464,
+              42.69704
+            ],
+            [
+              -71.69663,
+              42.70572
+            ],
+            [
+              -71.97286,
+              42.71307
+            ],
+            [
+              -72.6872,
+              42.73348
+            ],
+            [
+              -73.26496,
+              42.74594
+            ],
+            [
+              -73.50814,
+              42.08626
+            ],
+            [
+              -73.49688,
+              42.04968
+            ],
+            [
+              -73.43281,
+              42.05059
+            ],
+            [
+              -73.03678,
+              42.03929
+            ],
+            [
+              -72.81378,
+              42.03674
+            ],
+            [
+              -72.81705,
+              41.99769
+            ],
+            [
+              -72.76673,
+              42.00327
+            ],
+            [
+              -72.76572,
+              42.02276
+            ],
+            [
+              -72.75868,
+              42.02439
+            ],
+            [
+              -72.75714,
+              42.03635
+            ],
+            [
+              -72.69933,
+              42.03696
+            ],
+            [
+              -72.64019,
+              42.03205
+            ],
+            [
+              -72.60797,
+              42.03108
+            ],
+            [
+              -72.60717,
+              42.02515
+            ],
+            [
+              -72.58216,
+              42.02474
+            ],
+            [
+              -72.57278,
+              42.03022
+            ],
+            [
+              -72.53156,
+              42.03458
+            ],
+            [
+              -72.13569,
+              42.03025
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "attribution": {
+          "required": false,
+          "text": "MassGIS",
+          "url": "https://www.mass.gov/info-details/massgis-data-2025-aerial-imagery"
+        },
+        "category": "photo",
+        "country_code": "US",
+        "description": "15cm Spring 2025 color infrared (CIR) aerial imagery for the state of Massachusetts (7.5cm resolution on Cape Cod)",
+        "end_date": "2025-04-23",
+        "icon": "https://www.mass.gov/files/styles/organization_logo/public/2017-05/massgis_logo_401x300.png",
+        "id": "MassGIS_2025_Aerial_CIR",
+        "license_url": "https://www.mass.gov/info-details/massgis-frequently-asked-questions",
+        "max_zoom": 19,
+        "min_zoom": 7,
+        "name": "MassGIS 2025 Aerial Color Infrared",
+        "privacy_policy_url": "https://www.esri.com/en-us/privacy/overview",
+        "start_date": "2025-03-18",
+        "type": "tms",
+        "url": "https://tiles.arcgis.com/tiles/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Aerial_Imagery_2025_CIR/MapServer/tile/{z}/{y}/{x}",
         "valid-georeference": true
       },
       "geometry": {
@@ -88339,20 +88695,21 @@
           "text": "City and County of San Francisco",
           "url": "https://www.sf.gov/"
         },
+        "best": true,
         "category": "photo",
         "country_code": "US",
-        "description": "2024 3-inch resolution imagery for San Francisco in the State of California",
-        "end_date": "2024",
-        "icon": "https://www.sf.gov/themes/custom/sfgovpl/logo-white.svg",
-        "id": "San_Francisco_2024",
+        "description": "2025 3-inch resolution imagery for San Francisco in the State of California",
+        "end_date": "2025",
+        "icon": "https://media.api.sf.gov/original_images/Lockup_CCSF_Black.png",
+        "id": "San_Francisco_2025",
         "license_url": "https://wiki.openstreetmap.org/wiki/California#Publicly_Available_Data",
         "max_zoom": 20,
         "min_zoom": 10,
         "name": "San Francisco Orthoimagery (2024)",
         "privacy_policy_url": "https://www.sf.gov/information/privacy-policy-sfgov",
-        "start_date": "2024",
+        "start_date": "2025",
         "type": "tms",
-        "url": "https://tile.sf.gov/api/tiles/p2024_rgb8cm/{z}/{x}/{y}"
+        "url": "https://tile.sf.gov/api/tiles/p2025_rgb8cm/{z}/{x}/{y}"
       },
       "geometry": {
         "coordinates": [
@@ -88496,7 +88853,7 @@
         "country_code": "US",
         "description": "2024 3-inch resolution imagery for San Francisco in the State of California",
         "end_date": "2024",
-        "icon": "https://www.sf.gov/themes/custom/sfgovpl/logo-white.svg",
+        "icon": "https://media.api.sf.gov/original_images/Lockup_CCSF_Black.png",
         "id": "San_Francisco_2024_CIR",
         "license_url": "https://wiki.openstreetmap.org/wiki/California#Publicly_Available_Data",
         "max_zoom": 20,
